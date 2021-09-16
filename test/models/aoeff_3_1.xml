@@ -9,6 +9,17 @@
     </element>
     <element identifier="id-6be02ba1-0489-4ea4-b62b-a22d302cbefe" xsi:type="Capability">
       <name xml:lang="pt">Capability</name>
+      <properties>
+        <property propertyDefinitionRef="Description">
+          <value xml:lang="pt">Attribute value string</value>
+        </property>
+        <property propertyDefinitionRef="Maturity">
+          <value xml:lang="pt">3</value>
+        </property>
+        <property propertyDefinitionRef="Has Owner">
+          <value xml:lang="pt">true</value>
+        </property>
+      </properties>
     </element>
     <element identifier="id-5382f2ab-3c02-44b3-a26f-ceaff8b4df02" xsi:type="CourseOfAction">
       <name xml:lang="pt">Course of Action</name>
