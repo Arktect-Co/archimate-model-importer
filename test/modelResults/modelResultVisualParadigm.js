@@ -90,495 +90,589 @@ exports.modelResultVisualParadigm = {
             "resource": [
                 {
                     "identifier": "40eb5bd6-4d7c-4c27-98a8-602f935ed405",
-                    "name": "Resource"
+                    "name": "Resource",
+                    "properties": []
                 }
             ],
             "capability": [
                 {
                     "identifier": "6be02ba1-0489-4ea4-b62b-a22d302cbefe",
-                    "name": "Capability"
+                    "name": "Capability",
+                    "properties": []
                 }
             ],
             "courseofaction": [
                 {
                     "identifier": "5382f2ab-3c02-44b3-a26f-ceaff8b4df02",
-                    "name": "Course of Action"
+                    "name": "Course of Action",
+                    "properties": []
                 }
             ],
             "valuestream": [
                 {
                     "identifier": "7d9dd269-b44a-4067-b10c-2c0563f3efea",
-                    "name": "Value Stream"
+                    "name": "Value Stream",
+                    "properties": []
                 }
             ],
             "businessactor": [
                 {
                     "identifier": "35fad4b4-cf0b-46a8-832a-2da1d522b4b5",
-                    "name": "Business Actor"
+                    "name": "Business Actor",
+                    "properties": []
                 },
                 {
                     "identifier": "3a17d18c-78b4-47e1-bf17-0ff3ac741b7a",
-                    "name": "Business Actor2"
+                    "name": "Business Actor2",
+                    "properties": []
                 },
                 {
                     "identifier": "2d2786e0-cad0-4684-9bb4-efc806502b18",
-                    "name": "a"
+                    "name": "a",
+                    "properties": []
                 }
             ],
             "businessrole": [
                 {
                     "identifier": "dc41a04d-8386-4300-9aa2-b8d056e6e936",
-                    "name": "Business Role"
+                    "name": "Business Role",
+                    "properties": []
                 },
                 {
                     "identifier": "cc07d17e-8450-4adf-84d1-ea7d92ec01ab",
-                    "name": "Business Role A"
+                    "name": "Business Role A",
+                    "properties": []
                 },
                 {
                     "identifier": "ba1e731c-ff79-4b07-8f37-bc57a7eea232",
-                    "name": "Business Role B"
+                    "name": "Business Role B",
+                    "properties": []
                 }
             ],
             "businesscollaboration": [
                 {
                     "identifier": "6657839b-3f7f-46e5-87b5-30299fee9e59",
-                    "name": "Business Collaboration"
+                    "name": "Business Collaboration",
+                    "properties": []
                 },
                 {
                     "identifier": "d0c22546-6ae6-4ba9-a141-222cc6eea16d",
-                    "name": "Business Collaboration2"
+                    "name": "Business Collaboration2",
+                    "properties": []
                 }
             ],
             "businessinterface": [
                 {
                     "identifier": "e65afa9e-ef98-4fc0-969b-6d7af4de225e",
-                    "name": "Business Interface"
+                    "name": "Business Interface",
+                    "properties": []
                 }
             ],
             "businessprocess": [
                 {
                     "identifier": "e75e68cf-0ca7-47dd-aeaf-071b69a87b12",
-                    "name": "Business Process"
+                    "name": "Business Process",
+                    "properties": []
                 },
                 {
                     "identifier": "ce1bdaf3-3759-4df2-b2b9-7e4399042f7e",
-                    "name": "Business Process A"
+                    "name": "Business Process A",
+                    "properties": []
                 },
                 {
                     "identifier": "27d9e8b2-ded2-4eb1-8883-062cd3c8dc14",
-                    "name": "Business Process B"
+                    "name": "Business Process B",
+                    "properties": []
                 },
                 {
                     "identifier": "0e9e5337-c1d5-4465-8966-3c33e7aa9306",
-                    "name": "Business Process C"
+                    "name": "Business Process C",
+                    "properties": []
                 },
                 {
                     "identifier": "04c7398e-14b0-4a69-a61e-b729b94c3488",
-                    "name": "Business Process D"
+                    "name": "Business Process D",
+                    "properties": []
                 },
                 {
                     "identifier": "4ab9baa5-2ebe-4093-a8e8-fbd5b17b87c5",
-                    "name": "a"
+                    "name": "a",
+                    "properties": []
                 },
                 {
                     "identifier": "513c2b8d-78ab-484c-b9b4-6e8f721f31b0",
-                    "name": "b"
+                    "name": "b",
+                    "properties": []
                 },
                 {
                     "identifier": "75dfdfeb-77ae-4b35-812a-2eb131ba18df",
-                    "name": "c"
+                    "name": "c",
+                    "properties": []
                 },
                 {
                     "identifier": "5a22b53b-0f6d-4aae-8e08-51464d63f5ad",
-                    "name": "c2"
+                    "name": "c2",
+                    "properties": []
                 },
                 {
                     "identifier": "eeda300f-6a89-4324-a945-b5a3fe74297e",
-                    "name": "c1"
+                    "name": "c1",
+                    "properties": []
                 },
                 {
                     "identifier": "b6c188e2-5026-4a90-816f-b0cb4c0f87fa",
-                    "name": "c22"
+                    "name": "c22",
+                    "properties": []
                 }
             ],
             "businessfunction": [
                 {
                     "identifier": "aef2a0fd-3905-4db2-b527-08bb903d71a3",
-                    "name": "Business Function"
+                    "name": "Business Function",
+                    "properties": []
                 }
             ],
             "businessinteraction": [
                 {
                     "identifier": "54b6e024-2be6-4686-a5b6-2ac904235db2",
-                    "name": "Business Interaction"
+                    "name": "Business Interaction",
+                    "properties": []
                 }
             ],
             "businessevent": [
                 {
                     "identifier": "b359fb3d-fd7b-4752-8241-99b9cbe7d3e3",
-                    "name": "Business Event"
+                    "name": "Business Event",
+                    "properties": []
                 }
             ],
             "businessservice": [
                 {
                     "identifier": "81be3358-9765-4163-b708-ec082742157f",
-                    "name": "Business Service"
+                    "name": "Business Service",
+                    "properties": []
                 }
             ],
             "businessobject": [
                 {
                     "identifier": "9b2ba4e7-1dc2-48a2-bd74-0e3ddbb70fd8",
-                    "name": "Business Object"
+                    "name": "Business Object",
+                    "properties": []
                 }
             ],
             "contract": [
                 {
                     "identifier": "fb5ae095-a556-4a8c-8a36-d7250d518ddb",
-                    "name": "Contract"
+                    "name": "Contract",
+                    "properties": []
                 }
             ],
             "representation": [
                 {
                     "identifier": "a7d30fa6-97e1-4d08-b482-c091e6664b00",
-                    "name": "Representation"
+                    "name": "Representation",
+                    "properties": []
                 }
             ],
             "product": [
                 {
                     "identifier": "f3b3b99e-31eb-489c-a215-e1f2ed384922",
-                    "name": "Product"
+                    "name": "Product",
+                    "properties": []
                 }
             ],
             "applicationcomponent": [
                 {
                     "identifier": "fcb99b01-9ddd-48d7-92bd-e2f8abc92df6",
-                    "name": "Application Component"
+                    "name": "Application Component",
+                    "properties": []
                 },
                 {
                     "identifier": "075bb62d-b139-4317-9a86-7ebbe6e1f903",
-                    "name": "Application Component A"
+                    "name": "Application Component A",
+                    "properties": []
                 },
                 {
                     "identifier": "f2c58f23-4d22-4721-96cb-48446b3630e3",
-                    "name": "Application Component B"
+                    "name": "Application Component B",
+                    "properties": []
                 },
                 {
                     "identifier": "800d0c20-463b-4de7-9b9a-eb2d4f1e459c",
-                    "name": "Application Component C"
+                    "name": "Application Component C",
+                    "properties": []
                 },
                 {
                     "identifier": "fdfa517d-8d14-4ce7-96c4-7dbab4002dbf",
-                    "name": "a"
+                    "name": "a",
+                    "properties": []
                 },
                 {
                     "identifier": "18b75b9f-3939-4432-9117-c461d98c62c0",
-                    "name": "APP A"
+                    "name": "APP A",
+                    "properties": []
                 }
             ],
             "applicationcollaboration": [
                 {
                     "identifier": "edfda2a4-44d9-4890-9b47-5f6dc02646f2",
-                    "name": "Application Collaboration"
+                    "name": "Application Collaboration",
+                    "properties": []
                 },
                 {
                     "identifier": "e0f43547-a404-41bd-9ccb-fbd9911b9605",
-                    "name": "Application Collaboration2"
+                    "name": "Application Collaboration2",
+                    "properties": []
                 }
             ],
             "applicationinterface": [
                 {
                     "identifier": "c8c8739c-6129-4a39-a2f7-c9423e42ba3e",
-                    "name": "Application Interface"
+                    "name": "Application Interface",
+                    "properties": []
                 }
             ],
             "applicationfunction": [
                 {
                     "identifier": "dca66cf0-db00-4600-b0ed-9e7b6e7017fc",
-                    "name": "Application Function"
+                    "name": "Application Function",
+                    "properties": []
                 },
                 {
                     "identifier": "dc730608-6513-4a77-b7bb-deb496d677c3",
-                    "name": "b"
+                    "name": "b",
+                    "properties": []
                 },
                 {
                     "identifier": "9474f8e3-189e-4038-9aa3-07021dcdcb52",
-                    "name": "a"
+                    "name": "a",
+                    "properties": []
                 },
                 {
                     "identifier": "af707643-d2f6-427d-945e-fa78ed59b527",
-                    "name": "FUNC A"
+                    "name": "FUNC A",
+                    "properties": []
                 },
                 {
                     "identifier": "31df2412-ab11-41f8-aca0-bb17538761fb",
-                    "name": "FUNC B"
+                    "name": "FUNC B",
+                    "properties": []
                 }
             ],
             "applicationinteraction": [
                 {
                     "identifier": "e3481ac8-6efb-47ed-a1ee-3aa06174bdc8",
-                    "name": "Application Interaction"
+                    "name": "Application Interaction",
+                    "properties": []
                 }
             ],
             "applicationprocess": [
                 {
                     "identifier": "f61a8f36-0ad8-4c5d-869b-4dddeb01fe33",
-                    "name": "Application Process"
+                    "name": "Application Process",
+                    "properties": []
                 }
             ],
             "applicationevent": [
                 {
                     "identifier": "c974cdb4-7b3a-482b-8c48-eabd1a6e44de",
-                    "name": "Application Event"
+                    "name": "Application Event",
+                    "properties": []
                 }
             ],
             "applicationservice": [
                 {
                     "identifier": "6fa66dd9-df7f-4fa6-86ad-d4f944c4dacc",
-                    "name": "Application Service"
+                    "name": "Application Service",
+                    "properties": []
                 },
                 {
                     "identifier": "68754756-d593-4e81-bb52-f2f693b85853",
-                    "name": "Application Service A"
+                    "name": "Application Service A",
+                    "properties": []
                 },
                 {
                     "identifier": "34088132-b261-4950-9a83-0edb5b04450e",
-                    "name": "c"
+                    "name": "c",
+                    "properties": []
                 },
                 {
                     "identifier": "7ab087a8-e6d9-4226-a2ce-42d712b80736",
-                    "name": "b"
+                    "name": "b",
+                    "properties": []
                 },
                 {
                     "identifier": "4ffb22b7-5260-4b71-ae13-231bed0817f4",
-                    "name": "SERV A"
+                    "name": "SERV A",
+                    "properties": []
                 }
             ],
             "dataobject": [
                 {
                     "identifier": "144823a3-ecfb-433b-af16-6e60fb4654a1",
-                    "name": "Data Object"
+                    "name": "Data Object",
+                    "properties": []
                 },
                 {
                     "identifier": "5a3f59c1-46c1-4e55-a7a5-931e29d60a1d",
-                    "name": "Data Object2"
+                    "name": "Data Object2",
+                    "properties": []
                 }
             ],
             "node": [
                 {
                     "identifier": "2b9be694-5975-4506-914b-20e022ed877c",
-                    "name": "Node"
+                    "name": "Node",
+                    "properties": []
                 },
                 {
                     "identifier": "f935291b-77c1-4a3a-851e-1d74fbeb658c",
-                    "name": "Node A"
+                    "name": "Node A",
+                    "properties": []
                 }
             ],
             "device": [
                 {
                     "identifier": "fb367d58-be33-4236-800d-ee8c4accd067",
-                    "name": "Device"
+                    "name": "Device",
+                    "properties": []
                 },
                 {
                     "identifier": "39c926a3-0000-477e-a917-9a00a49b905b",
-                    "name": "Device A"
+                    "name": "Device A",
+                    "properties": []
                 }
             ],
             "systemsoftware": [
                 {
                     "identifier": "3230b23c-151c-4c1d-8419-2c65da684497",
-                    "name": "System Software"
+                    "name": "System Software",
+                    "properties": []
                 }
             ],
             "technologycollaboration": [
                 {
                     "identifier": "1a00bda4-abbf-4f77-ad56-dc7cf87647b1",
-                    "name": "Technology Collaboration"
+                    "name": "Technology Collaboration",
+                    "properties": []
                 }
             ],
             "technologyinterface": [
                 {
                     "identifier": "43dadc5f-fe3b-4289-8217-3b12e4aa61d2",
-                    "name": "Technology Interface"
+                    "name": "Technology Interface",
+                    "properties": []
                 }
             ],
             "path": [
                 {
                     "identifier": "5e0dfda4-8cb9-4168-9a19-a75701dcf17b",
-                    "name": "Path"
+                    "name": "Path",
+                    "properties": []
                 }
             ],
             "communicationnetwork": [
                 {
                     "identifier": "45c4824f-d318-4102-a6ef-3afedc21d39d",
-                    "name": "Communication Network"
+                    "name": "Communication Network",
+                    "properties": []
                 }
             ],
             "technologyfunction": [
                 {
                     "identifier": "531aa79b-5f86-46a7-b936-2d7ae28ac790",
-                    "name": "Technology Function"
+                    "name": "Technology Function",
+                    "properties": []
                 }
             ],
             "technologyprocess": [
                 {
                     "identifier": "dea8161a-61ea-4bed-ac30-ad7573624d6a",
-                    "name": "Technology Process"
+                    "name": "Technology Process",
+                    "properties": []
                 }
             ],
             "technologyinteraction": [
                 {
                     "identifier": "186f5dff-ec81-442a-b3eb-c0b6b4f5f058",
-                    "name": "Technology Interaction"
+                    "name": "Technology Interaction",
+                    "properties": []
                 }
             ],
             "technologyevent": [
                 {
                     "identifier": "004aafd7-2516-4bb1-89dd-84259d144bf0",
-                    "name": "Technology Event"
+                    "name": "Technology Event",
+                    "properties": []
                 }
             ],
             "technologyservice": [
                 {
                     "identifier": "12d0c9e2-a5b5-43d9-bbef-c7fd094c3358",
-                    "name": "Technology Service"
+                    "name": "Technology Service",
+                    "properties": []
                 },
                 {
                     "identifier": "25a451a7-dd19-45c8-a704-9c8a4bb6f144",
-                    "name": "c"
+                    "name": "c",
+                    "properties": []
                 }
             ],
             "equipment": [
                 {
                     "identifier": "215e3008-ec12-477e-a3e7-8faacf946465",
-                    "name": "Equipment"
+                    "name": "Equipment",
+                    "properties": []
                 }
             ],
             "facility": [
                 {
                     "identifier": "390d68ab-1e1f-4524-92f8-4c0d7ab0322c",
-                    "name": "Facility"
+                    "name": "Facility",
+                    "properties": []
                 }
             ],
             "distributionnetwork": [
                 {
                     "identifier": "26b7eda2-fd42-4382-a2f6-ee4e50c239e7",
-                    "name": "Distribution Network"
+                    "name": "Distribution Network",
+                    "properties": []
                 }
             ],
             "material": [
                 {
                     "identifier": "cad63317-249b-48f3-89c6-4e229737ddab",
-                    "name": "Material"
+                    "name": "Material",
+                    "properties": []
                 }
             ],
             "artifact": [
                 {
                     "identifier": "7a3905c3-ad99-47be-a33f-a8f99dd0b1e1",
-                    "name": "Deploy A"
+                    "name": "Deploy A",
+                    "properties": []
                 }
             ],
             "stakeholder": [
                 {
                     "identifier": "2403fb49-d671-4a96-8f55-13cb68185e4a",
-                    "name": "Stakeholder"
+                    "name": "Stakeholder",
+                    "properties": []
                 }
             ],
             "driver": [
                 {
                     "identifier": "e1b06769-f45a-4866-8db9-d6a9b85866fd",
-                    "name": "Driver"
+                    "name": "Driver",
+                    "properties": []
                 },
                 {
                     "identifier": "1493131e-477d-4817-a551-4bb147ec82c1",
-                    "name": "Driver2"
+                    "name": "Driver2",
+                    "properties": []
                 }
             ],
             "assessment": [
                 {
                     "identifier": "e767c36e-8800-494b-b408-829af1c0cfde",
-                    "name": "Assessment"
+                    "name": "Assessment",
+                    "properties": []
                 }
             ],
             "goal": [
                 {
                     "identifier": "dcaee901-0c56-44de-80e0-a1c2dc0f1d84",
-                    "name": "Goal"
+                    "name": "Goal",
+                    "properties": []
                 },
                 {
                     "identifier": "1aef2a19-28fe-4c6a-9273-ea0603ff9a8d",
-                    "name": "Goal2"
+                    "name": "Goal2",
+                    "properties": []
                 }
             ],
             "outcome": [
                 {
                     "identifier": "2a0436c3-e57f-4b50-88a1-798012cef218",
-                    "name": "Outcome"
+                    "name": "Outcome",
+                    "properties": []
                 }
             ],
             "principle": [
                 {
                     "identifier": "55085a11-fe05-4262-87df-dda8116c037c",
-                    "name": "Principle"
+                    "name": "Principle",
+                    "properties": []
                 }
             ],
             "requirement": [
                 {
                     "identifier": "9ff9bda5-55d1-449e-8253-071a6cc0cf71",
-                    "name": "Requirement"
+                    "name": "Requirement",
+                    "properties": []
                 }
             ],
             "constraint": [
                 {
                     "identifier": "2cef6c30-f227-42c8-8ac0-f98612e478a5",
-                    "name": "Constraint"
+                    "name": "Constraint",
+                    "properties": []
                 }
             ],
             "meaning": [
                 {
                     "identifier": "1d954579-af9d-4e98-a7b7-a116935aff76",
-                    "name": "Meaning"
+                    "name": "Meaning",
+                    "properties": []
                 }
             ],
             "value": [
                 {
                     "identifier": "6ab7f2ae-0028-4f6a-95ea-bc98cb691329",
-                    "name": "Value"
+                    "name": "Value",
+                    "properties": []
                 }
             ],
             "workpackage": [
                 {
                     "identifier": "9babecb9-3ddf-4b7e-a2b1-80cea14f714d",
-                    "name": "Work Package"
+                    "name": "Work Package",
+                    "properties": []
                 }
             ],
             "deliverable": [
                 {
                     "identifier": "4043fbcf-7b03-43ea-b584-7dd66ece4e7d",
-                    "name": "Deliverable"
+                    "name": "Deliverable",
+                    "properties": []
                 }
             ],
             "implementationevent": [
                 {
                     "identifier": "6b1112e8-2b2f-47f1-bb83-4948ca1099f2",
-                    "name": "Implementation Event"
+                    "name": "Implementation Event",
+                    "properties": []
                 }
             ],
             "plateau": [
                 {
                     "identifier": "30301dbd-300b-4657-b633-44ddea33d1ec",
-                    "name": "Plateau"
+                    "name": "Plateau",
+                    "properties": []
                 }
             ],
             "gap": [
                 {
                     "identifier": "5358184a-b360-4465-993e-a079af1f7bc9",
-                    "name": "Gap"
+                    "name": "Gap",
+                    "properties": []
                 }
             ],
             "location": [
                 {
                     "identifier": "8ab8d668-3852-4bf8-a43e-2fcc89c01c79",
-                    "name": "Location"
+                    "name": "Location",
+                    "properties": []
                 }
             ],
             "andjunction": [
@@ -590,7 +684,8 @@ exports.modelResultVisualParadigm = {
             "grouping": [
                 {
                     "identifier": "321beea6-1381-42b9-8657-d1cbd99e8afc",
-                    "name": "Grouping"
+                    "name": "Grouping",
+                    "properties": []
                 }
             ],
             "orjunction": [

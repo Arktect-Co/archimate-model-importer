@@ -4,11 +4,22 @@ In memory Archimate model importer compatible with Archi (.archimate), AOEFF and
 
 ## Installation
 
+Insert the dependency on package.json as follows:
+
+```json
+"dependencies": {
+    "@arktect-co/archimate-diagram-engine": "git+https://github.com/Arktect-Co/archimate-diagram-engine.git",
+    ...
+}
+```
+
+<!--
 Using npm:
 
 ``
 npm i --save @arktect-co/archimate-model-importer
 ``
+-->
 
 In Node.js:
 

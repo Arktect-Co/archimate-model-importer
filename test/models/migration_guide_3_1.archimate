@@ -2,7 +2,11 @@
 <archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="(new model)" id="799298e6-cefa-47aa-986f-1ab9d5c10d21" version="4.6.0">
   <folder name="Strategy" id="77b7b2d7-16ca-4a71-8cbd-27d81517b724" type="strategy">
     <element xsi:type="archimate:Resource" name="Resource" id="40eb5bd6-4d7c-4c27-98a8-602f935ed405"/>
-    <element xsi:type="archimate:Capability" name="Capability" id="6be02ba1-0489-4ea4-b62b-a22d302cbefe"/>
+    <element xsi:type="archimate:Capability" name="Capability" id="6be02ba1-0489-4ea4-b62b-a22d302cbefe">
+      <property key="Description" value="Attribute value string"/>
+      <property key="Maturity" value="3"/>
+      <property key="Has Owner" value="true"/>
+    </element>
     <element xsi:type="archimate:CourseOfAction" name="Course of Action" id="5382f2ab-3c02-44b3-a26f-ceaff8b4df02"/>
     <element xsi:type="archimate:ValueStream" name="Value Stream" id="7d9dd269-b44a-4067-b10c-2c0563f3efea"/>
   </folder>
