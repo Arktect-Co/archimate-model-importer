@@ -9,6 +9,7 @@
     </element>
     <element identifier="id-6be02ba1-0489-4ea4-b62b-a22d302cbefe" xsi:type="Capability">
       <name xml:lang="pt">Capability</name>
+      <documentation xml:lang="pt">This is a documentation test</documentation>
       <properties>
         <property propertyDefinitionRef="Description">
           <value xml:lang="pt">Attribute value string</value>
