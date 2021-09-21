@@ -3,6 +3,7 @@
   <folder name="Strategy" id="77b7b2d7-16ca-4a71-8cbd-27d81517b724" type="strategy">
     <element xsi:type="archimate:Resource" name="Resource" id="40eb5bd6-4d7c-4c27-98a8-602f935ed405"/>
     <element xsi:type="archimate:Capability" name="Capability" id="6be02ba1-0489-4ea4-b62b-a22d302cbefe">
+      <documentation>This is a documentation test</documentation>
       <property key="Description" value="Attribute value string"/>
       <property key="Maturity" value="3"/>
       <property key="Has Owner" value="true"/>

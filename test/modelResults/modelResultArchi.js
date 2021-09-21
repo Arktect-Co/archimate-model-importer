@@ -98,6 +98,7 @@ exports.modelResultArchi = {
                 {
                     "identifier": "6be02ba1-0489-4ea4-b62b-a22d302cbefe",
                     "name": "Capability",
+                    "documentation": "This is a documentation test",
                     "properties": [
                         {
                             "key": "Description",
