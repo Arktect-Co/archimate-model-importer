@@ -1,7 +1,7 @@
 {
   "name": "@arktect-co/archimate-model-importer",
-  "author": "diorbert",
-  "version": "1.0.0",
+  "author": "diorbert.pereira",
+  "version": "0.1.0",
   "description": "In memory Archimate model importer compatible with Archi (.archimate), AOEFF and GRAFICO (distributed Archi file)",
   "repository": {
     "type": "git",
@@ -22,5 +22,11 @@
   },
   "scripts": {
     "test": "mocha"
-  }
+  },
+  "keywords": [
+    "archimate",
+    "importing",
+    "archi",
+    "aoeff"
+  ]
 }
