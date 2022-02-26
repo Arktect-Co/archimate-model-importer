@@ -4,15 +4,19 @@ In memory Archimate model importer compatible with Archi (.archimate), AOEFF and
 
 ## Installation
 
-<!--
 Using npm:
 
 ``
 npm i --save @arktect-co/archimate-model-importer
 ``
--->
 
-In Node.js:
+Using Yarn:
+
+``
+yarn add @arktect-co/archimate-model-importer
+``
+
+## Usage Example
 
 ```js
 const {InputProcessingDirector} = require("@arktect-co/archimate-model-importer");

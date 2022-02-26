@@ -90,7 +90,7 @@ describe('Model Translation', () => {
             // Removing [undefined] values in View Relationships for isBidirectional
             removeUndefinedValues(response.model.views);
 
-            // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isnt
+            // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
             // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
             let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi));
 
@@ -133,7 +133,7 @@ describe('Model Translation', () => {
             // Removing [undefined] values in View Relationships for isBidirectional
             removeUndefinedValues(response.model.views);
 
-            // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isnt
+            // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
             // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
             let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultVisualParadigm));
 

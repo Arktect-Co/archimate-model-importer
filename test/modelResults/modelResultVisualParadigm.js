@@ -2174,7 +2174,7 @@ exports.modelResultVisualParadigm = {
                         ],
                         "isBidirectional": true
                     },
-                    // VISUAL PARADIGM DOESNT EXPORT IF ID === NULL
+                    // VISUAL PARADIGM DOESN'T EXPORT IF ID === NULL
                     // {
                     //     "modelRelationshipId": null,
                     //     "sourceId": "403021ea-285a-4a4f-a59b-27f15dc60bf4",
