@@ -2,7 +2,7 @@
   "name": "@arktect-co/archimate-model-importer",
   "author": "diorbert.pereira",
   "repository": "github:Arktect-Co/archimate-model-importer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "In memory Archimate model importer compatible with Archi (.archimate), AOEFF and GRAFICO (distributed Archi file)",
   "dependencies": {
     "lodash": "^4.17.20",
@@ -14,7 +14,8 @@
     "cross-env": "^5.2.0",
     "deep-equal-in-any-order": "^1.0.25",
     "mocha": "^7.1.1",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "nyc": "^15.1.0"
   },
   "scripts": {
     "test": "mocha"
@@ -22,7 +23,7 @@
   "license": "MIT",
   "keywords": [
     "archimate",
-    "importing",
+    "import",
     "archi",
     "aoeff"
   ]

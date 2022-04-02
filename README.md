@@ -22,11 +22,11 @@ yarn add @arktect-co/archimate-model-importer
 const {InputProcessingDirector} = require("@arktect-co/archimate-model-importer");
 
 let inputProcessorDirector = new InputProcessorDirector({
-    label: "Test Model",
-    description: "Test model for Archi Files"
+    label: "Your Model Name",
+    description: "Model Description"
 });
 
-await inputProcessorDirector.translateModelFile('../models/input.archimate');
+await inputProcessorDirector.translateModelFile('./your_model_file.archimate');
 
 let response = inputProcessorDirector.getOutputModel();
 ```
@@ -36,8 +36,8 @@ The output is in the form of an instance of the Model class. For example, the fo
 
 ```
 {
-    "description": "Test Model",
-    "label": "Test model for Archi Files",
+    "description": "Your Model Name",
+    "label": "Model Description",
     "statistics": {
         "totalNodes": 97,
         "totalRelationships": 46,
