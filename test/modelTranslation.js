@@ -43,19 +43,16 @@ function removeUndefinedValues(views) {
 
 describe('Model Translation', () => {
     describe('Archi Import', () => {
-        it('Test for Archi Model v4.6', async () => {
+        it('Importing Archi Model v4.6', async () => {
             let inputProcessorDirector = new InputProcessorDirector({
                 label: "Archi Test",
-                description: "Test model for Archi Files",
-                referencedate: "03/23/2020"
+                description: "Test model for Archi Files"
             });
 
             await inputProcessorDirector.translateModelFile(path.join(path.dirname(__filename), '/models/migration_guide_3_1.archimate'));
 
             let response = inputProcessorDirector.getOutputModel();
 
-            delete response.uploaddate;
-            delete response.referencedate;
             delete response.modelsourceid;
 
             // Removing Folder ids
@@ -66,22 +63,38 @@ describe('Model Translation', () => {
 
             chai.expect(response).to.deep.equalInAnyOrder(modelResultArchi);
         });
-    });
 
-    describe('AOEFF Import', () => {
-        it('Test for AOEFF for Archimate 3.1 - From Archi', async () => {
+        it('Importing Archi Model v4.6 Skipping Views', async () => {
             let inputProcessorDirector = new InputProcessorDirector({
                 label: "Archi Test",
                 description: "Test model for Archi Files",
-                referencedate: "03/23/2020"
+                options: {skipViews: true}
+            });
+
+            await inputProcessorDirector.translateModelFile(path.join(path.dirname(__filename), '/models/migration_guide_3_1.archimate'));
+
+            let response = inputProcessorDirector.getOutputModel();
+
+            delete response.modelsourceid;
+
+            chai.expect(response.model.nodes).to.deep.equalInAnyOrder(modelResultArchi.model.nodes);
+            chai.expect(response.model.relationships).to.deep.equalInAnyOrder(modelResultArchi.model.relationships);
+            chai.expect(response.model.views).to.be.empty;
+            chai.expect(response.model.landscape).to.be.empty;
+        });
+    });
+
+    describe('AOEFF Import', () => {
+        it('Importing AOEFF for Archimate 3.1 - From Archi', async () => {
+            let inputProcessorDirector = new InputProcessorDirector({
+                label: "Archi Test",
+                description: "Test model for Archi Files"
             });
 
             await inputProcessorDirector.translateModelFile(path.join(path.dirname(__filename), '/models/aoeff_3_1.xml'));
 
             let response = inputProcessorDirector.getOutputModel();
 
-            delete response.uploaddate;
-            delete response.referencedate;
             delete response.modelsourceid;
 
             // Removing Folder ids
@@ -112,19 +125,16 @@ describe('Model Translation', () => {
             chai.expect(response).to.deep.equalInAnyOrder(deepCopyModelResult);
         });
 
-        it('Test for AOEFF for Archimate 3.1 - From Visual Paradigm', async () => {
+        it('Importing AOEFF for Archimate 3.1 - From Visual Paradigm', async () => {
             let inputProcessorDirector = new InputProcessorDirector({
                 label: "Archi Test",
-                description: "Test model for Archi Files",
-                referencedate: "03/23/2020"
+                description: "Test model for Archi Files"
             });
 
             await inputProcessorDirector.translateModelFile(path.join(path.dirname(__filename), '/models/aoeff_3_1_visual_paradigm.xml'));
 
             let response = inputProcessorDirector.getOutputModel();
 
-            delete response.uploaddate;
-            delete response.referencedate;
             delete response.modelsourceid;
 
             // Removing Folder ids
@@ -157,23 +167,16 @@ describe('Model Translation', () => {
     });
 
     describe('GRAFICO Import', () => {
-        it('Test for GRAFICO for Archi 4.6', async () => {
+        it('Importing GRAFICO for Archi 4.6', async () => {
             let inputProcessorDirector = new InputProcessorDirector({
                 label: "Archi Test",
-                description: "Test model for Archi Files",
-                referencedate: "03/23/2020"
+                description: "Test model for Archi Files"
             });
 
             await inputProcessorDirector.translateModelFolder(path.join(path.dirname(__filename), '/models/grafico'));
 
             let response = inputProcessorDirector.getOutputModel();
 
-            // Verifying if dates was correctly processed before removal
-            chai.expect(response.referencedate).to.not.null;
-            chai.expect(response.uploaddate).to.not.null;
-
-            delete response.uploaddate;
-            delete response.referencedate;
             delete response.modelsourceid;
 
             // Removing Folder ids
