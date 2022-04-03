@@ -23,7 +23,10 @@ const {InputProcessingDirector} = require("@arktect-co/archimate-model-importer"
 
 let inputProcessorDirector = new InputProcessorDirector({
     label: "Your Model Name",
-    description: "Model Description"
+    description: "Model Description",
+    options: {
+        skipViews: true // False by default
+    }
 });
 
 await inputProcessorDirector.translateModelFile('./your_model_file.archimate');
