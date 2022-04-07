@@ -5,7 +5,7 @@ const path = require('path');
 const {modelResultArchi} = require('./modelResults/modelResultArchi');
 const {modelResultVisualParadigm} = require('./modelResults/modelResultVisualParadigm');
 
-const InputProcessorDirector = require("../lib/processors/InputProcessingDirector/InputProcessorDirector");
+const InputProcessorDirector = require("../../lib/processors/InputProcessingDirector/InputProcessorDirector");
 
 chai.use(deepEqualInAnyOrder);
 
