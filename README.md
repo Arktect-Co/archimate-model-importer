@@ -150,7 +150,7 @@ The output is in the form of an instance of the Model class. For example, the fo
                         "targetId": "1620e51a-453c-411e-8c1c-8bf9d7545c93",
                         "viewRelationshipId": "b370c707-37eb-4f93-b6f4-c54867832ec7",
                         "type": "assignment",
-                        "bendpoints": []
+                        "bendpoints": [{"x": 2, "y": 2}]
                     },
                     ...
                 ]
