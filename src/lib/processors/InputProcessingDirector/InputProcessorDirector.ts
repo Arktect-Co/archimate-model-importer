@@ -138,9 +138,9 @@ export class InputProcessorDirector {
    * const response = inputProcessorDirector.getOutputModel();
    */
   async translateModelFile(filePath): Promise<void> {
-    let fileString = fs.readFileSync(filePath);
+    const fileString = fs.readFileSync(filePath);
 
-    let xmlFile = await parseXml(fileString);
+    const xmlFile = await parseXml(fileString);
 
     if (xmlFile !== null) {
       let interpreter = null;

@@ -1,11 +1,11 @@
-const chai = require('chai');
-const deepEqualInAnyOrder = require('deep-equal-in-any-order');
-const path = require('path');
+import chai from 'chai';
+import deepEqualInAnyOrder from 'deep-equal-in-any-order';
+import path from 'path';
 
-const { modelResultArchi } = require('./modelResults/modelResultArchi');
-const { modelResultVisualParadigm } = require('./modelResults/modelResultVisualParadigm');
+import { modelResultArchi } from './modelResults/modelResultArchi';
+import { modelResultVisualParadigm } from './modelResults/modelResultVisualParadigm';
 
-const InputProcessorDirector = require('../../src/lib/processors/InputProcessingDirector/InputProcessorDirector');
+import { InputProcessorDirector } from '@lib/processors/InputProcessingDirector/InputProcessorDirector';
 
 chai.use(deepEqualInAnyOrder);
 
