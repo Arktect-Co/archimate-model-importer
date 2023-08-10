@@ -1,3 +1,3 @@
-import InputProcessorDirector from '@lib/processors/InputProcessingDirector/InputProcessorDirector';
+import { InputProcessorDirector } from '@lib/processors/InputProcessingDirector/InputProcessorDirector';
 
 export { InputProcessorDirector };
