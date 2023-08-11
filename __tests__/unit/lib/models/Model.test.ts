@@ -250,5 +250,31 @@ describe('Model', () => {
       expect(parentFolder.length).to.equal(1);
       expect(parentFolder).to.deep.include(folder);
     });
+
+    it('should add folder in directory', () => {
+      const parentFolder = {
+        id: '1ckve6axsll753nmy',
+        text: 'Views',
+        isDirectory: true,
+        children: [],
+      };
+      const folder = {
+        id: '1ckve6agsll74r3kj',
+        text: 'Views',
+        isDirectory: true,
+        children: [
+          {
+            id: '1ckve6agsll74r3jk',
+            text: 'Views',
+            isDirectory: true,
+          },
+        ],
+      };
+
+      model.addFolder(parentFolder, folder);
+
+      expect(parentFolder.children.length).to.equal(1);
+      expect(parentFolder.children).to.deep.include(folder);
+    });
   });
 });
