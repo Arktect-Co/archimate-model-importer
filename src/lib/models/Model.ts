@@ -191,7 +191,7 @@ export class Model {
     };
   }
 
-  static createNode(identifier: string, name: string, type: string): Node {
+  static createNode({ identifier, name, type }: Node): Node {
     return {
       identifier,
       name,
