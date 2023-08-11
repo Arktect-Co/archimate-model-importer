@@ -1,6 +1,7 @@
 import { Model } from '@lib/models/Model';
 import { expect, use } from 'chai';
 import deepEqualInAnyOrder from 'deep-equal-in-any-order';
+import { RelationshipType } from '@lib/common/enums/relationshipType';
 
 use(deepEqualInAnyOrder);
 
@@ -81,6 +82,23 @@ describe('Model', () => {
         name: ' ',
         modelNodeId: null,
       });
+    });
+  });
+
+  describe('createViewRelationship', () => {
+    const viewRelationshipSetting = {
+      modelRelationshipId: 'f55b4505',
+      sourceId: '81eb2518',
+      targetId: '4440af36',
+      viewRelationshipId: '9660a40c',
+      type: RelationshipType.Association,
+      bendpoints: [{ x: 1, y: 4 }],
+      isBidirectional: false,
+    };
+    it('should return a view Relationship', () => {
+      const viewRelationship = Model.createViewRelationship(viewRelationshipSetting);
+
+      expect(viewRelationship).to.deep.equalInAnyOrder(viewRelationshipSetting);
     });
   });
 });

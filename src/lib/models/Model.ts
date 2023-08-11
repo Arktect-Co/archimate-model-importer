@@ -14,7 +14,7 @@ import {
   TotalByType,
   Property,
 } from '@lib/interfaces/model';
-import { Optional } from '@lib/utils/typeUtils';
+import { Optional } from '@lib/common/utils/typeUtils';
 
 type ElementSetting = Optional<ViewNode, 'name'>;
 type DocumentationElementSetting = Optional<Omit<ViewNode, 'modelNodeId'>, 'name'>;
@@ -164,7 +164,7 @@ export class Model {
     };
   }
 
-  static createViewRelationship(
+  static createViewRelationship({
     modelRelationshipId,
     sourceId,
     targetId,
@@ -172,7 +172,7 @@ export class Model {
     type,
     bendpoints,
     isBidirectional,
-  ): ViewRelationship {
+  }: ViewRelationship): ViewRelationship {
     return {
       modelRelationshipId,
       sourceId,
