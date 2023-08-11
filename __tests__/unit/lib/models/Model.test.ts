@@ -336,4 +336,41 @@ describe('Model', () => {
       expect(model.model.views[0]).to.deep.equalInAnyOrder(view);
     });
   });
+
+  describe('setManyNodes', () => {
+    const nodes = [
+      {
+        identifier: 'f55b4503',
+        name: 'Node 1',
+        type: 'Resource',
+      },
+      {
+        identifier: 'f55b4503',
+        type: 'Capability',
+        name: 'Node 2',
+        properties: [{ key: 'key', value: 'value' }],
+        documentation: 'documentation 1',
+      },
+    ];
+    it('should set many nodes', () => {
+      model.setManyNodes(nodes);
+
+      expect(model.model.nodes).to.deep.equalInAnyOrder({
+        resource: [
+          {
+            identifier: 'f55b4503',
+            name: 'Node 1',
+          },
+        ],
+        capability: [
+          {
+            identifier: 'f55b4503',
+            name: 'Node 2',
+            properties: [{ key: 'key', value: 'value' }],
+            documentation: 'documentation 1',
+          },
+        ],
+      });
+    });
+  });
 });
