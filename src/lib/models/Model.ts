@@ -12,20 +12,19 @@ import {
   Bounds,
   Statistics,
   TotalByType,
+  Property,
 } from '@lib/interfaces/model';
+import { Optional } from '@lib/utils/typeUtils';
+
+type ElementInput = Optional<ViewNode, 'name'>;
 
 export class Model {
   public modelsourceid: string;
-  public label: string;
-  public description: string;
   public totalByType: TotalByType;
   public statistics: Statistics;
   public model: ModelStructure;
 
-  constructor(label, description) {
-    this.label = label;
-    this.description = description;
-
+  constructor(public label: string, public description: string) {
     this.model = {
       nodes: {},
       relationships: {},
@@ -105,17 +104,17 @@ export class Model {
     };
   }
 
-  static createViewElement(
+  static createViewElement({
     modelNodeId,
     viewNodeId,
     name,
     type,
-    x,
     y,
+    x,
+    parent,
     width,
     height,
-    parent,
-  ): ViewNode {
+  }: ElementInput): ViewNode {
     let elementName = 'Unknown Name';
 
     if (name !== undefined && name !== null && name !== '') {
@@ -227,7 +226,13 @@ export class Model {
     this.modelsourceid = id;
   }
 
-  static createNonCategorizedNode(identifier, name, type, properties, documentation) {
+  static createNonCategorizedNode(
+    identifier: string,
+    name?: string,
+    type?: string,
+    properties?: Array<Property>,
+    documentation?: string,
+  ): Node {
     let nodeName = name !== null ? name : 'Unknown Name';
     let nodeObj: Node = { identifier, name: nodeName, type };
 
