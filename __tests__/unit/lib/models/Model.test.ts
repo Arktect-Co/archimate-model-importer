@@ -6,6 +6,8 @@ import { RelationshipType } from '@lib/common/enums/relationshipType';
 use(deepEqualInAnyOrder);
 
 describe('Model', () => {
+  const model = new Model('model 1', '');
+
   describe('createViewElement', () => {
     const elementSetting = {
       type: 'group',
@@ -223,6 +225,30 @@ describe('Model', () => {
         type: undefined,
         documentation,
       });
+    });
+  });
+
+  describe('addFolder', () => {
+    it('should add folder in root', () => {
+      const parentFolder = [];
+      const folder = {
+        id: '1ckve6agsll74r3kj',
+        text: 'Views',
+        isDirectory: true,
+        children: [
+          {
+            id: '1ckve6agsll74r3jk',
+            text: 'Views',
+            isDirectory: true,
+          },
+        ],
+      };
+
+      model.addFolder(parentFolder, folder);
+
+      console.log(parentFolder);
+      expect(parentFolder.length).to.equal(1);
+      expect(parentFolder).to.deep.include(folder);
     });
   });
 });
