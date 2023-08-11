@@ -70,5 +70,17 @@ describe('Model', () => {
         modelNodeId: null,
       });
     });
+
+    it('should return a view documentation element with the default name if the name is not defined', () => {
+      const viewDocumentationElement = Model.createViewDocumentationElement(
+        documentationElementSetting,
+      );
+
+      expect(viewDocumentationElement).to.deep.equalInAnyOrder({
+        ...viewDocumentationElement,
+        name: ' ',
+        modelNodeId: null,
+      });
+    });
   });
 });
