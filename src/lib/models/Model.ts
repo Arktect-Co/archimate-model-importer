@@ -199,13 +199,13 @@ export class Model {
     };
   }
 
-  static createRelationship(
-    type?: string,
-    sourceId?: string,
-    targetId?: string,
-    isBidirectional?: boolean,
-    identifier?: string,
-  ): Relationship {
+  static createRelationship({
+    type,
+    sourceId,
+    targetId,
+    isBidirectional,
+    identifier,
+  }: Relationship): Relationship {
     let relationship: Relationship = {
       sourceId,
       targetId,

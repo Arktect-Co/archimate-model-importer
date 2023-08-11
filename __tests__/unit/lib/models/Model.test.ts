@@ -130,4 +130,18 @@ describe('Model', () => {
       expect(node).to.deep.equalInAnyOrder({ ...nodeSetting, type: undefined });
     });
   });
+
+  describe('createRelationship', () => {
+    const relationshipSetting = {
+      type: RelationshipType.Association,
+      sourceId: '81eb2518',
+      targetId: '4440af36',
+    };
+
+    it('should return a relationship', () => {
+      const node = Model.createRelationship(relationshipSetting);
+
+      expect(node).to.deep.equalInAnyOrder(relationshipSetting);
+    });
+  });
 });
