@@ -110,5 +110,11 @@ describe('Model', () => {
 
       expect(bendpoint).to.deep.equalInAnyOrder({ x, y });
     });
+
+    it('should return a default value of bendpoint if x and y are not defined', () => {
+      const bendpoint = Model.createBendpoint(undefined, undefined);
+
+      expect(bendpoint).to.deep.equalInAnyOrder({ x: 0, y: 0 });
+    });
   });
 });
