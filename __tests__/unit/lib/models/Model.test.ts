@@ -183,5 +183,18 @@ describe('Model', () => {
 
       expect(nonCategorizedNode).to.deep.equalInAnyOrder(nonCategorizedNode);
     });
+
+    it('should return a non categorized node with default name if name is not defined', () => {
+      const nonCategorizedNode = Model.createNonCategorizedNode({
+        ...nonCategorizedNodeSetting,
+        name: null,
+      });
+
+      expect(nonCategorizedNode).to.deep.equalInAnyOrder({
+        identifier: nonCategorizedNode.identifier,
+        name: 'Unknown Name',
+        type: undefined,
+      });
+    });
   });
 });
