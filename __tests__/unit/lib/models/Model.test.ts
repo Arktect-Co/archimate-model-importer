@@ -171,4 +171,17 @@ describe('Model', () => {
       expect(node).to.deep.equalInAnyOrder(relationshipSetting);
     });
   });
+
+  describe('createNonCategorizedNode', () => {
+    const nonCategorizedNodeSetting = {
+      identifier: '40eb5bd6-4d7c-4c27-98a8-602f935ed405',
+      name: 'Resource',
+    };
+
+    it('should return a non categorized node', () => {
+      const nonCategorizedNode = Model.createNonCategorizedNode(nonCategorizedNodeSetting);
+
+      expect(nonCategorizedNode).to.deep.equalInAnyOrder(nonCategorizedNode);
+    });
+  });
 });
