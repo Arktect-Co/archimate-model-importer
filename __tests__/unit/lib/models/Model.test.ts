@@ -117,4 +117,17 @@ describe('Model', () => {
       expect(bendpoint).to.deep.equalInAnyOrder({ x: 0, y: 0 });
     });
   });
+
+  describe('createNode', () => {
+    const nodeSetting = {
+      identifier: 'f55b4503',
+      name: 'Node 1',
+    };
+
+    it('should return a node', () => {
+      const node = Model.createNode(nodeSetting);
+
+      expect(node).to.deep.equalInAnyOrder({ ...nodeSetting, type: undefined });
+    });
+  });
 });
