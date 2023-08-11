@@ -101,4 +101,14 @@ describe('Model', () => {
       expect(viewRelationship).to.deep.equalInAnyOrder(viewRelationshipSetting);
     });
   });
+
+  describe('createBendpoint', () => {
+    it('should return a bendpoint', () => {
+      const x = 10;
+      const y = 20;
+      const bendpoint = Model.createBendpoint(x, y);
+
+      expect(bendpoint).to.deep.equalInAnyOrder({ x, y });
+    });
+  });
 });
