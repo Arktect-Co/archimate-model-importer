@@ -1,7 +1,12 @@
+export interface Property {
+  key: string;
+  value: string;
+}
+
 export interface Node {
   identifier: string;
   name: string;
-  properties?: any;
-  documentation?: any;
+  properties?: Array<Property>;
+  documentation?: string | null;
   type?: string;
 }
