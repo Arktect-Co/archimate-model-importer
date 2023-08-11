@@ -157,5 +157,12 @@ describe('Model', () => {
 
       expect(node).to.deep.equalInAnyOrder({ ...relationshipSetting, isBidirectional });
     });
+
+    it('should return a relationship without the "isBidirectional" property if "isBidirectional" equals false', () => {
+      const isBidirectional = false;
+      const node = Model.createRelationship({ ...relationshipSetting, isBidirectional });
+
+      expect(node).to.deep.equalInAnyOrder(relationshipSetting);
+    });
   });
 });
