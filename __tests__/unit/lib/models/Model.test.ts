@@ -355,6 +355,7 @@ describe('Model', () => {
     it('should set many nodes', () => {
       model.setManyNodes(nodes);
 
+      expect(model.statistics.totalNodes).to.equal(2);
       expect(model.model.nodes).to.deep.equalInAnyOrder({
         resource: [
           {
