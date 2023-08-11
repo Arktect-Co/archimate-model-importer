@@ -277,4 +277,45 @@ describe('Model', () => {
       expect(parentFolder.children).to.deep.include(folder);
     });
   });
+
+  describe('addView', () => {
+    const view = {
+      id: '57147c58-d2fc-463e-977b-b0812b23500a',
+      name: 'Elements',
+      bounds: {
+        vertical: { min: 10, max: 10 },
+        horizontal: { min: 20, max: 20 },
+      },
+      viewNodes: [
+        {
+          modelNodeId: '8ab8d668-3852-4bf8-a43e-2fcc89c01c79',
+          viewNodeId: '96f41f9a-44fd-420b-8e81-e669a490fd2d',
+          name: 'Location',
+          type: 'location',
+          x: 38,
+          y: 25,
+          width: 120,
+          height: 55,
+          parent: null,
+        },
+      ],
+      viewRelationships: [
+        {
+          modelRelationshipId: 'c8eacb29-df66-4c8a-98bf-159b8e894b94',
+          sourceId: '0d48039d-ed53-4e60-8045-1af4f1e5db6f',
+          targetId: '1620e51a-453c-411e-8c1c-8bf9d7545c93',
+          viewRelationshipId: 'b370c707-37eb-4f93-b6f4-c54867832ec7',
+          type: 'assignment',
+          bendpoints: [{ x: 2, y: 2 }],
+        },
+      ],
+    };
+
+    it('should add a View in model views', () => {
+      model.addView(view);
+
+      expect(model.statistics.totalViews).to.equal(1);
+      expect(model.model.views[0]).to.deep.equalInAnyOrder(view);
+    });
+  });
 });

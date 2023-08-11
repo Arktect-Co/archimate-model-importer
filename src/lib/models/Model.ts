@@ -340,7 +340,7 @@ export class Model {
     };
   }
 
-  addFolder(parentFolder: Landscape | Array<Landscape>, folder: Landscape) {
+  addFolder(parentFolder: Landscape | Array<Landscape>, folder: Landscape): void {
     if (!('children' in parentFolder) && Array.isArray(parentFolder)) {
       // Is the first level (root) of the landscape
       parentFolder.push(folder); // Model landscape it's a simple array
@@ -352,13 +352,13 @@ export class Model {
     }
   }
 
-  addView(viewid, viewname, bounds, viewNodes, viewRelationships): void {
+  addView({ id, name, bounds, viewNodes, viewRelationships }: View): void {
     this.model.views.push({
-      id: viewid,
-      name: viewname,
-      bounds: bounds,
-      viewNodes: viewNodes,
-      viewRelationships: viewRelationships,
+      id,
+      name,
+      bounds,
+      viewNodes,
+      viewRelationships,
     });
 
     this.statistics.totalViews++;
