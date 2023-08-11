@@ -196,5 +196,19 @@ describe('Model', () => {
         type: undefined,
       });
     });
+
+    it('should return a non categorized node with properties if properties is defined', () => {
+      const properties = [{ key: 'key', value: 'value' }];
+      const nonCategorizedNode = Model.createNonCategorizedNode({
+        ...nonCategorizedNodeSetting,
+        properties,
+      });
+
+      expect(nonCategorizedNode).to.deep.equalInAnyOrder({
+        ...nonCategorizedNodeSetting,
+        type: undefined,
+        properties,
+      });
+    });
   });
 });

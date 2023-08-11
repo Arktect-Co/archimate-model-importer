@@ -12,7 +12,6 @@ import {
   Bounds,
   Statistics,
   TotalByType,
-  Property,
 } from '@lib/interfaces/model';
 import { Optional } from '@lib/common/utils/typeUtils';
 
@@ -223,17 +222,17 @@ export class Model {
     return relationship;
   }
 
-  setModelId(id): void {
+  setModelId(id: string): void {
     this.modelsourceid = id;
   }
 
-  static createNonCategorizedNode(
-    identifier: string,
-    name?: string,
-    type?: string,
-    properties?: Array<Property>,
-    documentation?: string,
-  ): Node {
+  static createNonCategorizedNode({
+    identifier,
+    name,
+    type,
+    properties,
+    documentation,
+  }: Node): Node {
     let nodeName = name !== null ? name : 'Unknown Name';
     let nodeObj: Node = { identifier, name: nodeName, type };
 
