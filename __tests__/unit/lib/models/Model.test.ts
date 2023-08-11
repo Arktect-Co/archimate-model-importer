@@ -197,7 +197,7 @@ describe('Model', () => {
       });
     });
 
-    it('should return a non categorized node with properties if properties is defined', () => {
+    it('should return a non categorized node with properties if properties are defined', () => {
       const properties = [{ key: 'key', value: 'value' }];
       const nonCategorizedNode = Model.createNonCategorizedNode({
         ...nonCategorizedNodeSetting,
@@ -208,6 +208,20 @@ describe('Model', () => {
         ...nonCategorizedNodeSetting,
         type: undefined,
         properties,
+      });
+    });
+
+    it('should return a non categorized node with documentation if documentation is defined', () => {
+      const documentation = 'documentation';
+      const nonCategorizedNode = Model.createNonCategorizedNode({
+        ...nonCategorizedNodeSetting,
+        documentation,
+      });
+
+      expect(nonCategorizedNode).to.deep.equalInAnyOrder({
+        ...nonCategorizedNodeSetting,
+        type: undefined,
+        documentation,
       });
     });
   });
