@@ -24,5 +24,16 @@ describe('Model', () => {
         parent: undefined,
       });
     });
+
+    it('should return a view element', () => {
+      const name = 'View Element 1';
+      const viewElement = Model.createViewElement({ ...viewElementInput, name });
+
+      expect(viewElement).to.deep.equalInAnyOrder({
+        name,
+        ...viewElementInput,
+        parent: undefined,
+      });
+    });
   });
 });
