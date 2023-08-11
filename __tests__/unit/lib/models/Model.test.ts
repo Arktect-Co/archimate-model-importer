@@ -144,6 +144,12 @@ describe('Model', () => {
       expect(node).to.deep.equalInAnyOrder(relationshipSetting);
     });
 
+    it('should return a relationship with the empty type if the type is not defined', () => {
+      const node = Model.createRelationship({ ...relationshipSetting, type: undefined });
+
+      expect(node).to.deep.equalInAnyOrder({ ...relationshipSetting, type: '' });
+    });
+
     it('should return a relationship with the identifier if the identifier is defined', () => {
       const identifier = '4440af66';
       const node = Model.createRelationship({ ...relationshipSetting, identifier });
