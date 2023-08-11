@@ -16,7 +16,8 @@ import {
 } from '@lib/interfaces/model';
 import { Optional } from '@lib/utils/typeUtils';
 
-type ElementInput = Optional<ViewNode, 'name'>;
+type ElementSetting = Optional<ViewNode, 'name'>;
+type DocumentationElementSetting = Optional<Omit<ViewNode, 'modelNodeId'>, 'name'>;
 
 export class Model {
   public modelsourceid: string;
@@ -114,7 +115,7 @@ export class Model {
     parent,
     width,
     height,
-  }: ElementInput): ViewNode {
+  }: ElementSetting): ViewNode {
     let elementName = 'Unknown Name';
 
     if (name !== undefined && name !== null && name !== '') {
@@ -134,7 +135,7 @@ export class Model {
     };
   }
 
-  static createViewDocumentationElement(
+  static createViewDocumentationElement({
     viewNodeId,
     name,
     type,
@@ -143,7 +144,7 @@ export class Model {
     width,
     height,
     parent,
-  ): ViewNode {
+  }: DocumentationElementSetting): ViewNode {
     let elementName = ' ';
 
     if (name !== undefined && name !== null) {
