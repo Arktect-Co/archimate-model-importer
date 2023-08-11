@@ -2,6 +2,7 @@ import { Model } from '@lib/models/Model';
 import { expect, use } from 'chai';
 import deepEqualInAnyOrder from 'deep-equal-in-any-order';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
+import { Relationship } from '@lib/interfaces/model';
 
 use(deepEqualInAnyOrder);
 
@@ -355,6 +356,10 @@ describe('Model', () => {
     it('should set many nodes', () => {
       model.setManyNodes(nodes);
 
+      expect(model.totalByType['nodeTypes']).to.deep.equalInAnyOrder({
+        resource: 1,
+        capability: 1,
+      });
       expect(model.statistics.totalNodes).to.equal(2);
       expect(model.model.nodes).to.deep.equalInAnyOrder({
         resource: [
@@ -369,6 +374,47 @@ describe('Model', () => {
             name: 'Node 2',
             properties: [{ key: 'key', value: 'value' }],
             documentation: 'documentation 1',
+          },
+        ],
+      });
+    });
+  });
+
+  describe('setManyRelationships', () => {
+    const relationships: Array<Relationship> = [
+      {
+        identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
+        sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
+        targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
+        type: RelationshipType.Aggregation,
+      },
+      {
+        identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
+        sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
+        targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
+        type: RelationshipType.Aggregation,
+        isBidirectional: true,
+      },
+    ];
+    it('should set many relationships', () => {
+      model.setManyRelationships(relationships);
+
+      expect(model.statistics.totalRelationships).to.equal(2);
+      expect(model.totalByType['relationshipTypes']).to.deep.equalInAnyOrder({
+        [RelationshipType.Aggregation]: 2,
+      });
+      expect(model.model.relationships).to.deep.equalInAnyOrder({
+        [RelationshipType.Aggregation]: [
+          {
+            identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
+            sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
+            targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
+          },
+          {
+            identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
+            sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
+            targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
+            isBidirectional: true,
           },
         ],
       });
