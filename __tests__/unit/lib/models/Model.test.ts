@@ -143,5 +143,12 @@ describe('Model', () => {
 
       expect(node).to.deep.equalInAnyOrder(relationshipSetting);
     });
+
+    it('should return a relationship to the identifier if the identifier is defined', () => {
+      const identifier = '4440af66';
+      const node = Model.createRelationship({ ...relationshipSetting, identifier });
+
+      expect(node).to.deep.equalInAnyOrder({ ...relationshipSetting, identifier });
+    });
   });
 });
