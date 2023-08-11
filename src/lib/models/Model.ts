@@ -331,7 +331,7 @@ export class Model {
     this.model.relationships = categorizedRelationships;
   }
 
-  createFolder(folderid, foldername): Landscape {
+  createFolder(folderid: string, foldername: string): Landscape {
     return {
       id: folderid,
       text: foldername,
@@ -340,14 +340,14 @@ export class Model {
     };
   }
 
-  addFolder(parentfolder, folder) {
-    if (parentfolder.children === undefined) {
+  addFolder(parentFolder: Landscape | Array<Landscape>, folder: Landscape) {
+    if (!('children' in parentFolder) && Array.isArray(parentFolder)) {
       // Is the first level (root) of the landscape
-      parentfolder.push(folder); // Model landscape it's a simple array
+      parentFolder.push(folder); // Model landscape it's a simple array
     } else {
       // It's a folder
-      if (parentfolder.isDirectory === true) {
-        parentfolder.children.push(folder);
+      if (parentFolder.isDirectory === true) {
+        parentFolder.children.push(folder);
       }
     }
   }
