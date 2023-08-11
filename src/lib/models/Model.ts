@@ -17,6 +17,7 @@ import { Optional } from '@lib/common/utils/typeUtils';
 
 type ElementSetting = Optional<ViewNode, 'name'>;
 type DocumentationElementSetting = Optional<Omit<ViewNode, 'modelNodeId'>, 'name'>;
+type FolderView = Omit<Landscape, 'children' | 'isDirectory'>;
 
 export class Model {
   public modelsourceid: string;
@@ -364,11 +365,11 @@ export class Model {
     this.statistics.totalViews++;
   }
 
-  addFolderView(folder, viewid, viewname) {
+  addFolderView(folder: Landscape, { id, text }: FolderView): void {
     if (folder !== null && folder !== undefined) {
       folder.children.push({
-        id: viewid,
-        text: viewname,
+        id,
+        text,
         isDirectory: false,
       });
     }

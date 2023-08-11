@@ -278,6 +278,24 @@ describe('Model', () => {
     });
   });
 
+  describe('addFolderView', () => {
+    it('should add folder view', () => {
+      const folder = {
+        id: '1ckve6axsll753nmy',
+        text: 'Views',
+        isDirectory: true,
+        children: [],
+      };
+      const newFolderView = {
+        id: '1ckve6axsll753der',
+        text: 'Views',
+      };
+      model.addFolderView(folder, newFolderView);
+
+      expect(folder.children[0]).to.deep.equalInAnyOrder({ ...newFolderView, isDirectory: false });
+    });
+  });
+
   describe('addView', () => {
     const view = {
       id: '57147c58-d2fc-463e-977b-b0812b23500a',
