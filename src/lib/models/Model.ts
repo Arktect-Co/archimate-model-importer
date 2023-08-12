@@ -25,7 +25,7 @@ export class Model {
   public statistics: Statistics;
   public model: ModelStructure;
 
-  constructor(public label: string, public description: string) {
+  constructor(public label: string = 'Archimate Model', public description: string = '') {
     this.model = {
       nodes: {},
       relationships: {},
@@ -43,6 +43,15 @@ export class Model {
     };
   }
 
+  /**
+   * Returns all nodes from model
+   * @return Node list
+   * @example
+   * import { Model } from '@lib/models/Model';
+
+   * const model = new Model('model 1', '');
+   * const nodes = model.getNodes();
+   */
   getNodes(): Array<Node> {
     const nodes: Array<Node> = [];
 
@@ -61,6 +70,15 @@ export class Model {
     return nodes;
   }
 
+  /**
+   * Returns all relationships from model
+   * @return Relationships list
+   * @example
+   * import { Model } from '@lib/models/Model';
+
+   * const model = new Model('model 1', '');
+   * const relationships = model.getRelationships();
+   */
   getRelationships(): Array<Relationship> {
     const relationships: Array<Relationship> = [];
 
@@ -79,14 +97,44 @@ export class Model {
     return relationships;
   }
 
+  /**
+   * Returns views from model
+   * @return Views list
+   * @example
+   * import { Model } from '@lib/models/Model';
+
+   * const model = new Model('model 1', '');
+   * const views = model.getViews();
+   */
   getViews(): Array<View> {
     return this.model.views;
   }
 
+  /**
+   * Returns landscapes structure from model
+   * @return Landscape list
+   * @example
+   * import { Model } from '@lib/models/Model';
+
+   * const model = new Model('model 1', '');
+   * const landscapes = model.getLandscapeStructure();
+   */
   getLandscapeStructure(): Array<Landscape> {
     return this.model.landscape;
   }
 
+  /**
+   * Creates a view bounds
+   * @param minVert Minimum bound of the vertical plane
+   * @param maxVert Max bound of the vertical plane
+   * @param minHor Minimum bound of the horizontal plane
+   * @param maxHor Max bound of the horizontal plane
+   * @return Bounds
+   * @example
+   * import { Model } from '@lib/models/Model';
+   *
+   * const bounds = Model.createViewBounds(1000, 2000, 2000, 3000);
+   */
   static createViewBounds(
     minVert: number,
     maxVert: number,
@@ -105,6 +153,32 @@ export class Model {
     };
   }
 
+  /**
+   * Creates a view Element
+   * @param elementSetting Element Settings
+   * @param elementSetting.modelNodeId Model node identification
+   * @param elementSetting.viewNodeId View node identification
+   * @param elementSetting.name Element name
+   * @param elementSetting.type Element type
+   * @param elementSetting.y Position in y of the element
+   * @param elementSetting.x Position in X of the element
+   * @param elementSetting.parent Parent of element
+   * @param elementSetting.width Element width
+   * @param elementSetting.height Element height
+   * @return View Element
+   * @example
+   * import { Model } from '@lib/models/Model';
+   *  const elementSetting = {
+   *       type: 'group',
+   *       modelNodeId: '93d885b0',
+   *       height: 100,
+   *       width: 80,
+   *       y: 30,
+   *       x: 10,
+   *       viewNodeId: 'ebc607cd',
+   *     };
+   * const view = Model.createViewElement(elementSetting);
+   */
   static createViewElement({
     modelNodeId,
     viewNodeId,
@@ -135,6 +209,30 @@ export class Model {
     };
   }
 
+  /**
+   * Creates a view documentation element
+   * @param elementSetting documentation element settings
+   * @param elementSetting.viewNodeId View node identification
+   * @param elementSetting.name Element name
+   * @param elementSetting.type Element type
+   * @param elementSetting.y Position in y of the element
+   * @param elementSetting.x Position in X of the element
+   * @param elementSetting.parent Parent of element
+   * @param elementSetting.width Element width
+   * @param elementSetting.height Element height
+   * @return View Documentation Element
+   * @example
+   * import { Model } from '@lib/models/Model';
+   *  const documentationElementSetting = {
+   *       viewNodeId: 'ebc607cd',
+   *       type: 'note',
+   *       x: 10,
+   *       y: 10,
+   *       width: 100,
+   *       height: 80,
+   *     };
+   * const view = Model.createViewDocumentationElement(documentationElementSetting);
+   */
   static createViewDocumentationElement({
     viewNodeId,
     name,
@@ -164,6 +262,32 @@ export class Model {
     };
   }
 
+  /**
+   * Creates a view Relationship
+   * @param viewRelationshipSettings  Relationship view settings
+   * @param viewRelationshipSettings.modelRelationshipId Model relationship identification
+   * @param viewRelationshipSettings.sourceId Relationship source identification
+   * @param viewRelationshipSettings.targetId Relationship target identification
+   * @param viewRelationshipSettings.viewRelationshipId Relationship view identification
+   * @param viewRelationshipSettings.type Relationship type
+   * @param viewRelationshipSettings.bendpoints Relationship bendpoints
+   * @param viewRelationshipSettings.isBidirectional Indicates whether the relationship is bidirectional or not
+   * @return View Relationship
+   * @example
+   *  import { Model } from '@lib/models/Model';
+   *
+   *  const viewRelationship = {
+   *       modelRelationshipId: 'f55b4505',
+   *       sourceId: '81eb2518',
+   *       targetId: '4440af36',
+   *       viewRelationshipId: '9660a40c',
+   *       type: 'association',
+   *       bendpoints: [{ x: 1, y: 4 }],
+   *       isBidirectional: false,
+   *     };
+   *
+   *  const view = Model.createViewRelationship(viewRelationship);
+   */
   static createViewRelationship({
     modelRelationshipId,
     sourceId,
@@ -184,6 +308,16 @@ export class Model {
     };
   }
 
+  /**
+   * Creates a Bend Point
+   * @param x x-axis bending point
+   * @param y y-axis bending point
+   * @return Bend Point
+   * @example
+   *  import { Model } from '@lib/models/Model';
+   *
+   *  const benPoint = Model.createBendpoint(10, 20);
+   */
   static createBendpoint(x?: number, y?: number): BendPoint {
     return {
       x: x || 0,
@@ -191,6 +325,22 @@ export class Model {
     };
   }
 
+  /**
+   * Creates a Node
+   * @param nodeSettings Node settings
+   * @param nodeSettings.identifier Node identifier
+   * @param nodeSettings.name Node name
+   * @param nodeSettings.type Node type
+   * @return Node
+   * @example
+   *  import { Model } from '@lib/models/Model';
+   *
+   *  const nodeSetting = {
+   *       identifier: 'f55b4503',
+   *       name: 'Node 1',
+   *     };
+   *  const node = Model.createNode(nodeSetting);
+   */
   static createNode({ identifier, name, type }: Node): Node {
     return {
       identifier,
@@ -199,6 +349,25 @@ export class Model {
     };
   }
 
+  /**
+   * Creates a Relationship
+   * @param relationshipSettings Relationship settings
+   * @param relationshipSettings.type Relationship type
+   * @param relationshipSettings.sourceId Relationship source identification
+   * @param relationshipSettings.targetId Relationship target identification
+   * @param relationshipSettings.isBidirectional Indicates whether the relationship is bidirectional or not
+   * @param relationshipSettings.identifier Relationship identifier
+   * @return Relationship
+   * @example
+   *  import { Model } from '@lib/models/Model';
+   *
+   * const relationshipSetting = {
+   *       type: RelationshipType.Association,
+   *       sourceId: '81eb2518',
+   *       targetId: '4440af36',
+   *     };
+   *  const relationship = Model.createRelationship(relationshipSetting);;
+   */
   static createRelationship({
     type,
     sourceId,
@@ -223,6 +392,15 @@ export class Model {
     return relationship;
   }
 
+  /**
+   * Set a model identification
+   * @param id identification
+   * @example
+   * import { Model } from '@lib/models/Model';
+   *
+   * const model = new Model('model 1', '');
+   * model.setModelId("57147c58-d2fc-463e-977b-b0812b23500a");
+   */
   setModelId(id: string): void {
     this.modelsourceid = id;
   }
