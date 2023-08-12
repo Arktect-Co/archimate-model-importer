@@ -21,7 +21,7 @@ interface InputProcessorDirectorSettings {
 type Log = (message?: string) => void;
 
 export class InputProcessorDirector {
-  private readonly model: any; //TODO: Add Model Type
+  private readonly model: Model;
   private readonly options: Option;
   private readonly log: Log;
 
@@ -225,7 +225,7 @@ export class InputProcessorDirector {
   /**
    * Returns an instance of the Model class.
    */
-  getOutputModel() {
+  getOutputModel(): Model {
     return this.model;
   }
 }

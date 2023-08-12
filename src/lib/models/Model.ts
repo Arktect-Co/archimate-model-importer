@@ -434,7 +434,7 @@ export class Model {
     properties,
     documentation,
   }: Node): Node {
-    let nodeName = name !== null ? name : 'Unknown Name';
+    const nodeName = name !== null ? name : 'Unknown Name';
     let nodeObj: Node = { identifier, name: nodeName, type };
 
     if (properties) {
@@ -477,10 +477,10 @@ export class Model {
 
     nodeList.forEach(node => {
       if (node.type && node.identifier) {
-        let type = node.type.toLowerCase();
-        let name = node.name || 'Unknown Name';
-        let properties = node.properties;
-        let documentation = node.documentation;
+        const type = node.type.toLowerCase();
+        const name = node.name || 'Unknown Name';
+        const properties = node.properties;
+        const documentation = node.documentation;
 
         if (categorizedNodes[type] === undefined) {
           // it's the first element of type
@@ -503,7 +503,7 @@ export class Model {
       }
     });
 
-    for (let nodeType in categorizedNodes) {
+    for (const nodeType in categorizedNodes) {
       if (categorizedNodes.hasOwnProperty(nodeType)) {
         this.totalByType['nodeTypes'][nodeType] = categorizedNodes[nodeType].length;
       }
@@ -543,7 +543,7 @@ export class Model {
 
     relationshipList.forEach(rel => {
       if (rel.type && rel.sourceId && rel.targetId) {
-        let type = rel.type.toLowerCase();
+        const type = rel.type.toLowerCase();
 
         if (categorizedRelationships[type] === undefined) {
           // it's the first element of type
@@ -566,7 +566,7 @@ export class Model {
       }
     });
 
-    for (let relType in categorizedRelationships) {
+    for (const relType in categorizedRelationships) {
       if (categorizedRelationships.hasOwnProperty(relType)) {
         const sumarizedType = relType.replace('relationship', '');
 
