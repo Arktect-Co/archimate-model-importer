@@ -1,7 +1,7 @@
-import { View } from '@lib/interfaces/model/View';
-import { Landscape } from '@lib/interfaces/model/Landscape';
-import { Relationship } from '@lib/interfaces/model/Relationship';
-import { Node } from '@lib/interfaces/model/Node';
+import { View } from '@lib/common/interfaces/model/View';
+import { Landscape } from '@lib/common/interfaces/model/Landscape';
+import { Relationship } from '@lib/common/interfaces/model/Relationship';
+import { Node } from '@lib/common/interfaces/model/Node';
 
 interface Data<T> {
   [key: string]: T;

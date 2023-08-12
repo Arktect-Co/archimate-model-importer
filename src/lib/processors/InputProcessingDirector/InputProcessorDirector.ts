@@ -5,8 +5,8 @@ import InputTranslator from '@lib/processors/InputTranslator/InputTranslator';
 import Archi4Interpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
 import AoeffInterpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
 import { parseXml } from '@lib/common/utils/parseXml';
-import { AoeffModel } from '@lib/interfaces/AoeffModel';
-import { ArchiModel } from '@lib/interfaces/ArchiModel';
+import { AoeffModel } from '@lib/common/interfaces/AoeffModel';
+import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
 
 interface Option {
   skipViews: boolean;

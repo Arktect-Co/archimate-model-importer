@@ -2,7 +2,7 @@ import { Model } from '@lib/models/Model';
 import { expect, use } from 'chai';
 import deepEqualInAnyOrder from 'deep-equal-in-any-order';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
-import { Relationship } from '@lib/interfaces/model';
+import { Relationship } from '@lib/common/interfaces/model';
 
 use(deepEqualInAnyOrder);
 

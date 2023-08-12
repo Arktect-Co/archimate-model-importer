@@ -12,7 +12,7 @@ import {
   Bounds,
   Statistics,
   TotalByType,
-} from '@lib/interfaces/model';
+} from '@lib/common/interfaces/model';
 import { Optional } from '@lib/common/utils/typeUtils';
 
 type ElementSetting = Optional<ViewNode, 'name'>;
