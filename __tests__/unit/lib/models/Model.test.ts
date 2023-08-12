@@ -28,6 +28,22 @@ describe('Model', () => {
     },
   ];
 
+  const relationships: Array<Relationship> = [
+    {
+      identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
+      sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
+      targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
+      type: RelationshipType.Aggregation,
+    },
+    {
+      identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
+      sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
+      targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
+      type: RelationshipType.Aggregation,
+      isBidirectional: true,
+    },
+  ];
+
   describe('createViewElement', () => {
     const elementSetting = {
       type: 'group',
@@ -266,7 +282,6 @@ describe('Model', () => {
 
       model.addFolder(parentFolder, folder);
 
-      console.log(parentFolder);
       expect(parentFolder.length).to.equal(1);
       expect(parentFolder).to.deep.include(folder);
     });
@@ -386,21 +401,6 @@ describe('Model', () => {
   });
 
   describe('setManyRelationships', () => {
-    const relationships: Array<Relationship> = [
-      {
-        identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
-        sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
-        targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
-        type: RelationshipType.Aggregation,
-      },
-      {
-        identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
-        sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
-        targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
-        type: RelationshipType.Aggregation,
-        isBidirectional: true,
-      },
-    ];
     it('should set many relationships', () => {
       model.setManyRelationships(relationships);
 
@@ -441,6 +441,27 @@ describe('Model', () => {
         properties: [{ key: 'key', value: 'value' }],
         documentation: 'documentation 1',
         type: 'capability',
+      });
+    });
+  });
+
+  describe('getRelationships', () => {
+    it('should get all relationships from model', () => {
+      model.setManyRelationships(relationships);
+      const [firstRelationship, secondRelationship] = model.getRelationships();
+
+      expect(firstRelationship).to.deep.equalInAnyOrder({
+        identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
+        sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
+        targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
+        type: RelationshipType.Aggregation,
+      });
+      expect(secondRelationship).to.deep.equalInAnyOrder({
+        identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
+        sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
+        targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
+        isBidirectional: true,
+        type: RelationshipType.Aggregation,
       });
     });
   });
