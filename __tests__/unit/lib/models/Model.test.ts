@@ -465,4 +465,13 @@ describe('Model', () => {
       });
     });
   });
+
+  describe('createViewBounds', () => {
+    it('should return a view bounds', () => {
+      const { vertical, horizontal } = Model.createViewBounds(1000, 2000, 2000, 3000);
+
+      expect(vertical).to.deep.equalInAnyOrder({ min: 1000, max: 2000 });
+      expect(horizontal).to.deep.equalInAnyOrder({ min: 2000, max: 3000 });
+    });
+  });
 });
