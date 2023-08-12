@@ -7,7 +7,26 @@ import { Relationship } from '@lib/interfaces/model';
 use(deepEqualInAnyOrder);
 
 describe('Model', () => {
-  const model = new Model('model 1', '');
+  let model = new Model('model 1', '');
+
+  beforeEach(() => {
+    model = new Model('model 1', '');
+  });
+
+  const nodes = [
+    {
+      identifier: 'f55b4503',
+      name: 'Node 1',
+      type: 'Resource',
+    },
+    {
+      identifier: 'f55b4503',
+      type: 'Capability',
+      name: 'Node 2',
+      properties: [{ key: 'key', value: 'value' }],
+      documentation: 'documentation 1',
+    },
+  ];
 
   describe('createViewElement', () => {
     const elementSetting = {
@@ -339,20 +358,6 @@ describe('Model', () => {
   });
 
   describe('setManyNodes', () => {
-    const nodes = [
-      {
-        identifier: 'f55b4503',
-        name: 'Node 1',
-        type: 'Resource',
-      },
-      {
-        identifier: 'f55b4503',
-        type: 'Capability',
-        name: 'Node 2',
-        properties: [{ key: 'key', value: 'value' }],
-        documentation: 'documentation 1',
-      },
-    ];
     it('should set many nodes', () => {
       model.setManyNodes(nodes);
 
@@ -417,6 +422,25 @@ describe('Model', () => {
             isBidirectional: true,
           },
         ],
+      });
+    });
+  });
+  describe('getNodes', () => {
+    it('should get all nodes in model', () => {
+      model.setManyNodes(nodes);
+      const [firstNode, secondNode] = model.getNodes();
+
+      expect(firstNode).to.deep.equalInAnyOrder({
+        identifier: 'f55b4503',
+        name: 'Node 1',
+        type: 'resource',
+      });
+      expect(secondNode).to.deep.equalInAnyOrder({
+        identifier: 'f55b4503',
+        name: 'Node 2',
+        properties: [{ key: 'key', value: 'value' }],
+        documentation: 'documentation 1',
+        type: 'capability',
       });
     });
   });
