@@ -25,6 +25,10 @@ export class Model {
   public statistics: Statistics;
   public model: ModelStructure;
 
+  /**
+   * @param [label = 'Archimate Model'] Model name
+   * @param [description = ""] Model description
+   */
   constructor(public label: string = 'Archimate Model', public description: string = '') {
     this.model = {
       nodes: {},
@@ -405,6 +409,24 @@ export class Model {
     this.modelsourceid = id;
   }
 
+  /**
+   * Creates a non categorized node
+   * @param nodeSettings Node settings
+   * @param nodeSettings.identifier Node identifier
+   * @param nodeSettings.name Node name
+   * @param nodeSettings.type Node type
+   * @param nodeSettings.properties Node properties
+   * @param nodeSettings.documentation Node documentation
+   * @return Non categorized Node
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const nonCategorizedNodeSetting = {
+   *       identifier: '40eb5bd6-4d7c-4c27-98a8-602f935ed405',
+   *       name: 'Resource',
+   *     };
+   *
+   * const node = Model.createNonCategorizedNode(nonCategorizedNodeSetting);
+   */
   static createNonCategorizedNode({
     identifier,
     name,
@@ -426,6 +448,29 @@ export class Model {
     return nodeObj;
   }
 
+  /**
+   * Sets too many nodes in the node model
+   * @param nodeList List of nodes
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const nodes = [
+   *     {
+   *       identifier: 'f55b4503',
+   *       name: 'Node 1',
+   *       type: 'Resource',
+   *     },
+   *     {
+   *       identifier: 'f55b4503',
+   *       type: 'Capability',
+   *       name: 'Node 2',
+   *       properties: [{ key: 'key', value: 'value' }],
+   *       documentation: 'documentation 1',
+   *     },
+   *   ];
+   *
+   *  const model = new Model('model 1', '');
+   *  model.setManyNodes(nodes);
+   */
   setManyNodes(nodeList: Array<Node>): void {
     let categorizedNodes: Nodes = {};
     let totalNodes = 0;
@@ -468,6 +513,30 @@ export class Model {
     this.model.nodes = categorizedNodes;
   }
 
+  /**
+   * Sets too many relationships in the relationships model
+   * @param relationshipList List of relationships
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const relationships = [
+   *     {
+   *       identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
+   *       sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
+   *       targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
+   *       type: RelationshipType.Aggregation,
+   *     },
+   *     {
+   *       identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
+   *       sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
+   *       targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
+   *       type: RelationshipType.Aggregation,
+   *       isBidirectional: true,
+   *     },
+   *   ];
+   *
+   *  const model = new Model('model 1', '');
+   *  model.setManyRelationships(relationships);
+   */
   setManyRelationships(relationshipList: Array<Relationship>): void {
     let categorizedRelationships: Relationships = {};
     let totalRelationships = 0;
@@ -510,6 +579,17 @@ export class Model {
     this.model.relationships = categorizedRelationships;
   }
 
+  /**
+   * Creates a folder
+   * @param folderid Folder identification
+   * @param foldername Folder name
+   * @return Folder
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const model = new Model('model 1', '');
+   *
+   * const folder = model.createFolder('cc07d17e-8450-4adf-84d1-ea7d92ec01ff', 'Folder 1');
+   */
   createFolder(folderid: string, foldername: string): Landscape {
     return {
       id: folderid,
@@ -519,6 +599,24 @@ export class Model {
     };
   }
 
+  /**
+   * Add Folder in Parent Folder
+   * @param parentFolder Parent folder
+   * @param folder Folder
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const model = new Model('model 1', '');
+   *
+   * const parentFolder = [];
+   * const folder = {
+   *   id: '1ckve6agsll74r3kj',
+   *   text: 'Views',
+   *   isDirectory: true,
+   *   children: []
+   * };
+   *
+   * model.addFolder(parentFolder, folder);
+   */
   addFolder(parentFolder: Landscape | Array<Landscape>, folder: Landscape): void {
     if (!('children' in parentFolder) && Array.isArray(parentFolder)) {
       // Is the first level (root) of the landscape
@@ -531,6 +629,52 @@ export class Model {
     }
   }
 
+  /**
+   * Add view to view model
+   * @param viewSettings View Settings
+   * @param viewSettings.id View identification
+   * @param viewSettings.name View name
+   * @param viewSettings.bounds View bounds
+   * @param viewSettings.viewNodes View nodes
+   * @param viewSettings.viewRelationships View Relationships
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const model = new Model('model 1', '');
+   *
+   * const view = {
+   *     id: '57147c58-d2fc-463e-977b-b0812b23500a',
+   *     name: 'Elements',
+   *     bounds: {
+   *       vertical: { min: 10, max: 10 },
+   *       horizontal: { min: 20, max: 20 },
+   *     },
+   *     viewNodes: [
+   *       {
+   *         modelNodeId: '8ab8d668-3852-4bf8-a43e-2fcc89c01c79',
+   *         viewNodeId: '96f41f9a-44fd-420b-8e81-e669a490fd2d',
+   *         name: 'Location',
+   *         type: 'location',
+   *         x: 38,
+   *         y: 25,
+   *         width: 120,
+   *         height: 55,
+   *         parent: null,
+   *       },
+   *     ],
+   *     viewRelationships: [
+   *       {
+   *         modelRelationshipId: 'c8eacb29-df66-4c8a-98bf-159b8e894b94',
+   *         sourceId: '0d48039d-ed53-4e60-8045-1af4f1e5db6f',
+   *         targetId: '1620e51a-453c-411e-8c1c-8bf9d7545c93',
+   *         viewRelationshipId: 'b370c707-37eb-4f93-b6f4-c54867832ec7',
+   *         type: 'assignment',
+   *         bendpoints: [{ x: 2, y: 2 }],
+   *       },
+   *     ],
+   *   };
+   *
+   * model.addView(view);
+   */
   addView({ id, name, bounds, viewNodes, viewRelationships }: View): void {
     this.model.views.push({
       id,
@@ -543,6 +687,29 @@ export class Model {
     this.statistics.totalViews++;
   }
 
+  /**
+   * Add new folder view
+   * @param folder Folder
+   * @param folderView Folder view
+   * @param folderView.id Folder view identification
+   * @param folderView.text Folder view text
+   * @example
+   * import { Model } from '@lib/models/Model';
+   * const model = new Model('model 1', '');
+   *
+   * const folder = {
+   *   id: '1ckve6axsll753nmy',
+   *   text: 'Views',
+   *   isDirectory: true,
+   *   children: [],
+   * };
+   * const newFolderView = {
+   *   id: '1ckve6axsll753der',
+   *   text: 'Views',
+   * };
+   *
+   * model.addFolderView(folder, newFolderView);
+   */
   addFolderView(folder: Landscape, { id, text }: FolderView): void {
     if (folder !== null && folder !== undefined) {
       folder.children.push({
