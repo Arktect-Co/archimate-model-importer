@@ -239,8 +239,8 @@ class InputTranslator {
           id: viewId,
           name: viewName,
           bounds,
-          nodes,
-          relationships,
+          viewNodes: nodes,
+          viewRelationships: relationships,
         });
       }
 
