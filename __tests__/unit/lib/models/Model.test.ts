@@ -474,4 +474,12 @@ describe('Model', () => {
       expect(horizontal).to.deep.equalInAnyOrder({ min: 2000, max: 3000 });
     });
   });
+
+  describe('getLandscapeStructure', () => {
+    it('should return a landscape structure', () => {
+      const landscape = model.getLandscapeStructure();
+
+      expect(landscape.length).to.equal(0);
+    });
+  });
 });
