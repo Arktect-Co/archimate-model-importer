@@ -1,6 +1,6 @@
 import xml2js from 'xml2js';
-import { AoeffModel } from '@lib/interfaces/AoeffModel';
-import { ArchiModel } from '@lib/interfaces/ArchiModel';
+import { AoeffModel } from '@lib/common/interfaces/AoeffModel';
+import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
 
 /**
  * Returns a json xml template from the xml file buffer

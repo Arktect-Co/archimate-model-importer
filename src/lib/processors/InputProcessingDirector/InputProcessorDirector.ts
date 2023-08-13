@@ -1,12 +1,12 @@
 import fs from 'fs';
-import Model from '@lib/models/Model';
+import { Model } from '@lib/models/Model';
 import Grafico from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
 import InputTranslator from '@lib/processors/InputTranslator/InputTranslator';
 import Archi4Interpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
 import AoeffInterpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
-import { parseXml } from '@lib/utils/parseXml';
-import { AoeffModel } from '@lib/interfaces/AoeffModel';
-import { ArchiModel } from '@lib/interfaces/ArchiModel';
+import { parseXml } from '@lib/common/utils/parseXml';
+import { AoeffModel } from '@lib/common/interfaces/AoeffModel';
+import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
 
 interface Option {
   skipViews: boolean;
@@ -18,10 +18,10 @@ interface InputProcessorDirectorSettings {
   options?: Option;
 }
 
-type Log = (message?: string, ...optionalParams: Array<any>) => void;
+type Log = (message?: string) => void;
 
 export class InputProcessorDirector {
-  private readonly model: any; //TODO: Add Model Type
+  private readonly model: Model;
   private readonly options: Option;
   private readonly log: Log;
 
@@ -225,7 +225,7 @@ export class InputProcessorDirector {
   /**
    * Returns an instance of the Model class.
    */
-  getOutputModel() {
+  getOutputModel(): Model {
     return this.model;
   }
 }
