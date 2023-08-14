@@ -179,7 +179,7 @@ export class AoeffInterpreter {
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
    * const model = {} // Aoeff Model
    * const inputInterpreter = new AoeffInterpreter(model);
-   * const relationship = model.model.elements[0].element[0].properties[0].property[0];
+   * const relationship = model.model.relationships[0].relationship[0];
    *
    * const propertyEntry = inputInterpreter.getRelationshipId(relationship);
    */
@@ -187,6 +187,18 @@ export class AoeffInterpreter {
     return relationship.$.identifier.replace('id-', '');
   }
 
+  /**
+   * Returns the relationship source identification
+   * @param relationship Relationship
+   * @return Relationship source ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[0];
+   *
+   * const sourceId = inputInterpreter.getRelationshipSourceId(relationship);
+   */
   getRelationshipSourceId(relationship: RelationshipModel): string {
     return relationship.$.source.replace('id-', '');
   }
