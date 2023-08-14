@@ -233,4 +233,15 @@ describe('AoeffInterpreter', async () => {
       expect(target).to.equal(true);
     });
   });
+
+  describe('getAssociationsRelationshipIsDirected', () => {
+    it('should return true if association relationship is directed', () => {
+      const relationships = model.model.relationships[0].relationship;
+      const relationship = relationships.find(e => e.$.isDirected);
+
+      const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
+
+      expect(isDirected).to.equal(true);
+    });
+  });
 });

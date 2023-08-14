@@ -286,14 +286,23 @@ export class AoeffInterpreter {
     }
   }
 
+  /**
+   * Checks if the association relationship is directed
+   * @param relationship Relationship
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[0];
+   *
+   * const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
+   */
   getAssociationRelationshipIsDirected(relationship: RelationshipModel): boolean {
     let isDirected = relationship.$.isDirected;
 
-    if (isDirected === undefined) {
-      return false;
-    } else {
-      return typeof isDirected === 'boolean' ? isDirected : isDirected === 'true';
-    }
+    if (isDirected === undefined) return false;
+
+    return typeof isDirected === 'boolean' ? isDirected : isDirected === 'true';
   }
 
   getFolderName(folder: ItemModel) {

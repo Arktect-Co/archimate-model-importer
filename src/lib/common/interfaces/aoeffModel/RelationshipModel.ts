@@ -4,7 +4,7 @@ interface RelationshipModelSettings {
   source: string;
   target: string;
   'xsi:type': string;
-  isDirected: string;
+  isDirected?: string | boolean;
 }
 
 export interface RelationshipModel {
