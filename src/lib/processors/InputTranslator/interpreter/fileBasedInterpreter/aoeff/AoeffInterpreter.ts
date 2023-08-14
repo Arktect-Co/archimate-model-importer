@@ -94,6 +94,17 @@ export class AoeffInterpreter {
     return node.$['xsi:type'];
   }
 
+  /**
+   * Returns the node documentation
+   * @param node Node
+   * @return Node documentation
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.elements[0].element[0];
+   * const documentation = inputInterpreter.getNodeDocumentation(node);
+   */
   getNodeDocumentation(node: ElementModel): string | null {
     return node.documentation && node.documentation[0] && node.documentation[0]._
       ? node.documentation[0]._

@@ -75,4 +75,14 @@ describe('AoeffInterpreter', async () => {
       expect(type).to.equal('Resource');
     });
   });
+
+  describe('getNodeDocumentation', () => {
+    it('should return a node documentation', () => {
+      const nodes = model.model.elements[0].element;
+      const nodeIndex = nodes.findIndex(node => node.documentation);
+      const documentation = inputInterpreter.getNodeDocumentation(nodes[nodeIndex]);
+
+      expect(documentation).to.equal('This is a documentation test');
+    });
+  });
 });
