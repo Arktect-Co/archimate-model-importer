@@ -36,6 +36,15 @@ export class AoeffInterpreter {
     this.hasViewElementChildRelationships = false;
   }
 
+  /**
+   * Get the model identification
+   * @return model ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const id = inputInterpreter.getModelId();
+   */
   getModelId(): string {
     return this.modelid;
   }
