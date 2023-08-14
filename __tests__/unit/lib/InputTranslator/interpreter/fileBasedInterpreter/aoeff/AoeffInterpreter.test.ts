@@ -252,5 +252,12 @@ describe('AoeffInterpreter', async () => {
 
       expect(isDirected).to.equal(false);
     });
+
+    it('should return false if "isDirected" property of relationship is undefined', () => {
+      const relationship = model.model.relationships[0].relationship[0];
+      const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
+
+      expect(isDirected).to.equal(false);
+    });
   });
 });
