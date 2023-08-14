@@ -128,6 +128,18 @@ export class AoeffInterpreter {
     return node.$['xsi:type'];
   }
 
+  /**
+   * Returns the node properties
+   * @param node Node
+   * @return Node properties
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.elements[0].element[0];
+   *
+   * const properties = inputInterpreter.getNodeProperties(node);
+   */
   getNodeProperties(node: ElementModel): Array<Property> | null {
     return node.properties ? node.properties[0].property : null;
   }

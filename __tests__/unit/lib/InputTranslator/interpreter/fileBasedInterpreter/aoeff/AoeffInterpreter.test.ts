@@ -103,4 +103,16 @@ describe('AoeffInterpreter', async () => {
       expect(junctionType).to.equal('AndJunction');
     });
   });
+
+  describe('getNodeProperties', () => {
+    it('should return a node properties', () => {
+      const nodes = model.model.elements[0].element;
+      const nodeIndex = nodes.findIndex(node => node.properties);
+
+      const properties = inputInterpreter.getNodeProperties(nodes[nodeIndex]);
+
+      expect(properties.length).to.equal(3);
+      expect(properties).to.deep.equal(nodes[nodeIndex].properties[0].property);
+    });
+  });
 });
