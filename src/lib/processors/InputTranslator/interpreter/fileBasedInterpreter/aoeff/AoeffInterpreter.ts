@@ -12,6 +12,7 @@ import {
   RelationshipModel,
 } from '@lib/common/interfaces/aoeffModel';
 import _ from 'lodash';
+import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -262,22 +263,22 @@ export class AoeffInterpreter {
       };
 
     switch (accessType) {
-      case 'Write':
+      case RelationshipAccessType.Write:
         return {
           source: false,
           target: true,
         };
-      case 'Read':
+      case RelationshipAccessType.Read:
         return {
           source: true,
           target: false,
         };
-      case 'Access':
+      case RelationshipAccessType.Access:
         return {
           source: false,
           target: false,
         };
-      case 'ReadWrite':
+      case RelationshipAccessType.ReadWrite:
         return {
           source: true,
           target: true,
