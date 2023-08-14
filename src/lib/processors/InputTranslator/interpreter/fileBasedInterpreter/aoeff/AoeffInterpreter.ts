@@ -15,6 +15,11 @@ import _ from 'lodash';
 
 const UNKNOWN = 'Unknown Name';
 
+interface AccessRelationshipDirection {
+  source: boolean;
+  target: boolean;
+}
+
 /**
  *  AOEFF has a limitation when loading relationships of nested elements with its parents. The model
  *  ignores this type of relationship
@@ -235,35 +240,48 @@ export class AoeffInterpreter {
     return `${relationship.$['xsi:type']}relationship`;
   }
 
-  getAccessRelationshipDirection(relationship: RelationshipModel) {
-    if (relationship.$.accessType === undefined) {
+  /**
+   * Returns the access relationship direction
+   * @param relationship Relationship
+   * @return The access relationship direction
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[0];
+   *
+   * const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
+   */
+  getAccessRelationshipDirection(relationship: RelationshipModel): AccessRelationshipDirection {
+    const accessType = relationship.$.accessType;
+
+    if (accessType === undefined)
       return {
         source: false,
         target: true,
       };
-    } else {
-      switch (relationship.$.accessType) {
-        case 'Write':
-          return {
-            source: false,
-            target: true,
-          };
-        case 'Read':
-          return {
-            source: true,
-            target: false,
-          };
-        case 'Access':
-          return {
-            source: false,
-            target: false,
-          };
-        case 'ReadWrite':
-          return {
-            source: true,
-            target: true,
-          };
-      }
+
+    switch (accessType) {
+      case 'Write':
+        return {
+          source: false,
+          target: true,
+        };
+      case 'Read':
+        return {
+          source: true,
+          target: false,
+        };
+      case 'Access':
+        return {
+          source: false,
+          target: false,
+        };
+      case 'ReadWrite':
+        return {
+          source: true,
+          target: true,
+        };
     }
   }
 
