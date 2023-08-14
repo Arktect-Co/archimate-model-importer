@@ -75,7 +75,7 @@ export class AoeffInterpreter {
    * const node = model.model.elements[0].element[0];
    * const name = inputInterpreter.getNodeName(node);
    */
-  getNodeName(node: ElementModel): string {
+  getNodeName(node?: ElementModel): string {
     return node ? node.name[0]['_'] || node.name[0] : UNKNOWN;
   }
 

@@ -6,6 +6,8 @@ import { AoeffModel } from '@lib/common/interfaces/aoeffModel';
 import { expect } from 'chai';
 import { before } from 'mocha';
 
+const UNKNOWN = 'Unknown Name';
+
 const getAoeffModel = async (filePath: string): Promise<AoeffModel> => {
   const fileString = fs.readFileSync(filePath);
 
@@ -56,6 +58,12 @@ describe('AoeffInterpreter', async () => {
       const name = inputInterpreter.getNodeName(node);
 
       expect(name).to.equal('Resource');
+    });
+
+    it('should return a default node name if the node is not defined', () => {
+      const name = inputInterpreter.getNodeName(undefined);
+
+      expect(name).to.equal(UNKNOWN);
     });
   });
 });
