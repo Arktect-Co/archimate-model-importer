@@ -13,7 +13,7 @@ interface ConnectionSettings {
   target: string;
 }
 
-export interface Connection {
+export interface ConnectionModel {
   $: ConnectionSettings;
   bendpoint?: Array<Bendpoint>;
 }
@@ -28,5 +28,5 @@ export interface ViewModel {
   $: ViewModelSettings;
   name: Array<NameModel | string>;
   node: Array<NodeModel>;
-  connection: Array<Connection>;
+  connection: Array<ConnectionModel>;
 }
