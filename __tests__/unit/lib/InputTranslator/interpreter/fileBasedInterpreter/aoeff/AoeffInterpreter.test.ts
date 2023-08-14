@@ -5,6 +5,7 @@ import { parseXml } from '@lib/common/utils/parseXml';
 import { AoeffModel } from '@lib/common/interfaces/aoeffModel';
 import { expect } from 'chai';
 import { before } from 'mocha';
+import { RelationshipAccessType } from '../../../../../../../src/lib/common/enums/relationshipAccessType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -183,6 +184,16 @@ describe('AoeffInterpreter', async () => {
   describe('getAccessRelationshipDirection', () => {
     it('should return a default access relationship direction if "accesstype" is not defined', () => {
       const relationship = model.model.relationships[0].relationship[0];
+
+      const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
+
+      expect(source).to.equal(false);
+      expect(target).to.equal(true);
+    });
+
+    it('should return a relationship "Write" access direction', () => {
+      const relationships = model.model.relationships[0].relationship;
+      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Write);
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
