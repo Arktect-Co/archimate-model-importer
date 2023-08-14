@@ -219,6 +219,18 @@ export class AoeffInterpreter {
     return relationship.$.target.replace('id-', '');
   }
 
+  /**
+   * Returns the relationship type
+   * @param relationship Relationship
+   * @return Relationship type
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[0];
+   *
+   * const type = inputInterpreter.getRelationshipType(relationship);
+   */
   getRelationshipType(relationship: RelationshipModel): string {
     return `${relationship.$['xsi:type']}relationship`;
   }

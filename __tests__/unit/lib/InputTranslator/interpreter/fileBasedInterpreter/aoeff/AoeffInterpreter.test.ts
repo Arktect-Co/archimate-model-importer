@@ -170,4 +170,13 @@ describe('AoeffInterpreter', async () => {
       expect(id).to.equal('cc07d17e-8450-4adf-84d1-ea7d92ec01ab');
     });
   });
+
+  describe('getRelationshipType', () => {
+    it('should return a relationship type', () => {
+      const relationship = model.model.relationships[0].relationship[0];
+      const type = inputInterpreter.getRelationshipType(relationship);
+
+      expect(type).to.equal('Aggregationrelationship');
+    });
+  });
 });
