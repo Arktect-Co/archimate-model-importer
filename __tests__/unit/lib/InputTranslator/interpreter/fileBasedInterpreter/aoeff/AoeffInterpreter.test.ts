@@ -135,5 +135,12 @@ describe('AoeffInterpreter', async () => {
       expect(propertyDefinition).to.equal('Description');
       expect(value).to.equal('Attribute value string');
     });
+
+    it('should return an empty array if property is not defined', () => {
+      const propertyEntry = inputInterpreter.getPropertyEntry(undefined);
+
+      expect(propertyEntry).to.deep.equal([]);
+      expect(propertyEntry.length).to.equal(0);
+    });
   });
 });
