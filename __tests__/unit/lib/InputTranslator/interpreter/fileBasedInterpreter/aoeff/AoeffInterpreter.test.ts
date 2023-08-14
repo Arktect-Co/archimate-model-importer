@@ -260,4 +260,13 @@ describe('AoeffInterpreter', async () => {
       expect(isDirected).to.equal(false);
     });
   });
+
+  describe('getFolderName', () => {
+    it('should return a default folder name if the property label of folder is an empty array', () => {
+      const folder = model.model.organizations[0].item[0];
+      const folderName = inputInterpreter.getFolderName({ ...folder, label: [] });
+
+      expect(folderName).to.equal(UNKNOWN);
+    });
+  });
 });

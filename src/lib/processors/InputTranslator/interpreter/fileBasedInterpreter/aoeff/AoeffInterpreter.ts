@@ -305,14 +305,30 @@ export class AoeffInterpreter {
     return typeof isDirected === 'boolean' ? isDirected : isDirected === 'true';
   }
 
-  getFolderName(folder: ItemModel) {
-    if (folder.label[0]['_']) {
-      return folder.label[0]['_'];
-    } else if (folder.label[0]) {
-      return folder.label[0];
-    } else {
-      return UNKNOWN;
+  /**
+   * Returns the folder name
+   * @param folder Folder
+   * @return Folder name
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const folder = model.model.organizations[0].item[0];
+   *
+   * const folderName = inputInterpreter.getFolderName(folder);
+   */
+  getFolderName(folder: ItemModel): string {
+    const label = folder.label[0];
+
+    if (label) {
+      if (typeof label !== 'string' && label._) {
+        return label._;
+      }
+
+      return <string>label;
     }
+
+    return UNKNOWN;
   }
 
   getSubFolders(folder: ItemModel): Array<ItemModel> {
