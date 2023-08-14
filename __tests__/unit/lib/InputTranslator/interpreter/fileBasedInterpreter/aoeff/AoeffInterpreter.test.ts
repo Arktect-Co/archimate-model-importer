@@ -14,11 +14,12 @@ const getAoeffModel = async (filePath: string): Promise<AoeffModel> => {
 
 describe('AoeffInterpreter', async () => {
   let inputInterpreter: AoeffInterpreter;
+  let model: AoeffModel;
 
   before(async () => {
     const rootPath = __dirname.split('\\').slice(0, -5).join('\\');
     const filePath = path.join(rootPath, '/models/aoeff_3_1.xml');
-    const model = await getAoeffModel(filePath);
+    model = await getAoeffModel(filePath);
     inputInterpreter = new AoeffInterpreter(model);
   });
 
@@ -27,6 +28,15 @@ describe('AoeffInterpreter', async () => {
       const id = inputInterpreter.getModelId();
 
       expect(id).to.equal('id-799298e6-cefa-47aa-986f-1ab9d5c10d21');
+    });
+  });
+
+  describe('getNodeId', () => {
+    it('should return a node id', () => {
+      const node = model.model.elements[0].element[0];
+      const id = inputInterpreter.getNodeId(node);
+
+      expect(id).to.equal('40eb5bd6-4d7c-4c27-98a8-602f935ed405');
     });
   });
 });

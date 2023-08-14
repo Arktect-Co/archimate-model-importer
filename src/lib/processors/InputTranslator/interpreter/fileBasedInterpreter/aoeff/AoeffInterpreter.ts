@@ -49,6 +49,16 @@ export class AoeffInterpreter {
     return this.modelid;
   }
 
+  /**
+   * Returns the node identification
+   * @param node Node
+   * @return Node ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const id = inputInterpreter.getNodeId();
+   */
   getNodeId(node: ElementModel): string {
     return node.$.identifier.replace('id-', '');
   }
