@@ -56,13 +56,25 @@ export class AoeffInterpreter {
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
    * const model = {} // Aoeff Model
+   * const node = model.model.elements[0].element[0];
    * const inputInterpreter = new AoeffInterpreter(model);
-   * const id = inputInterpreter.getNodeId();
+   * const id = inputInterpreter.getNodeId(node);
    */
   getNodeId(node: ElementModel): string {
     return node.$.identifier.replace('id-', '');
   }
 
+  /**
+   * Returns the node name
+   * @param node Node
+   * @return Node name
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.elements[0].element[0];
+   * const name = inputInterpreter.getNodeName(node);
+   */
   getNodeName(node: ElementModel): string {
     return node ? node.name[0]['_'] || node.name[0] : UNKNOWN;
   }

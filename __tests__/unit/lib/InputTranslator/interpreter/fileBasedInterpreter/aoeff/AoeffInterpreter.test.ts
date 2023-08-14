@@ -39,4 +39,13 @@ describe('AoeffInterpreter', async () => {
       expect(id).to.equal('40eb5bd6-4d7c-4c27-98a8-602f935ed405');
     });
   });
+
+  describe('getNodeName', () => {
+    it('should return a node name if the name is an array of object', () => {
+      const node = model.model.elements[0].element[0];
+      const name = inputInterpreter.getNodeName(node);
+
+      expect(name).to.equal('Resource');
+    });
+  });
 });
