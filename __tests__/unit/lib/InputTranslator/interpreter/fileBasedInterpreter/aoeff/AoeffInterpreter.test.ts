@@ -114,5 +114,13 @@ describe('AoeffInterpreter', async () => {
       expect(properties.length).to.equal(3);
       expect(properties).to.deep.equal(nodes[nodeIndex].properties[0].property);
     });
+
+    it('should return null if properties is not defined', () => {
+      const node = model.model.elements[0].element[0];
+
+      const properties = inputInterpreter.getNodeProperties(node);
+
+      expect(properties).to.equal(null);
+    });
   });
 });
