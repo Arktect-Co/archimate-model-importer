@@ -84,5 +84,12 @@ describe('AoeffInterpreter', async () => {
 
       expect(documentation).to.equal('This is a documentation test');
     });
+
+    it('should return null if node documentation is not defined', () => {
+      const node = model.model.elements[0].element[0];
+      const documentation = inputInterpreter.getNodeDocumentation(node);
+
+      expect(documentation).to.equal(null);
+    });
   });
 });
