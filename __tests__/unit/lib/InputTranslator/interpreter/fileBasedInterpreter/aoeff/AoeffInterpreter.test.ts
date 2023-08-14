@@ -262,11 +262,18 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getFolderName', () => {
-    it('should return a default folder name if the property label of folder is an empty array', () => {
+    it('should return a default folder name if the label property is an empty array', () => {
       const folder = model.model.organizations[0].item[0];
       const folderName = inputInterpreter.getFolderName({ ...folder, label: [] });
 
       expect(folderName).to.equal(UNKNOWN);
+    });
+
+    it('should return a folder name if the label property is an array of object', () => {
+      const folder = model.model.organizations[0].item[0];
+      const folderName = inputInterpreter.getFolderName(folder);
+
+      expect(folderName).to.equal('Strategy');
     });
   });
 });
