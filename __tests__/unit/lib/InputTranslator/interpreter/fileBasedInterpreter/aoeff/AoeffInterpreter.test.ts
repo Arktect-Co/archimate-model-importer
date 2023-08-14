@@ -47,5 +47,15 @@ describe('AoeffInterpreter', async () => {
 
       expect(name).to.equal('Resource');
     });
+
+    it('should return a node name if the name is an array of string', () => {
+      const node = {
+        $: { identifier: 'id-40eb5bd6-4d7c-4c27-98a8-602f935ed405', 'xsi:type': '' },
+        name: ['Resource'],
+      };
+      const name = inputInterpreter.getNodeName(node);
+
+      expect(name).to.equal('Resource');
+    });
   });
 });
