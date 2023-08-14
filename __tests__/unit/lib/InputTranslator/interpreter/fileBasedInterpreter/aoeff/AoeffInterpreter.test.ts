@@ -92,4 +92,15 @@ describe('AoeffInterpreter', async () => {
       expect(documentation).to.equal(null);
     });
   });
+
+  describe('getNodeJunctionType', () => {
+    it('should return the node junction type', () => {
+      const nodes = model.model.elements[0].element;
+      const nodeIndex = nodes.findIndex(node => inputInterpreter.isJunctionNode(node));
+
+      const junctionType = inputInterpreter.getNodeJunctionType(nodes[nodeIndex]);
+
+      expect(junctionType).to.equal('AndJunction');
+    });
+  });
 });

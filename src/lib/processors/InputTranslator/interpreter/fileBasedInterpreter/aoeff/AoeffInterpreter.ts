@@ -111,6 +111,19 @@ export class AoeffInterpreter {
       : null;
   }
 
+  /**
+   * Returns the node Junction type
+   * @param node
+   * @return Node Junctions type
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.elements[0].element[0];
+   *
+   * if(inputInterpreter.isJunctionNode(node))
+   * const type = inputInterpreter.getNodeJunctionType(node);
+   */
   getNodeJunctionType(node: ElementModel): string {
     return node.$['xsi:type'];
   }
