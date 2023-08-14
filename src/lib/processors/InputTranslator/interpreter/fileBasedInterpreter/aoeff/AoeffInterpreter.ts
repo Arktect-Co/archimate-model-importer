@@ -203,6 +203,18 @@ export class AoeffInterpreter {
     return relationship.$.source.replace('id-', '');
   }
 
+  /**
+   * Returns the relationship target identification
+   * @param relationship Relationship
+   * @return Relationship target ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[0];
+   *
+   * const targetId = inputInterpreter.getRelationshipTargetId(relationship);
+   */
   getRelationshipTargetId(relationship: RelationshipModel): string {
     return relationship.$.target.replace('id-', '');
   }

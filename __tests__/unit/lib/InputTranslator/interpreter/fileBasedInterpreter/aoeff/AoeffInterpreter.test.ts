@@ -161,4 +161,13 @@ describe('AoeffInterpreter', async () => {
       expect(id).to.equal('d0c22546-6ae6-4ba9-a141-222cc6eea16d');
     });
   });
+
+  describe('getRelationshipTargetId', () => {
+    it('should return a relationship target ID', () => {
+      const relationship = model.model.relationships[0].relationship[0];
+      const id = inputInterpreter.getRelationshipTargetId(relationship);
+
+      expect(id).to.equal('cc07d17e-8450-4adf-84d1-ea7d92ec01ab');
+    });
+  });
 });
