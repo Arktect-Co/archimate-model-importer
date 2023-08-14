@@ -143,4 +143,13 @@ describe('AoeffInterpreter', async () => {
       expect(propertyEntry.length).to.equal(0);
     });
   });
+
+  describe('getRelationshipId', () => {
+    it('should return a relationship ID', () => {
+      const relationship = model.model.relationships[0].relationship[0];
+      const id = inputInterpreter.getRelationshipId(relationship);
+
+      expect(id).to.equal('bc8c928b-dafb-4e61-91b3-7c3e5b93a900');
+    });
+  });
 });

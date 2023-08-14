@@ -171,6 +171,18 @@ export class AoeffInterpreter {
     }
   }
 
+  /**
+   * Returns the relationship identification
+   * @param relationship Relationship
+   * @return Relationship ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.elements[0].element[0].properties[0].property[0];
+   *
+   * const propertyEntry = inputInterpreter.getRelationshipId(relationship);
+   */
   getRelationshipId(relationship: RelationshipModel): string {
     return relationship.$.identifier.replace('id-', '');
   }
