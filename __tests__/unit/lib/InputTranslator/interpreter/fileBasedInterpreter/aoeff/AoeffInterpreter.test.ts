@@ -123,4 +123,17 @@ describe('AoeffInterpreter', async () => {
       expect(properties).to.equal(null);
     });
   });
+
+  describe('getPropertyEntry', () => {
+    it('should return a property entry', () => {
+      const nodes = model.model.elements[0].element;
+      const nodeIndex = nodes.findIndex(node => node.properties);
+      const property = nodes[nodeIndex].properties[0].property[0];
+
+      const [propertyDefinition, value] = inputInterpreter.getPropertyEntry(property);
+
+      expect(propertyDefinition).to.equal('Description');
+      expect(value).to.equal('Attribute value string');
+    });
+  });
 });
