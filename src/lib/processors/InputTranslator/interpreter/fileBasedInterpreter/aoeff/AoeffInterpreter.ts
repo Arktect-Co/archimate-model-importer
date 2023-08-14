@@ -187,14 +187,6 @@ export class AoeffInterpreter {
     return relationship.$.identifier.replace('id-', '');
   }
 
-  getRelationshipName(relationship) {
-    if (relationship !== undefined && relationship.name !== undefined) {
-      return relationship.name[0]._;
-    }
-
-    return '';
-  }
-
   getRelationshipSourceId(relationship: RelationshipModel): string {
     return relationship.$.source.replace('id-', '');
   }
