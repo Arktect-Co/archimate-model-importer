@@ -1,5 +1,5 @@
 import xml2js from 'xml2js';
-import { AoeffModel } from '@lib/common/interfaces/AoeffModel';
+import { AoeffModel } from '@lib/common/interfaces/aoeffModel';
 import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
 
 /**
