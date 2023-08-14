@@ -200,5 +200,15 @@ describe('AoeffInterpreter', async () => {
       expect(source).to.equal(false);
       expect(target).to.equal(true);
     });
+
+    it('should return a relationship "Read" access direction', () => {
+      const relationships = model.model.relationships[0].relationship;
+      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Read);
+
+      const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
+
+      expect(source).to.equal(true);
+      expect(target).to.equal(false);
+    });
   });
 });
