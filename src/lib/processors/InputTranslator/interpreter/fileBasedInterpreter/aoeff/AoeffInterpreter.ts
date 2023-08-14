@@ -79,6 +79,17 @@ export class AoeffInterpreter {
     return node ? node.name[0]['_'] || node.name[0] : UNKNOWN;
   }
 
+  /**
+   * Returns the node type
+   * @param node Node
+   * @return Node type
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.elements[0].element[0];
+   * const type = inputInterpreter.getNodeType(node);
+   */
   getNodeType(node: ElementModel): string {
     return node.$['xsi:type'];
   }

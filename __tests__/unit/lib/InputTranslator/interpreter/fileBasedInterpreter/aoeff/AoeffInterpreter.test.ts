@@ -66,4 +66,13 @@ describe('AoeffInterpreter', async () => {
       expect(name).to.equal(UNKNOWN);
     });
   });
+
+  describe('getNodeType', () => {
+    it('should return a node type', () => {
+      const node = model.model.elements[0].element[0];
+      const type = inputInterpreter.getNodeType(node);
+
+      expect(type).to.equal('Resource');
+    });
+  });
 });
