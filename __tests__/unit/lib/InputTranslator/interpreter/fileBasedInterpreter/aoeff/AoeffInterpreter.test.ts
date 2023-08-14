@@ -275,5 +275,12 @@ describe('AoeffInterpreter', async () => {
 
       expect(folderName).to.equal('Strategy');
     });
+
+    it('should return a folder name if the label property is an array of string', () => {
+      const folder = model.model.organizations[0].item[0];
+      const folderName = inputInterpreter.getFolderName({ ...folder, label: ['Strategy'] });
+
+      expect(folderName).to.equal('Strategy');
+    });
   });
 });
