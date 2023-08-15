@@ -553,4 +553,15 @@ describe('AoeffInterpreter', async () => {
       expect(content).to.equal(UNKNOWN);
     });
   });
+
+  describe('getViewRelationshipBendpoints', () => {
+    it('should return a bendpoints', () => {
+      const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
+
+      const bendpoints = inputInterpreter.getViewRelationshipBendpoints(relationship);
+
+      expect(bendpoints.length).to.equal(1);
+      expect(bendpoints).to.deep.equal([{ $: { x: '528', y: '492' } }]);
+    });
+  });
 });

@@ -746,6 +746,18 @@ export class AoeffInterpreter {
     return label && label[0] ? label[0]['_'] || label[0] : UNKNOWN;
   }
 
+  /**
+   * Returns the view relationship bendpoints
+   * @param viewRelationship View Relationship
+   * @return View Relationship bendpoint
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
+   *
+   *       const bendpoints = inputInterpreter.getViewRelationshipBendpoints(relationship);
+   *      */
   getViewRelationshipBendpoints(viewRelationship: ConnectionModel): Array<Bendpoint> {
     return viewRelationship.bendpoint;
   }
