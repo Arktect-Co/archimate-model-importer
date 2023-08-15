@@ -715,4 +715,14 @@ describe('AoeffInterpreter', async () => {
       expect(isViewNote).to.equal(true);
     });
   });
+
+  describe('isViewGroup', () => {
+    it('should return false if view type is not equal Container', () => {
+      const node = model.model.views[0].diagrams[0].view[0];
+
+      const isViewGroup = inputInterpreter.isViewGroup(node);
+
+      expect(isViewGroup).to.equal(false);
+    });
+  });
 });
