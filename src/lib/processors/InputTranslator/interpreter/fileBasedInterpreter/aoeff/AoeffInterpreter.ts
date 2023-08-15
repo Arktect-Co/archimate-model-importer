@@ -387,6 +387,18 @@ export class AoeffInterpreter {
     return folderViews;
   }
 
+  /**
+   * Returns a view elements
+   * @param view View Model
+   * @return View Elements
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const view = model.model.views[0].diagrams[0].view[0];
+   *
+   * const elements = inputInterpreter.getViewElements(view);
+   */
   getViewElements(view: ViewModel): Array<NodeModel> {
     return view.node;
   }

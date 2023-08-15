@@ -308,4 +308,14 @@ describe('AoeffInterpreter', async () => {
       ]);
     });
   });
+
+  describe('getViewElements', () => {
+    it('should return a view elements', () => {
+      const view = model.model.views[0].diagrams[0].view[0];
+      const elements = inputInterpreter.getViewElements(view);
+
+      expect(elements.length).to.equal(58);
+      expect(elements[0].$['xsi:type']).to.equal('Element');
+    });
+  });
 });
