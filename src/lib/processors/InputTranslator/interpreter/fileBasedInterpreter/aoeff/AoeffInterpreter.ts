@@ -488,14 +488,28 @@ export class AoeffInterpreter {
     return viewElement.$.elementRef.replace('id-', '');
   }
 
+  /**
+   * Returns the view element position x
+   * @param viewElement View Element
+   * @param parentId parent ID
+   * @param parentViewElements List of parent view elements
+   * @return Position x
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+   */
   getViewElementPositionX(
     viewElement: NodeModel,
-    parentId?: string,
+    parentId?: string | null,
     parentViewElements?: Array<NodeModel>,
   ): number {
     let x = parseInt(viewElement.$.x, 0);
 
-    if (parentId !== null) {
+    if (parentId) {
       let parent = this.findViewElement(parentViewElements, parentId);
 
       x = x - parseInt(parent.$.x, 0);

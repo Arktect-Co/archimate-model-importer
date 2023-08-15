@@ -387,4 +387,13 @@ describe('AoeffInterpreter', async () => {
       expect(id).to.equal('8ab8d668-3852-4bf8-a43e-2fcc89c01c79');
     });
   });
+
+  describe('getViewElementPositionX', () => {
+    it('should return a view element position X', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+      const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+
+      expect(positionX).to.equal(38);
+    });
+  });
 });
