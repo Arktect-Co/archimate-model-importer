@@ -318,4 +318,15 @@ describe('AoeffInterpreter', async () => {
       expect(elements[0].$['xsi:type']).to.equal('Element');
     });
   });
+
+  describe('getViewId', () => {
+    it('should return a view ID if identifier is not defined', () => {
+      const view = model.model.views[0].diagrams[0].view[0];
+      view.$.identifierRef = 'id-57147c58-d2fc-463e-977b-b0812b23500a';
+      view.$.identifier = undefined;
+      const id = inputInterpreter.getViewId(view);
+
+      expect(id).to.equal('57147c58-d2fc-463e-977b-b0812b23500a');
+    });
+  });
 });

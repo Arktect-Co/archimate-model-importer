@@ -403,12 +403,22 @@ export class AoeffInterpreter {
     return view.node;
   }
 
+  /**
+   * Returns the view identification
+   * @param view View
+   * @return View ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const view = model.model.views[0].diagrams[0].view[0];
+   *
+   * const id = inputInterpreter.getViewId(view);
+   */
   getViewId(view: ViewModel): string {
-    if (view.$.identifier !== undefined) {
-      return view.$.identifier.replace('id-', '');
-    } else {
-      return view.$.identifierRef.replace('id-', '');
-    }
+    if (view.$.identifier !== undefined) return view.$.identifier.replace('id-', '');
+
+    return view.$.identifierRef.replace('id-', '');
   }
 
   getViewName(view: ViewModel): string {
