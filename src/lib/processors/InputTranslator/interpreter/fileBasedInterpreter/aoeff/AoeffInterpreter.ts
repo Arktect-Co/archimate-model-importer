@@ -456,6 +456,18 @@ export class AoeffInterpreter {
     }
   }
 
+  /**
+   * Returns the element view identification
+   * @param viewElement View Element
+   * @return Element View ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const id = inputInterpreter.getViewName(viewElement);
+   */
   getViewElementViewId(viewElement: NodeModel): string {
     return viewElement.$.identifier.replace('id-', '');
   }

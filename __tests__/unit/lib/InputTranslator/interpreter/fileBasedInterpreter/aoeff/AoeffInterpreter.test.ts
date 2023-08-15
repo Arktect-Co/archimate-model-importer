@@ -369,4 +369,13 @@ describe('AoeffInterpreter', async () => {
       expect(name).to.equal(UNKNOWN);
     });
   });
+
+  describe('getViewElementViewId', () => {
+    it('should return a element view ID', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+
+      const id = inputInterpreter.getViewElementViewId(node);
+      expect(id).to.equal('96f41f9a-44fd-420b-8e81-e669a490fd2d');
+    });
+  });
 });
