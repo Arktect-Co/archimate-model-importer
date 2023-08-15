@@ -576,4 +576,15 @@ describe('AoeffInterpreter', async () => {
       expect(y).to.equal(492);
     });
   });
+
+  describe('getViewRelationshipModelId', () => {
+    it('should return null if relationshipRef property is not defined', () => {
+      const relationship = model.model.views[0].diagrams[0].view[1].connection[1];
+      relationship.$.relationshipRef = undefined;
+
+      const id = inputInterpreter.getViewRelationshipModelId(relationship);
+
+      expect(id).to.equal(null);
+    });
+  });
 });
