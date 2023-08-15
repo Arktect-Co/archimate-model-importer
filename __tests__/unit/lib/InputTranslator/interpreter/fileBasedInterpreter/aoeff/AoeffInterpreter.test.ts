@@ -705,5 +705,14 @@ describe('AoeffInterpreter', async () => {
 
       expect(isViewNote).to.equal(false);
     });
+
+    it('should return true if view type is equal Label', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[1];
+      node.$['xsi:type'] = ViewType.Label;
+
+      const isViewNote = inputInterpreter.isViewNote(node);
+
+      expect(isViewNote).to.equal(true);
+    });
   });
 });
