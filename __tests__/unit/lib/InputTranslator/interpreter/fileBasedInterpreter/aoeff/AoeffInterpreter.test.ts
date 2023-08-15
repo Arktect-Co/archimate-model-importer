@@ -516,6 +516,13 @@ describe('AoeffInterpreter', async () => {
       expect(content).to.equal('Teste');
     });
 
+    it('should return a view note content if label is an array of string', () => {
+      const node = model.model.views[0].diagrams[0].view[1].node[16];
+
+      const content = inputInterpreter.getViewNoteContent({ ...node, label: ['Teste'] });
+      expect(content).to.equal('Teste');
+    });
+
     it('should return a default content if label property is not defined', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
 
