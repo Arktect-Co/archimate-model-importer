@@ -14,6 +14,7 @@ import {
 import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
+import { FolderType } from '@lib/common/enums/folderType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -885,14 +886,14 @@ export class AoeffInterpreter {
           if (folderName !== undefined) {
             if (
               typeof folderName === 'string' &&
-              folderName.localeCompare('Business') !== 0 &&
-              folderName.localeCompare('Application') !== 0 &&
-              folderName.localeCompare('Technology & Physical') !== 0 &&
-              folderName.localeCompare('Motivation') !== 0 &&
-              folderName.localeCompare('Implementation & Migration') !== 0 &&
-              folderName.localeCompare('Strategy') !== 0 &&
-              folderName.localeCompare('Other') !== 0 &&
-              folderName.localeCompare('Relations') !== 0
+              folderName.localeCompare(FolderType.Business) !== 0 &&
+              folderName.localeCompare(FolderType.Application) !== 0 &&
+              folderName.localeCompare(FolderType.TechnologyAndPhysical) !== 0 &&
+              folderName.localeCompare(FolderType.Motivation) !== 0 &&
+              folderName.localeCompare(FolderType.ImplementationAndMigration) !== 0 &&
+              folderName.localeCompare(FolderType.Strategy) !== 0 &&
+              folderName.localeCompare(FolderType.Other) !== 0 &&
+              folderName.localeCompare(FolderType.Relations) !== 0
             ) {
               organizationFolders.push(folder);
             }
