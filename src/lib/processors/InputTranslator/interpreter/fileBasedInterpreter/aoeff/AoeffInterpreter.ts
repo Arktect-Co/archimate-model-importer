@@ -548,6 +548,18 @@ export class AoeffInterpreter {
     return y;
   }
 
+  /**
+   * Returns the view element width
+   * @param viewElement View Element
+   * @return View Element width
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const width = inputInterpreter.getViewElementWidth(viewElement);
+   */
   getViewElementWidth(viewElement: NodeModel): number {
     return parseInt(viewElement.$.w, 0);
   }
