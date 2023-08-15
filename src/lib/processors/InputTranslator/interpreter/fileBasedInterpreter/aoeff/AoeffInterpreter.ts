@@ -724,7 +724,9 @@ export class AoeffInterpreter {
    * const content = inputInterpreter.getViewNoteContent(node);
    */
   getViewNoteContent(viewElement: NodeModel): string {
-    return viewElement.label[0] ? viewElement.label[0]['_'] || viewElement.label[0] : 'No Content';
+    return viewElement.label && viewElement.label[0]
+      ? viewElement.label[0]['_'] || viewElement.label[0]
+      : 'No Content';
   }
 
   getViewGroupName(viewElement: NodeModel): string {
