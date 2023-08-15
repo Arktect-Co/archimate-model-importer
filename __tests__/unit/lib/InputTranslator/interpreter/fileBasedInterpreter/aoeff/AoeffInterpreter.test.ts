@@ -462,4 +462,16 @@ describe('AoeffInterpreter', async () => {
       expect(viewElementSource).to.deep.equal([]);
     });
   });
+
+  describe('getViewElementNestedElements', () => {
+    it('should return a nested elements', () => {
+      const node = model.model.views[0].diagrams[0].view[1].node[12];
+
+      const nestedElements = inputInterpreter.getViewElementNestedElements(node);
+
+      expect(nestedElements.length).to.equal(2);
+      expect(nestedElements[0].$.identifier).to.equal('id-8108d366-2028-4c39-b119-5b249e77647f');
+      expect(nestedElements[1].$.identifier).to.equal('id-90587bb4-b903-4d1e-af17-ec1deb1a6a3e');
+    });
+  });
 });

@@ -596,6 +596,15 @@ export class AoeffInterpreter {
     return [];
   }
 
+  /**
+   * Returns the view element nested elements
+   * @param viewElement View Element
+   * @return Nested elements
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   */
   getViewElementNestedElements(viewElement: NodeModel): Array<NodeModel> {
     return viewElement.node;
   }
