@@ -1024,12 +1024,24 @@ export class AoeffInterpreter {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const node = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const isViewObject = inputInterpreter. isViewObject(node);
+   * const isViewObject = inputInterpreter.isViewObject(node);
    */
   isViewObject(viewElement: NodeModel): boolean {
     return viewElement.$['xsi:type'].localeCompare(ViewType.Element) === 0;
   }
 
+  /**
+   * Checks if the view element type is Note
+   * @param viewElement View Element
+   * @return boolean
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const isViewNote = inputInterpreter.isViewNote(node);
+   */
   isViewNote(viewElement: NodeModel): boolean {
     return viewElement.$['xsi:type'].localeCompare('Label') === 0;
   }

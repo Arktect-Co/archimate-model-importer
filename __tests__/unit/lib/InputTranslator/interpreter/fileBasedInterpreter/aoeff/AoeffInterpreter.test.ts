@@ -696,4 +696,14 @@ describe('AoeffInterpreter', async () => {
       expect(isViewObject).to.equal(false);
     });
   });
+
+  describe('isViewNote', () => {
+    it('should return false if view type is not equal Label', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[1];
+
+      const isViewNote = inputInterpreter.isViewNote(node);
+
+      expect(isViewNote).to.equal(false);
+    });
+  });
 });
