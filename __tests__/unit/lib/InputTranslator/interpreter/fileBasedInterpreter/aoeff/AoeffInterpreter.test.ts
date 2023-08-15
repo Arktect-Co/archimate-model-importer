@@ -293,4 +293,19 @@ describe('AoeffInterpreter', async () => {
       expect(subFolders).to.deep.equal([]);
     });
   });
+
+  describe('getFolderViews', () => {
+    it('should return a folder Views', async () => {
+      const folder = model.model.organizations[0].item[0];
+      const folderViews = inputInterpreter.getFolderViews(folder);
+
+      expect(folderViews.length).to.equal(4);
+      expect(folderViews).to.deep.equal([
+        { $: { identifierRef: 'id-40eb5bd6-4d7c-4c27-98a8-602f935ed405' } },
+        { $: { identifierRef: 'id-6be02ba1-0489-4ea4-b62b-a22d302cbefe' } },
+        { $: { identifierRef: 'id-5382f2ab-3c02-44b3-a26f-ceaff8b4df02' } },
+        { $: { identifierRef: 'id-7d9dd269-b44a-4067-b10c-2c0563f3efea' } },
+      ]);
+    });
+  });
 });

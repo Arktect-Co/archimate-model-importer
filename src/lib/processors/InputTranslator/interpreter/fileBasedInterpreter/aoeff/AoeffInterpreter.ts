@@ -341,7 +341,7 @@ export class AoeffInterpreter {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const folder = model.model.organizations[0].item[0];
    *
-   * const folderName = inputInterpreter.getSubFolders(folder);
+   * const folders = inputInterpreter.getSubFolders(folder);
    */
   getSubFolders(folder: ItemModel): Array<ItemModel> {
     let subFolders: Array<ItemModel> = [];
@@ -361,6 +361,18 @@ export class AoeffInterpreter {
     return subFolders;
   }
 
+  /**
+   * Returns a folder views
+   * @param folder Folder
+   * @return Folder views
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const folder = model.model.organizations[0].item[0];
+   *
+   * const folders = inputInterpreter.getFolderViews(folder);
+   */
   getFolderViews(folder: ItemModel): Array<CandidateView> {
     let folderViews: Array<CandidateView> = [];
 
