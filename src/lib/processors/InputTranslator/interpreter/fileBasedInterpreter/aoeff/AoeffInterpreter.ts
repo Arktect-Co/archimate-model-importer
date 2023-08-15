@@ -657,6 +657,19 @@ export class AoeffInterpreter {
     return null;
   }
 
+  /**
+   * Returns the view element parent
+   * @param viewElements View elements
+   * @param id niew element ID
+   * @return View Element
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const nodes = model.model.views[0].diagrams[0].view[1].node;
+   *
+   * const element = inputInterpreter.findViewElementParent(nodes,'id-90587bb4-b903-4d1e-af17-ec1deb1a6a3e');
+   */
   findViewElementParent(viewElements: Array<NodeModel>, id: string): NodeModel | null {
     if (Array.isArray(viewElements)) {
       for (let i = 0; i < viewElements.length; i++) {

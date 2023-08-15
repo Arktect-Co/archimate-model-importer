@@ -486,6 +486,14 @@ describe('AoeffInterpreter', async () => {
 
       expect(element.$.identifier).to.equal(parent.$.identifier);
     });
+
+    it('should return null if element is not found', () => {
+      const nodes = model.model.views[0].diagrams[0].view[1].node;
+      const id = 'id';
+      const element = inputInterpreter.findViewElementParent(nodes, id);
+
+      expect(element).to.equal(null);
+    });
   });
 
   describe('findViewElement', () => {
