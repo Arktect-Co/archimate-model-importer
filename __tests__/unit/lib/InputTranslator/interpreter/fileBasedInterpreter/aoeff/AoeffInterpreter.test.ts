@@ -283,4 +283,14 @@ describe('AoeffInterpreter', async () => {
       expect(folderName).to.equal('Strategy');
     });
   });
+
+  describe('getSubFolders', () => {
+    it('should return a sub folders', async () => {
+      const folder = model.model.organizations[0].item[0];
+      const subFolders = inputInterpreter.getSubFolders(folder);
+
+      expect(subFolders.length).to.equal(0);
+      expect(subFolders).to.deep.equal([]);
+    });
+  });
 });
