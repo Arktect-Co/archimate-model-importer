@@ -1062,6 +1062,18 @@ export class AoeffInterpreter {
     return viewElement.$['xsi:type'].localeCompare(ViewType.Container) === 0;
   }
 
+  /**
+   * Checks if the node element type is JunctionNode
+   * @param node Element model
+   * @return boolean
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const isJunctionNode = inputInterpreter.isJunctionNode(node);
+   */
   isJunctionNode(node: ElementModel): boolean {
     return (
       node.$['xsi:type'].localeCompare('OrJunction') === 0 ||

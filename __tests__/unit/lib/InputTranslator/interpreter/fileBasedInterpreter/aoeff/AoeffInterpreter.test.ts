@@ -734,4 +734,14 @@ describe('AoeffInterpreter', async () => {
       expect(isViewGroup).to.equal(true);
     });
   });
+
+  describe('isJunctionNode', () => {
+    it('should return false if element is not junction node', () => {
+      const element = model.model.elements[0].element[0];
+
+      const isJunctionNode = inputInterpreter.isJunctionNode(element);
+
+      expect(isJunctionNode).to.equal(false);
+    });
+  });
 });
