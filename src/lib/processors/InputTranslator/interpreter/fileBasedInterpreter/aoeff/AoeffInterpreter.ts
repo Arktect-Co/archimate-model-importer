@@ -331,6 +331,18 @@ export class AoeffInterpreter {
     return UNKNOWN;
   }
 
+  /**
+   * Returns the sub folders
+   * @param folder Folder
+   * @return List of sub folder
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const folder = model.model.organizations[0].item[0];
+   *
+   * const folderName = inputInterpreter.getSubFolders(folder);
+   */
   getSubFolders(folder: ItemModel): Array<ItemModel> {
     let subFolders: Array<ItemModel> = [];
 
