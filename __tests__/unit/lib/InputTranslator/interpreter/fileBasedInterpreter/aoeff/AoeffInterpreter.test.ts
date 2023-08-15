@@ -631,4 +631,12 @@ describe('AoeffInterpreter', async () => {
       expect(folders[0].label[0]['_']).to.equal('Views');
     });
   });
+
+  describe('validate', () => {
+    it('should return true if Aoeff model is valid', () => {
+      const isValid = inputInterpreter.validate();
+
+      expect(isValid).to.equal(true);
+    });
+  });
 });
