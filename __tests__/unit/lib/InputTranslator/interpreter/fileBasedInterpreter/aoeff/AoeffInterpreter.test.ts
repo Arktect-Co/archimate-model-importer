@@ -474,4 +474,17 @@ describe('AoeffInterpreter', async () => {
       expect(nestedElements[1].$.identifier).to.equal('id-90587bb4-b903-4d1e-af17-ec1deb1a6a3e');
     });
   });
+
+  describe('findViewElement', () => {
+    it('should return a view Element', () => {
+      const nodes = model.model.views[0].diagrams[0].view[1].node;
+
+      const element = inputInterpreter.findViewElement(
+        nodes,
+        '4ac2c3f6-739a-4598-9e8f-2600e0964ace',
+      );
+
+      expect(element.$.identifier).to.equal('id-4ac2c3f6-739a-4598-9e8f-2600e0964ace');
+    });
+  });
 });

@@ -604,11 +604,30 @@ export class AoeffInterpreter {
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
    * const model = {} // Aoeff Model
    * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.views[0].diagrams[0].view[1].node[12];
+   *
+   * const nestedElements = inputInterpreter.getViewElementNestedElements(node);
    */
   getViewElementNestedElements(viewElement: NodeModel): Array<NodeModel> {
     return viewElement.node;
   }
 
+  /**
+   * Returns the view Element
+   * @param viewElements View Elements
+   * @param id View element ID
+   * @return View Element
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const nodes = model.model.views[0].diagrams[0].view[1].node;
+   *
+   * const element = inputInterpreter.findViewElement(
+   *    nodes,
+   *   '4ac2c3f6-739a-4598-9e8f-2600e0964ace',
+   * );
+   */
   findViewElement(viewElements: Array<NodeModel>, id: string): NodeModel | null {
     if (Array.isArray(viewElements)) {
       for (let i = 0; i < viewElements.length; i++) {
