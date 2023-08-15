@@ -466,12 +466,24 @@ export class AoeffInterpreter {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const id = inputInterpreter.getViewName(viewElement);
+   * const id = inputInterpreter.getViewElementViewId(viewElement);
    */
   getViewElementViewId(viewElement: NodeModel): string {
     return viewElement.$.identifier.replace('id-', '');
   }
 
+  /**
+   * Returns the view element model identification
+   * @param viewElement View Element
+   * @return View element model ID
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const id = inputInterpreter.getViewElementModelId(viewElement);
+   */
   getViewElementModelId(viewElement: NodeModel): string {
     return viewElement.$.elementRef.replace('id-', '');
   }
