@@ -33,16 +33,12 @@ interface AccessRelationshipDirection {
 export class AoeffInterpreter {
   private model: Model;
   private readonly modelid: string;
-  private modelRoot: any;
-  private modelFolders: any;
-  private isNestedDiagramStructure: boolean;
-  private hasViewElementChildRelationships: boolean;
+  public isNestedDiagramStructure: boolean;
+  public hasViewElementChildRelationships: boolean;
 
   constructor(model: AoeffModel) {
     this.model = model.model;
     this.modelid = model['model'].$['identifier'];
-    this.modelRoot = null;
-    this.modelFolders = null;
     this.isNestedDiagramStructure = false;
     this.hasViewElementChildRelationships = false;
   }
