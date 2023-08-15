@@ -724,5 +724,14 @@ describe('AoeffInterpreter', async () => {
 
       expect(isViewGroup).to.equal(false);
     });
+
+    it('should return true if view type is equal Container', () => {
+      const node = model.model.views[0].diagrams[0].view[0];
+      node.$['xsi:type'] = ViewType.Container;
+
+      const isViewGroup = inputInterpreter.isViewGroup(node);
+
+      expect(isViewGroup).to.equal(true);
+    });
   });
 });
