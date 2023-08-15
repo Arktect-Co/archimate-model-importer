@@ -499,5 +499,12 @@ describe('AoeffInterpreter', async () => {
 
       expect(element).to.equal(null);
     });
+
+    it('should return null if view elements are empty', () => {
+      const id = '90587bb4-b903-4d1e-af17-ec1deb1a6a3e';
+      const element = inputInterpreter.findViewElement([], id);
+
+      expect(element).to.equal(null);
+    });
   });
 });
