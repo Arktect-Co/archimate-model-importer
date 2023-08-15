@@ -538,5 +538,12 @@ describe('AoeffInterpreter', async () => {
       const content = inputInterpreter.getViewGroupName(node);
       expect(content).to.equal('Teste');
     });
+
+    it('should return a view group name if label is an array of string', () => {
+      const node = model.model.views[0].diagrams[0].view[1].node[16];
+
+      const content = inputInterpreter.getViewGroupName({ ...node, label: ['Teste'] });
+      expect(content).to.equal('Teste');
+    });
   });
 });
