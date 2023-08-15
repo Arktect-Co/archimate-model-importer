@@ -752,5 +752,13 @@ describe('AoeffInterpreter', async () => {
 
       expect(isJunctionNode).to.equal(true);
     });
+
+    it('should return true if view type is equal OrJunction', () => {
+      const element = model.model.elements[0].element[0];
+      element.$['xsi:type'] = ElementType.AndJunction;
+      const isJunctionNode = inputInterpreter.isJunctionNode(element);
+
+      expect(isJunctionNode).to.equal(true);
+    });
   });
 });

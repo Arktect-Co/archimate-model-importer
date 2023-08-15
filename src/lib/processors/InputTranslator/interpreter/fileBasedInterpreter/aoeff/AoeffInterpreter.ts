@@ -17,6 +17,7 @@ import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { FolderType } from '@lib/common/enums/folderType';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
 import { ViewType } from '@lib/common/enums/viewType';
+import { ElementType } from '@lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -1076,8 +1077,8 @@ export class AoeffInterpreter {
    */
   isJunctionNode(node: ElementModel): boolean {
     return (
-      node.$['xsi:type'].localeCompare('OrJunction') === 0 ||
-      node.$['xsi:type'].localeCompare('AndJunction') === 0
+      node.$['xsi:type'].localeCompare(ElementType.OrJunction) === 0 ||
+      node.$['xsi:type'].localeCompare(ElementType.AndJunction) === 0
     );
   }
 }
