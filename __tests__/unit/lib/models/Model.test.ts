@@ -33,13 +33,13 @@ describe('Model', () => {
       identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
       sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
       targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
-      type: RelationshipType.Aggregation,
+      type: RelationshipType.Aggregation.toLowerCase(),
     },
     {
       identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
       sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
       targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
-      type: RelationshipType.Aggregation,
+      type: RelationshipType.Aggregation.toLowerCase(),
       isBidirectional: true,
     },
   ];
@@ -161,7 +161,7 @@ describe('Model', () => {
       sourceId: '81eb2518',
       targetId: '4440af36',
       viewRelationshipId: '9660a40c',
-      type: RelationshipType.Association,
+      type: RelationshipType.Association.toLowerCase(),
       bendpoints: [{ x: 1, y: 4 }],
       isBidirectional: false,
     };
@@ -203,7 +203,7 @@ describe('Model', () => {
 
   describe('createRelationship', () => {
     const relationshipSetting = {
-      type: RelationshipType.Association,
+      type: RelationshipType.Association.toLowerCase(),
       sourceId: '81eb2518',
       targetId: '4440af36',
     };
@@ -406,10 +406,10 @@ describe('Model', () => {
 
       expect(model.statistics.totalRelationships).to.equal(2);
       expect(model.totalByType['relationshipTypes']).to.deep.equalInAnyOrder({
-        [RelationshipType.Aggregation]: 2,
+        [RelationshipType.Aggregation.toLowerCase()]: 2,
       });
       expect(model.model.relationships).to.deep.equalInAnyOrder({
-        [RelationshipType.Aggregation]: [
+        [RelationshipType.Aggregation.toLowerCase()]: [
           {
             identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
             sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
@@ -455,14 +455,14 @@ describe('Model', () => {
         identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a900',
         sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea16d',
         targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ab',
-        type: RelationshipType.Aggregation,
+        type: RelationshipType.Aggregation.toLowerCase(),
       });
       expect(secondRelationship).to.deep.equalInAnyOrder({
         identifier: 'bc8c928b-dafb-4e61-91b3-7c3e5b93a955',
         sourceId: 'd0c22546-6ae6-4ba9-a141-222cc6eea20r',
         targetId: 'cc07d17e-8450-4adf-84d1-ea7d92ec01ff',
         isBidirectional: true,
-        type: RelationshipType.Aggregation,
+        type: RelationshipType.Aggregation.toLowerCase(),
       });
     });
   });

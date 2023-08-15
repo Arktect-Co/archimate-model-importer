@@ -6,6 +6,7 @@ import { AoeffModel, ItemModel, ViewModel } from '@lib/common/interfaces/aoeffMo
 import { expect } from 'chai';
 import { before } from 'mocha';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
+import { ViewType } from '../../../../../../../src/lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -683,6 +684,16 @@ describe('AoeffInterpreter', async () => {
       const isViewObject = inputInterpreter.isViewObject(node);
 
       expect(isViewObject).to.equal(true);
+    });
+
+    it('should return false if view type is not equal Element', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+
+      node.$['xsi:type'] = ViewType.Label;
+
+      const isViewObject = inputInterpreter.isViewObject(node);
+
+      expect(isViewObject).to.equal(false);
     });
   });
 });
