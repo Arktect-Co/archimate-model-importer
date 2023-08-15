@@ -996,6 +996,18 @@ export class AoeffInterpreter {
     return relationship.$['xsi:type'].localeCompare(RelationshipAccessType.Access) === 0;
   }
 
+  /**
+   * Checks if the relationship type is Association
+   * @param relationship Relationship
+   * @return boolean
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[5];
+   *
+   * const isAssociationRelationship = inputInterpreter.isAssociationRelationship(relationship);
+   */
   isAssociationRelationship(relationship: RelationshipModel): boolean {
     return relationship.$['xsi:type'].localeCompare('Association') === 0;
   }

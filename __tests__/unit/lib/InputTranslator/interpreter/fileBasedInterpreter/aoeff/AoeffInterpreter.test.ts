@@ -657,4 +657,14 @@ describe('AoeffInterpreter', async () => {
       expect(isAccessRelationship).to.equal(false);
     });
   });
+
+  describe('isAssociationRelationship', () => {
+    it('should return true if relationship type is equal Association', () => {
+      const relationship = model.model.relationships[0].relationship[7];
+
+      const isAccessRelationship = inputInterpreter.isAssociationRelationship(relationship);
+
+      expect(isAccessRelationship).to.equal(true);
+    });
+  });
 });
