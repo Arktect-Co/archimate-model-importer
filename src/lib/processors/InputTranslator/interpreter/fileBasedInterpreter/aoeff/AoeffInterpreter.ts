@@ -728,8 +728,22 @@ export class AoeffInterpreter {
     return label && label[0] ? label[0]['_'] || label[0] : 'No Content';
   }
 
+  /**
+   * Returns the view group name
+   * @param viewElement View Element
+   * @return View group name
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.views[0].diagrams[0].view[1].node[0];
+   *
+   * const name = inputInterpreter.getViewGroupName(node);
+   */
   getViewGroupName(viewElement: NodeModel): string {
-    return viewElement.label[0] ? viewElement.label[0]['_'] || viewElement.label[0] : UNKNOWN;
+    const { label } = viewElement;
+
+    return label && label[0] ? label[0]['_'] || label[0] : UNKNOWN;
   }
 
   getViewRelationshipBendpoints(viewRelationship: ConnectionModel): Array<Bendpoint> {

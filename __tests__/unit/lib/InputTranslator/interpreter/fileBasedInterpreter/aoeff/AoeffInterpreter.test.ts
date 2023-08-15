@@ -530,4 +530,13 @@ describe('AoeffInterpreter', async () => {
       expect(content).to.equal('No Content');
     });
   });
+
+  describe('getViewGroupName', () => {
+    it('should return a view group name', () => {
+      const node = model.model.views[0].diagrams[0].view[1].node[16];
+
+      const content = inputInterpreter.getViewGroupName(node);
+      expect(content).to.equal('Teste');
+    });
+  });
 });
