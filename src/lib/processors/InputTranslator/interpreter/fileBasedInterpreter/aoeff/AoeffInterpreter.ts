@@ -580,7 +580,19 @@ export class AoeffInterpreter {
     return parseInt(viewElement.$.h, 0);
   }
 
-  getViewElementSourceRelationships(viewElement: NodeModel) {
+  /**
+   * Returns the view element source relationship
+   * @param viewElement View Element
+   * @return Empty Array
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   *
+   * const node = model.model.views[0].diagrams[0].view[0].node[0];
+   * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(node);
+   */
+  getViewElementSourceRelationships(viewElement: NodeModel): Array<NodeModel> {
     return [];
   }
 

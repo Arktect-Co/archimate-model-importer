@@ -451,4 +451,15 @@ describe('AoeffInterpreter', async () => {
       expect(width).to.equal(55);
     });
   });
+
+  describe('getViewElementSourceRelationships', () => {
+    it('should return an empty array', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+
+      const viewElementSource = inputInterpreter.getViewElementSourceRelationships(node);
+
+      expect(viewElementSource.length).to.equal(0);
+      expect(viewElementSource).to.deep.equal([]);
+    });
+  });
 });
