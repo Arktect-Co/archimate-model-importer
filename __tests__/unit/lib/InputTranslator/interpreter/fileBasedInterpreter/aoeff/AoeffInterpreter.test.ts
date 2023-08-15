@@ -564,4 +564,16 @@ describe('AoeffInterpreter', async () => {
       expect(bendpoints).to.deep.equal([{ $: { x: '528', y: '492' } }]);
     });
   });
+
+  describe('getViewRelationshipBendpoint', () => {
+    it('should return a bendpoint', () => {
+      const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
+      const [bendpoint] = inputInterpreter.getViewRelationshipBendpoints(relationship);
+
+      const { y, x } = inputInterpreter.getViewRelationshipBendpoint(bendpoint);
+
+      expect(x).to.equal(528);
+      expect(y).to.equal(492);
+    });
+  });
 });

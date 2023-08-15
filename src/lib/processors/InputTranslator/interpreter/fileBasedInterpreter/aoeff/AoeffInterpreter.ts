@@ -1,6 +1,5 @@
 import {
   AoeffModel,
-  Bendpoint,
   CandidateView,
   ConnectionModel,
   ElementModel,
@@ -10,9 +9,11 @@ import {
   NodeModel,
   Property,
   RelationshipModel,
+  BendpointModel,
 } from '@lib/common/interfaces/aoeffModel';
 import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
+import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -756,20 +757,37 @@ export class AoeffInterpreter {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
    *
-   *       const bendpoints = inputInterpreter.getViewRelationshipBendpoints(relationship);
+   * const bendpoints = inputInterpreter.getViewRelationshipBendpoints(relationship);
    *      */
-  getViewRelationshipBendpoints(viewRelationship: ConnectionModel): Array<Bendpoint> {
+  getViewRelationshipBendpoints(viewRelationship: ConnectionModel): Array<BendpointModel> {
     return viewRelationship.bendpoint;
   }
 
+  /**
+   * Returns the Relationship bendpoint
+   * @param bendpoint Bendpoint Model
+   * @param bendpointIndex Bendpoint index
+   * @param bendpointsLength Bendpoint quantity
+   * @param sourceViewElement Source View Element
+   * @param targetViewElement Target View Element
+   * @param viewNodes View Nodes
+   * @return Bendpoint
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
+   *
+   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(relationship.bendpoint);
+   */
   getViewRelationshipBendpoint(
-    bendpoint: Bendpoint,
-    bendpointIndex,
-    bendpointsLength,
-    sourceViewElement,
-    targetViewElement,
-    viewNodes,
-  ) {
+    bendpoint: BendpointModel,
+    bendpointIndex?: number,
+    bendpointsLength?: number,
+    sourceViewElement?: NodeModel | null,
+    targetViewElement?: NodeModel | null,
+    viewNodes?: Array<NodeModel>,
+  ): Bendpoint {
     let x = parseInt(bendpoint.$.x, 0);
     let y = parseInt(bendpoint.$.y, 0);
 

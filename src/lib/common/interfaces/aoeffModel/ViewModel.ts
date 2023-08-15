@@ -1,7 +1,7 @@
 import { NameModel } from '@lib/common/interfaces/aoeffModel/NameModel';
 import { NodeModel } from '@lib/common/interfaces/aoeffModel/NodeModel';
 
-export interface Bendpoint {
+export interface BendpointModel {
   $: { x: string; y: string };
 }
 
@@ -15,7 +15,7 @@ interface ConnectionSettings {
 
 export interface ConnectionModel {
   $: ConnectionSettings;
-  bendpoint?: Array<Bendpoint>;
+  bendpoint?: Array<BendpointModel>;
 }
 
 interface ViewModelSettings {

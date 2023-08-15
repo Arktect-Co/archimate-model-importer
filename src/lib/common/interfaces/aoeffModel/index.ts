@@ -4,7 +4,11 @@ import { ItemModel, CandidateView } from '@lib/common/interfaces/aoeffModel/Item
 import { NameModel } from '@lib/common/interfaces/aoeffModel/NameModel';
 import { NodeModel } from '@lib/common/interfaces/aoeffModel/NodeModel';
 import { RelationshipModel } from '@lib/common/interfaces/aoeffModel/RelationshipModel';
-import { ViewModel, ConnectionModel, Bendpoint } from '@lib/common/interfaces/aoeffModel/ViewModel';
+import {
+  ViewModel,
+  ConnectionModel,
+  BendpointModel,
+} from '@lib/common/interfaces/aoeffModel/ViewModel';
 
 export {
   AoeffModel,
@@ -18,5 +22,5 @@ export {
   NameModel,
   Property,
   ConnectionModel,
-  Bendpoint,
+  BendpointModel,
 };
