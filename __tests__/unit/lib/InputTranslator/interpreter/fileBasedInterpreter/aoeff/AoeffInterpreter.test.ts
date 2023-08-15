@@ -622,4 +622,13 @@ describe('AoeffInterpreter', async () => {
       expect(id).to.equal('1620e51a-453c-411e-8c1c-8bf9d7545c93');
     });
   });
+
+  describe('getOrganizationFolders', () => {
+    it("should return an organization's folder", () => {
+      const folders = inputInterpreter.getOrganizationFolders();
+
+      expect(folders.length).to.equal(1);
+      expect(folders[0].label[0]['_']).to.equal('Views');
+    });
+  });
 });

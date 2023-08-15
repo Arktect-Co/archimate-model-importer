@@ -860,6 +860,16 @@ export class AoeffInterpreter {
     return viewRelationship.$.target.replace('id-', '');
   }
 
+  /**
+   * Returns an organizations folders
+   * @return List of Organization's folder
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   *
+   * const folders = inputInterpreter.getOrganizationFolders();
+   */
   getOrganizationFolders(): Array<ItemModel> {
     let organizationFolders: Array<ItemModel> = [];
 
