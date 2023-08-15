@@ -692,7 +692,20 @@ export class AoeffInterpreter {
     return null;
   }
 
-  calculateNestedPosition(viewElements: Array<NodeModel>, id: string) {
+  /**
+   * Calculate and returns a nested element position
+   * @param viewElements Views elements
+   * @param id Element ID
+   * @return Bendpoint
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const nodes = model.model.views[0].diagrams[0].view[1].node;
+   *
+   * const positions = inputInterpreter.calculateNestedPosition(nodes,'id-90587bb4-b903-4d1e-af17-ec1deb1a6a3e');
+   */
+  calculateNestedPosition(viewElements: Array<NodeModel>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
       for (let i = 0; i < viewElements.length; i++) {
         const element = viewElements[i];

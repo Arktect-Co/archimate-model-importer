@@ -390,6 +390,14 @@ describe('AoeffInterpreter', async () => {
     });
   });
 
+  describe('calculateNestedPosition', () => {
+    it('should return null if view elements is an empty array', () => {
+      const response = inputInterpreter.calculateNestedPosition([], '');
+
+      expect(response).to.equal(null);
+    });
+  });
+
   describe('getViewElementPositionX', () => {
     it('should return a position X of view element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
