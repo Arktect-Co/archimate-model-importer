@@ -15,6 +15,7 @@ import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { FolderType } from '@lib/common/enums/folderType';
+import { RelationshipType } from '@lib/common/enums/relationshipType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -993,7 +994,7 @@ export class AoeffInterpreter {
    * const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
    */
   isAccessRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare(RelationshipAccessType.Access) === 0;
+    return relationship.$['xsi:type'].localeCompare(RelationshipType.Access) === 0;
   }
 
   /**
@@ -1009,7 +1010,7 @@ export class AoeffInterpreter {
    * const isAssociationRelationship = inputInterpreter.isAssociationRelationship(relationship);
    */
   isAssociationRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare('Association') === 0;
+    return relationship.$['xsi:type'].localeCompare(RelationshipType.Association) === 0;
   }
 
   isViewObject(viewElement: NodeModel): boolean {
