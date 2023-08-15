@@ -477,6 +477,17 @@ describe('AoeffInterpreter', async () => {
     });
   });
 
+  describe('findViewElementParent', () => {
+    it('should return a view element parent', () => {
+      const nodes = model.model.views[0].diagrams[0].view[1].node;
+      const id = 'id-90587bb4-b903-4d1e-af17-ec1deb1a6a3e';
+      const element = inputInterpreter.findViewElementParent(nodes, id);
+      const parent = nodes.find(e => e.$.identifier === 'id-4ac2c3f6-739a-4598-9e8f-2600e0964ace');
+
+      expect(element.$.identifier).to.equal(parent.$.identifier);
+    });
+  });
+
   describe('findViewElement', () => {
     it('should return a view Element', () => {
       const nodes = model.model.views[0].diagrams[0].view[1].node;
