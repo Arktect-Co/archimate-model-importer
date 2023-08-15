@@ -441,4 +441,14 @@ describe('AoeffInterpreter', async () => {
       expect(width).to.equal(120);
     });
   });
+
+  describe('getViewElementHeight', () => {
+    it('should return a view element height', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+
+      const width = inputInterpreter.getViewElementHeight(node);
+
+      expect(width).to.equal(55);
+    });
+  });
 });

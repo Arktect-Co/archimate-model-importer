@@ -564,6 +564,18 @@ export class AoeffInterpreter {
     return parseInt(viewElement.$.w, 0);
   }
 
+  /**
+   * Returns the view element height
+   * @param viewElement View Element
+   * @return View Element height
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const height = inputInterpreter.getViewElementHeight(viewElement);
+   */
   getViewElementHeight(viewElement: NodeModel): number {
     return parseInt(viewElement.$.h, 0);
   }
