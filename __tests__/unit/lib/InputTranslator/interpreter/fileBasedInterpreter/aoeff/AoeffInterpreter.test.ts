@@ -329,11 +329,19 @@ describe('AoeffInterpreter', async () => {
 
     it('should return a view ID if identifier is not defined', () => {
       const view = model.model.views[0].diagrams[0].view[0];
-      view.$.identifierRef = 'id-57147c58-d2fc-463e-977b-b0812b23500a';
-      view.$.identifier = undefined;
       const id = inputInterpreter.getViewId(view);
 
       expect(id).to.equal('57147c58-d2fc-463e-977b-b0812b23500a');
+    });
+  });
+
+  describe('getViewName', () => {
+    it('should return a view name if name property is defined', () => {
+      const view = model.model.views[0].diagrams[0].view[1];
+
+      const name = inputInterpreter.getViewName(view);
+
+      expect(name).to.equal('Relationships');
     });
   });
 });

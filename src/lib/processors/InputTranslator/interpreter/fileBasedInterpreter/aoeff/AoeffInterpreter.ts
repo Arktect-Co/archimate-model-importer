@@ -421,6 +421,18 @@ export class AoeffInterpreter {
     return view.$.identifierRef.replace('id-', '');
   }
 
+  /**
+   * Returns a view name
+   * @param view View
+   * @return View name
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const view = model.model.views[0].diagrams[0].view[0];
+   *
+   * const name = inputInterpreter.getViewName(view);
+   */
   getViewName(view: ViewModel): string {
     if (view !== undefined && view.name !== undefined) {
       // It's a view of the Views folder
