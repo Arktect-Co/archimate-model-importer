@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
 import { parseXml } from '@lib/common/utils/parseXml';
-import { AoeffModel } from '@lib/common/interfaces/aoeffModel';
+import { AoeffModel, ItemModel, ViewModel } from '@lib/common/interfaces/aoeffModel';
 import { expect } from 'chai';
 import { before } from 'mocha';
 import { RelationshipAccessType } from '../../../../../../../src/lib/common/enums/relationshipAccessType';
@@ -350,6 +350,15 @@ describe('AoeffInterpreter', async () => {
       const name = inputInterpreter.getViewName({ ...view, name: ['Relationships'] });
 
       expect(name).to.equal('Relationships');
+    });
+
+    it("should return a view name if the view is an Organizations' folder", () => {
+      const organizationView = model.model.organizations[0].item[8].item[0] as ItemModel;
+      const item = organizationView.item[0];
+
+      const name = inputInterpreter.getViewName(item as unknown as ViewModel);
+
+      expect(name).to.equal('Elements');
     });
   });
 });
