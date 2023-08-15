@@ -395,5 +395,18 @@ describe('AoeffInterpreter', async () => {
 
       expect(positionX).to.equal(38);
     });
+
+    it('should return a view element position X with parent element', () => {
+      const node = model.model.views[0].diagrams[0].view[1].node[12];
+      const nestedElements = inputInterpreter.getViewElementNestedElements(node);
+
+      const positionX = inputInterpreter.getViewElementPositionX(
+        node,
+        '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
+        nestedElements,
+      );
+
+      expect(positionX).to.equal(-324);
+    });
   });
 });
