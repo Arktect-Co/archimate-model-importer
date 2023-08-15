@@ -507,4 +507,13 @@ describe('AoeffInterpreter', async () => {
       expect(element).to.equal(null);
     });
   });
+
+  describe('getViewNoteContent', () => {
+    it('should return a view note content', () => {
+      const node = model.model.views[0].diagrams[0].view[1].node[16];
+
+      const content = inputInterpreter.getViewNoteContent(node);
+      expect(content).to.equal('Teste');
+    });
+  });
 });

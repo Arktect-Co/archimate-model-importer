@@ -711,6 +711,18 @@ export class AoeffInterpreter {
     return null;
   }
 
+  /**
+   * Returns the view note content
+   * @param viewElement View Element
+   * @return View note content
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.views[0].diagrams[0].view[1].node[0];
+   *
+   * const content = inputInterpreter.getViewNoteContent(node);
+   */
   getViewNoteContent(viewElement: NodeModel): string {
     return viewElement.label[0] ? viewElement.label[0]['_'] || viewElement.label[0] : 'No Content';
   }
