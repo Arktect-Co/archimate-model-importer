@@ -343,5 +343,13 @@ describe('AoeffInterpreter', async () => {
 
       expect(name).to.equal('Relationships');
     });
+
+    it('should return a view name if name property is an array of string', () => {
+      const view = model.model.views[0].diagrams[0].view[1];
+
+      const name = inputInterpreter.getViewName({ ...view, name: ['Relationships'] });
+
+      expect(name).to.equal('Relationships');
+    });
   });
 });
