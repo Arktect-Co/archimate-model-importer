@@ -905,6 +905,9 @@ export class AoeffInterpreter {
     return organizationFolders;
   }
 
+  /**
+   * Validates the Aoeff model
+   */
   validate(): boolean {
     return (
       Array.isArray(this.model.elements) &&
@@ -913,30 +916,84 @@ export class AoeffInterpreter {
     );
   }
 
+  /**
+   * Loops through a list of views relationships
+   * @param view View Model
+   * @param action Action foe each relationship view in the list
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const view = model.model.views[0].diagrams[0].view[1];
+   *
+   * inputInterpreter.forEachViewRelationship(view, (connection) =>{});
+   */
   forEachViewRelationship(view: ViewModel, action: (connection: ConnectionModel) => void) {
     if (view.connection !== undefined) {
       view.connection.forEach(action);
     }
   }
 
+  /**
+   * Loops through a list of nodes
+   * @param action Action for each node in the list
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   *
+   * inputInterpreter.forEachModelNode((node) => {});
+   */
   forEachModelNode(action: (node: ElementModel) => void): void {
     if (Array.isArray(this.model.elements)) {
       this.model.elements[0].element.forEach(action);
     }
   }
 
+  /**
+   * Loops through a list of relationship
+   * @param action Action for each relationship in the list
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {});
+   */
   forEachModelRelationship(action: (relationship: RelationshipModel) => void): void {
     if (Array.isArray(this.model.relationships)) {
       this.model.relationships[0].relationship.forEach(action);
     }
   }
 
+  /**
+   * Loops through a list of diagram
+   * @param action Action for each diagram in the list
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   *
+   * inputInterpreter.forEachDiagram((view) => {});
+   */
   forEachDiagram(action: (view: ViewModel) => void) {
     this.model.views[0].diagrams[0].view.forEach(action);
   }
 
+  /**
+   * Checks if the relationship type is Access
+   * @param relationship Relationship
+   * @return boolean
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.relationships[0].relationship[5];
+   *
+   * const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
+   */
   isAccessRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare('Access') === 0;
+    return relationship.$['xsi:type'].localeCompare(RelationshipAccessType.Access) === 0;
   }
 
   isAssociationRelationship(relationship: RelationshipModel): boolean {

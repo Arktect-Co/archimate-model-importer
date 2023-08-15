@@ -5,7 +5,7 @@ import { parseXml } from '@lib/common/utils/parseXml';
 import { AoeffModel, ItemModel, ViewModel } from '@lib/common/interfaces/aoeffModel';
 import { expect } from 'chai';
 import { before } from 'mocha';
-import { RelationshipAccessType } from '../../../../../../../src/lib/common/enums/relationshipAccessType';
+import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -637,6 +637,16 @@ describe('AoeffInterpreter', async () => {
       const isValid = inputInterpreter.validate();
 
       expect(isValid).to.equal(true);
+    });
+  });
+
+  describe('isAccessRelationship', () => {
+    it('should return true if relationship type is equal Access', () => {
+      const relationship = model.model.relationships[0].relationship[5];
+
+      const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
+
+      expect(isAccessRelationship).to.equal(true);
     });
   });
 });
