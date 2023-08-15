@@ -489,7 +489,7 @@ export class AoeffInterpreter {
   }
 
   /**
-   * Returns the view element position x
+   * Returns the position x of view element
    * @param viewElement View Element
    * @param parentId parent ID
    * @param parentViewElements List of parent view elements
@@ -500,7 +500,7 @@ export class AoeffInterpreter {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX(viewElement, null, undefined);
    */
   getViewElementPositionX(
     viewElement: NodeModel,
@@ -518,6 +518,20 @@ export class AoeffInterpreter {
     return x;
   }
 
+  /**
+   * Returns the position y of view element
+   * @param viewElement View Element
+   * @param parentId Parent ID
+   * @param parentViewElements List of parent view elements
+   * @return Position Y
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const positionY = inputInterpreter.getViewElementPositionY(viewElement, null, undefined);
+   */
   getViewElementPositionY(
     viewElement: NodeModel,
     parentId?: string,

@@ -389,14 +389,14 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getViewElementPositionX', () => {
-    it('should return a view element position X', () => {
+    it('should return a position X of view element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
       const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
 
       expect(positionX).to.equal(38);
     });
 
-    it('should return a view element position X with parent element', () => {
+    it('should return a position X view element when parent element is defined', () => {
       const node = model.model.views[0].diagrams[0].view[1].node[12];
       const nestedElements = inputInterpreter.getViewElementNestedElements(node);
 
@@ -407,6 +407,15 @@ describe('AoeffInterpreter', async () => {
       );
 
       expect(positionX).to.equal(-324);
+    });
+  });
+
+  describe('getViewElementPositionY', () => {
+    it('should return a position Y of view element', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+      const positionY = inputInterpreter.getViewElementPositionY(node, null, undefined);
+
+      expect(positionY).to.equal(25);
     });
   });
 });
