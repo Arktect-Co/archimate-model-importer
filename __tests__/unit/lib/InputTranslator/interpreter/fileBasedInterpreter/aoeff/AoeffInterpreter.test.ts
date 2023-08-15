@@ -675,4 +675,14 @@ describe('AoeffInterpreter', async () => {
       expect(isAccessRelationship).to.equal(false);
     });
   });
+
+  describe('isViewObject', () => {
+    it('should return true if view type is equal Element', () => {
+      const node = model.model.views[0].diagrams[0].view[0].node[0];
+
+      const isViewObject = inputInterpreter.isViewObject(node);
+
+      expect(isViewObject).to.equal(true);
+    });
+  });
 });

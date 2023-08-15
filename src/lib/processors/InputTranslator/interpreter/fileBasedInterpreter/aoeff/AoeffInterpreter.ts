@@ -16,6 +16,7 @@ import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { FolderType } from '@lib/common/enums/folderType';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
+import { ViewType } from '@lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -1013,8 +1014,20 @@ export class AoeffInterpreter {
     return relationship.$['xsi:type'].localeCompare(RelationshipType.Association) === 0;
   }
 
+  /**
+   * Checks if the view element type is Object
+   * @param viewElement View Element
+   * @return boolean
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const node = model.model.views[0].diagrams[0].view[0].node[0];
+   *
+   * const isViewObject = inputInterpreter. isViewObject(node);
+   */
   isViewObject(viewElement: NodeModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare('Element') === 0;
+    return viewElement.$['xsi:type'].localeCompare(ViewType.Element) === 0;
   }
 
   isViewNote(viewElement: NodeModel): boolean {
