@@ -578,6 +578,14 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getViewRelationshipModelId', () => {
+    it('should return the relationship model ID', () => {
+      const relationship = model.model.views[0].diagrams[0].view[1].connection[0];
+
+      const id = inputInterpreter.getViewRelationshipModelId(relationship);
+
+      expect(id).to.equal('c8eacb29-df66-4c8a-98bf-159b8e894b94');
+    });
+
     it('should return null if relationshipRef property is not defined', () => {
       const relationship = model.model.views[0].diagrams[0].view[1].connection[1];
       relationship.$.relationshipRef = undefined;
