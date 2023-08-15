@@ -360,5 +360,13 @@ describe('AoeffInterpreter', async () => {
 
       expect(name).to.equal('Elements');
     });
+
+    it('should return a default view name if name property is not defined and not find view based in organization folder', () => {
+      const organizationView = model.model.organizations[0].item[0].item[0];
+
+      const name = inputInterpreter.getViewName(organizationView as unknown as ViewModel);
+
+      expect(name).to.equal(UNKNOWN);
+    });
   });
 });
