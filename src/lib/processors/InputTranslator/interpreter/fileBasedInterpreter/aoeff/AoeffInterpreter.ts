@@ -812,6 +812,18 @@ export class AoeffInterpreter {
       : null;
   }
 
+  /**
+   * Returns the view relationship identification
+   * @param viewRelationship View Relationship
+   * @return View relationship id
+   * @example
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * const model = {} // Aoeff Model
+   * const inputInterpreter = new AoeffInterpreter(model);
+   * const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
+   *
+   * const id = inputInterpreter.getViewRelationshipId(relationship);
+   */
   getViewRelationshipId(viewRelationship: ConnectionModel): string {
     return viewRelationship.$.identifier.replace('id-', '');
   }

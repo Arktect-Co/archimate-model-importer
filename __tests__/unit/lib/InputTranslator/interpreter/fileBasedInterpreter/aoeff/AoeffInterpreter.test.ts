@@ -595,4 +595,13 @@ describe('AoeffInterpreter', async () => {
       expect(id).to.equal(null);
     });
   });
+
+  describe('getViewRelationshipId', () => {
+    it('should return a view relationship ID', () => {
+      const relationship = model.model.views[0].diagrams[0].view[1].connection[0];
+
+      const id = inputInterpreter.getViewRelationshipId(relationship);
+      expect(id).to.equal('b370c707-37eb-4f93-b6f4-c54867832ec7');
+    });
+  });
 });
