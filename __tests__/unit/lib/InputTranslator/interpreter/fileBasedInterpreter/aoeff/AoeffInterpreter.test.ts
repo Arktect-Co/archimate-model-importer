@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import { before } from 'mocha';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 import { ViewType } from '../../../../../../../src/lib/common/enums/viewType';
+import { ElementType } from '../../../../../../../src/lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -742,6 +743,14 @@ describe('AoeffInterpreter', async () => {
       const isJunctionNode = inputInterpreter.isJunctionNode(element);
 
       expect(isJunctionNode).to.equal(false);
+    });
+
+    it('should return true if view type is equal OrJunction', () => {
+      const element = model.model.elements[0].element[0];
+      element.$['xsi:type'] = ElementType.OrJunction;
+      const isJunctionNode = inputInterpreter.isJunctionNode(element);
+
+      expect(isJunctionNode).to.equal(true);
     });
   });
 });

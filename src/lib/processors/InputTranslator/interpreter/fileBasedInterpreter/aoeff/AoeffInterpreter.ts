@@ -1070,9 +1070,9 @@ export class AoeffInterpreter {
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
    * const model = {} // Aoeff Model
    * const inputInterpreter = new AoeffInterpreter(model);
-   * const node = model.model.views[0].diagrams[0].view[0].node[0];
+   * const element = model.model.elements[0].element[0];
    *
-   * const isJunctionNode = inputInterpreter.isJunctionNode(node);
+   * const isJunctionNode = inputInterpreter.isJunctionNode(element);
    */
   isJunctionNode(node: ElementModel): boolean {
     return (
