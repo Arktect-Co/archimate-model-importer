@@ -3,9 +3,9 @@ import { Model } from '@lib/models/Model';
 import Grafico from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
 import InputTranslator from '@lib/processors/InputTranslator/InputTranslator';
 import Archi4Interpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
-import AoeffInterpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
 import { parseXml } from '@lib/common/utils/parseXml';
-import { AoeffModel } from '@lib/common/interfaces/AoeffModel';
+import { AoeffModel } from '@lib/common/interfaces/aoeffModel/AoeffModel';
 import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
 
 interface Option {
