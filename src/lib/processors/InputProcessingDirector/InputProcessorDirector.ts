@@ -2,14 +2,17 @@ import fs from 'fs';
 import { Model } from '@lib/models/Model';
 import Grafico from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
 import { InputTranslator } from '@lib/processors/InputTranslator/InputTranslator';
-import Archi4Interpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
+import {
+  Archi4Interpreter,
+  ArchiInterpreterModel,
+} from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
 import {
   AoeffInterpreter,
   AoeffInterpreterModel,
 } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
 import { parseXml } from '@lib/common/utils/parseXml';
 import { AoeffModel } from '@lib/common/interfaces/aoeffModel/AoeffModel';
-import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
+import { ArchiModel } from '@lib/common/interfaces/archiModel/ArchiModel';
 import { Interpreter } from '@lib/common/interfaces/Interpreter';
 
 interface Option {
@@ -147,7 +150,7 @@ export class InputProcessorDirector {
     const xmlFile = await parseXml(fileString);
 
     if (xmlFile !== null) {
-      let interpreter: AoeffInterpreterModel | null = null;
+      let interpreter: AoeffInterpreterModel | ArchiInterpreterModel | null = null;
       const checkFileType = InputProcessorDirector.checkFileType(xmlFile);
       const isAoeffFile = checkFileType('model');
 

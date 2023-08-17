@@ -8,21 +8,12 @@ import {
   ViewNode,
   ViewRelationship,
 } from '@lib/common/interfaces/model';
-import {
-  BendpointModel,
-  CandidateView,
-  ConnectionModel,
-  ElementModel,
-  ItemModel,
-  NodeModel,
-  RelationshipModel,
-  ViewModel,
-  Property,
-} from '@lib/common/interfaces/aoeffModel';
+import * as AoeffModel from '@lib/common/interfaces/aoeffModel';
 import { Interpreter } from '@lib/common/interfaces/Interpreter';
 import getUniqueId from 'uniqid';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
 import { ViewType } from '@lib/common/enums/viewType';
+import * as ArchiModel from '@lib/common/interfaces/archiModel';
 
 interface Option {
   skipViews: boolean;
@@ -30,15 +21,15 @@ interface Option {
 type Log = (message?: string) => void;
 
 // TODO: Add type for each interpreter
-type InterpreterCandidateView = CandidateView;
-type InterpreterView = ViewModel;
-type InterpreterViewNode = NodeModel;
-type InterpreterViewRelationship = ConnectionModel;
-type InterpreterNode = ElementModel;
-type InterpreterProperty = Property;
-type InterpreterRelationship = RelationshipModel;
-type InterpreterFolder = ItemModel;
-type InterpreterBendpoint = BendpointModel;
+type InterpreterNode = AoeffModel.ElementModel | ArchiModel.Element;
+type InterpreterRelationship = AoeffModel.RelationshipModel | ArchiModel.Element;
+type InterpreterProperty = AoeffModel.Property | ArchiModel.Property;
+type InterpreterView = AoeffModel.ViewModel | ArchiModel.View;
+type InterpreterFolder = AoeffModel.ItemModel | ArchiModel.Folder;
+type InterpreterCandidateView = AoeffModel.CandidateView | ArchiModel.Folder;
+type InterpreterViewNode = AoeffModel.NodeModel | ArchiModel.ChildElement;
+type InterpreterViewRelationship = AoeffModel.ConnectionModel | ArchiModel.Relationship;
+type InterpreterBendpoint = AoeffModel.BendpointModel | ArchiModel.BendpointModel;
 
 type InterpreterModel = Interpreter<
   unknown,

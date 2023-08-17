@@ -607,7 +607,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const node = model.model.views[0].diagrams[0].view[0].node[0];
    * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(node);
    */
-  getViewElementSourceRelationships(viewElement: NodeModel): Array<NodeModel> {
+  getViewElementSourceRelationships(viewElement: NodeModel): Array<ConnectionModel> {
     return [];
   }
 
