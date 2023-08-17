@@ -1,15 +1,21 @@
-export enum RelationshipType {
+export enum AoeffRelationshipType {
   Association = 'Association',
-  Serving = 'Serving',
-  UsedBy = 'UsedBy',
-  Assignment = 'Assignment',
-  Triggering = 'Triggering',
   Access = 'Access',
-  Influence = 'Influence',
-  Realization = 'Realization',
-  Realisation = 'Realisation',
-  Specialization = 'Specialization',
-  Flow = 'Flow',
-  Composition = 'Composition',
-  Aggregation = 'Aggregation',
+}
+
+export enum RelationshipType {
+  Association = 'association',
+  Serving = 'serving',
+  UsedBy = 'usedby',
+  Assignment = 'assignment',
+  Triggering = 'triggering',
+  Access = 'access',
+  Influence = 'influence',
+  Realization = 'realization',
+  Realisation = 'realisation',
+  Specialization = 'specialization',
+  Flow = 'flow',
+  Composition = 'composition',
+  Aggregation = 'aggregation',
+  Connection = 'connection',
 }
