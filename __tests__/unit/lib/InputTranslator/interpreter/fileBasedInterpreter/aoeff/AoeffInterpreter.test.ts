@@ -6,8 +6,8 @@ import { AoeffModel, ItemModel, ViewModel } from '@lib/common/interfaces/aoeffMo
 import { expect } from 'chai';
 import { before } from 'mocha';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
-import { ViewType } from '../../../../../../../src/lib/common/enums/viewType';
-import { ElementType } from '../../../../../../../src/lib/common/enums/elementType';
+import { AoeffViewType } from '@lib/common/enums/viewType';
+import { ElementType } from '@lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -717,7 +717,7 @@ describe('AoeffInterpreter', async () => {
     it('should return false if view type is not equal Element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
 
-      node.$['xsi:type'] = ViewType.Label;
+      node.$['xsi:type'] = AoeffViewType.Label;
 
       const isViewObject = inputInterpreter.isViewObject(node);
 
@@ -736,7 +736,7 @@ describe('AoeffInterpreter', async () => {
 
     it('should return true if view type is equal Label', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[1];
-      node.$['xsi:type'] = ViewType.Label;
+      node.$['xsi:type'] = AoeffViewType.Label;
 
       const isViewNote = inputInterpreter.isViewNote(node);
 
@@ -755,7 +755,7 @@ describe('AoeffInterpreter', async () => {
 
     it('should return true if view type is equal Container', () => {
       const node = model.model.views[0].diagrams[0].view[0];
-      node.$['xsi:type'] = ViewType.Container;
+      node.$['xsi:type'] = AoeffViewType.Container;
 
       const isViewGroup = inputInterpreter.isViewGroup(node);
 
