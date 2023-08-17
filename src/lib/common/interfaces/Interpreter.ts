@@ -15,6 +15,8 @@ export interface Interpreter<
 > {
   model?: TModel;
   readonly modelid: string;
+  modelRoot?: unknown;
+  modelFolders?: Array<unknown>;
   isNestedDiagramStructure: boolean;
   hasViewElementChildRelationships: boolean;
   validate(): boolean;
@@ -62,7 +64,7 @@ export interface Interpreter<
   getViewElementWidth(viewElement: TViewNode): number;
   getViewElementHeight(viewElement: TViewNode): number;
   isViewObject(viewElement: TViewNode): boolean;
-  getViewElementSourceRelationships(viewElement: TViewNode): Array<TViewNode>;
+  getViewElementSourceRelationships(viewElement: TViewNode): Array<TViewRelationship>;
   getViewElements(viewElement: TView): Array<TViewNode>;
   isViewNote(viewElement: TViewNode): boolean;
   getViewNoteContent(viewElement: TViewNode): string;
