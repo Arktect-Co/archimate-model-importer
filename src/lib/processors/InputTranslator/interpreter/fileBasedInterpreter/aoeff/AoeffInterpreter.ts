@@ -15,8 +15,8 @@ import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { FolderType } from '@lib/common/enums/folderType';
-import { RelationshipType } from '@lib/common/enums/relationshipType';
-import { ViewType } from '@lib/common/enums/viewType';
+import { AoeffRelationshipType } from '@lib/common/enums/relationshipType';
+import { AoeffViewType } from '@lib/common/enums/viewType';
 import { ElementType } from '@lib/common/enums/elementType';
 import { Interpreter } from '@lib/common/interfaces/Interpreter';
 
@@ -1032,7 +1032,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
    */
   isAccessRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare(RelationshipType.Access) === 0;
+    return relationship.$['xsi:type'].localeCompare(AoeffRelationshipType.Access) === 0;
   }
 
   /**
@@ -1048,7 +1048,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isAssociationRelationship = inputInterpreter.isAssociationRelationship(relationship);
    */
   isAssociationRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare(RelationshipType.Association) === 0;
+    return relationship.$['xsi:type'].localeCompare(AoeffRelationshipType.Association) === 0;
   }
 
   /**
@@ -1064,7 +1064,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isViewObject = inputInterpreter.isViewObject(node);
    */
   isViewObject(viewElement: NodeModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare(ViewType.Element) === 0;
+    return viewElement.$['xsi:type'].localeCompare(AoeffViewType.Element) === 0;
   }
 
   /**
@@ -1080,7 +1080,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isViewNote = inputInterpreter.isViewNote(node);
    */
   isViewNote(viewElement: NodeModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare(ViewType.Label) === 0;
+    return viewElement.$['xsi:type'].localeCompare(AoeffViewType.Label) === 0;
   }
 
   /**
@@ -1096,7 +1096,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isViewGroup = inputInterpreter.isViewGroup(node);
    */
   isViewGroup(viewElement: ViewModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare(ViewType.Container) === 0;
+    return viewElement.$['xsi:type'].localeCompare(AoeffViewType.Container) === 0;
   }
 
   /**
