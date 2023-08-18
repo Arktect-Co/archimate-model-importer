@@ -3,6 +3,11 @@ export enum AoeffRelationshipType {
   Access = 'Access',
 }
 
+export enum ArchiRelationshipType {
+  Access = 'archimate:AccessRelationship',
+  Association = 'archimate:AssociationRelationship',
+}
+
 export enum RelationshipType {
   Association = 'association',
   Serving = 'serving',
