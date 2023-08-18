@@ -1,7 +1,7 @@
 export interface IdentificationModel {
   'xsi:type'?: string;
   id: string;
-  name: string;
+  name?: string;
   type: string;
   source?: string;
   target?: string;

@@ -14,6 +14,7 @@ import {
 import { Interpreter } from '@lib/common/interfaces/Interpreter';
 import { AccessRelationshipDirection } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
+import { ElementType } from '@lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -72,9 +73,9 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
     if (type === undefined) {
       // AND junction
-      return 'AndJunction';
+      return ElementType.AndJunction;
     } else {
-      return 'OrJunction';
+      return ElementType.OrJunction;
     }
   }
 
