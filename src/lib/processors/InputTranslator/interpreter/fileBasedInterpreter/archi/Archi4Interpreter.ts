@@ -165,7 +165,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
   }
 
   getViewElements(view: View): Array<ChildElement> {
-    return 'child' in view ? view.child : [];
+    return 'child' in view && view.child ? view.child : [];
   }
 
   getViewId(view: View): string {

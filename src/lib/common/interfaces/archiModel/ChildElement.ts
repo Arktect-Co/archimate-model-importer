@@ -16,6 +16,6 @@ export interface ChildElement {
   $: IdentificationModel;
   bounds: Array<Bounds>;
   sourceConnection: Array<Relationship>;
-  content?: Array<string>;
+  content?: Array<string> | string;
   child?: Array<ChildElement>;
 }
