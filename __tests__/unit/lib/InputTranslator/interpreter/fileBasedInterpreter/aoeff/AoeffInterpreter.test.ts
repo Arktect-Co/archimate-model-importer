@@ -1,21 +1,14 @@
-import fs from 'fs';
 import path from 'path';
 import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
-import { parseXml } from '@lib/common/utils/parseXml';
 import { AoeffModel, ItemModel, ViewModel } from '@lib/common/interfaces/aoeffModel';
 import { expect } from 'chai';
 import { before } from 'mocha';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 import { AoeffViewType } from '@lib/common/enums/viewType';
 import { ElementType } from '@lib/common/enums/elementType';
+import { getXmlModel } from '../../../../../utils/getXmlModel';
 
 const UNKNOWN = 'Unknown Name';
-
-const getAoeffModel = async (filePath: string): Promise<AoeffModel> => {
-  const fileString = fs.readFileSync(filePath);
-
-  return <AoeffModel>await parseXml(fileString);
-};
 
 describe('AoeffInterpreter', async () => {
   let inputInterpreter: AoeffInterpreter;
@@ -24,7 +17,7 @@ describe('AoeffInterpreter', async () => {
   before(async () => {
     const rootPath = __dirname.split('\\').slice(0, -5).join('\\');
     const filePath = path.join(rootPath, '/models/aoeff_3_1.xml');
-    model = await getAoeffModel(filePath);
+    model = await getXmlModel<AoeffModel>(filePath);
     inputInterpreter = new AoeffInterpreter(model);
   });
 
