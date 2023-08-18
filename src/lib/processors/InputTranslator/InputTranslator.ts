@@ -1,24 +1,88 @@
-const { Model } = require('../../models/Model');
-const getUniqueId = require('uniqid');
+import { Model } from '@lib/models/Model';
+import {
+  Bounds,
+  Landscape,
+  Node,
+  Property as NodeProperty,
+  Relationship,
+  ViewNode,
+  ViewRelationship,
+} from '@lib/common/interfaces/model';
+import * as AoeffModel from '@lib/common/interfaces/aoeffModel';
+import { Interpreter } from '@lib/common/interfaces/Interpreter';
+import getUniqueId from 'uniqid';
+import { RelationshipType } from '@lib/common/enums/relationshipType';
+import { ViewType } from '@lib/common/enums/viewType';
+import * as ArchiModel from '@lib/common/interfaces/archiModel';
 
-class InputTranslator {
-  constructor(inputInterpreter, outputModel, options, logger) {
+interface Option {
+  skipViews: boolean;
+}
+type Log = (message?: string) => void;
+
+// TODO: Add type for each interpreter
+type InterpreterNode = AoeffModel.ElementModel | ArchiModel.Element;
+type InterpreterRelationship = AoeffModel.RelationshipModel | ArchiModel.Element;
+type InterpreterProperty = AoeffModel.Property | ArchiModel.Property;
+type InterpreterView = AoeffModel.ViewModel | ArchiModel.View;
+type InterpreterFolder = AoeffModel.ItemModel | ArchiModel.Folder;
+type InterpreterCandidateView = AoeffModel.CandidateView | ArchiModel.Folder;
+type InterpreterViewNode = AoeffModel.NodeModel | ArchiModel.ChildElement;
+type InterpreterViewRelationship = AoeffModel.ConnectionModel | ArchiModel.Relationship;
+type InterpreterBendpoint = AoeffModel.BendpointModel | ArchiModel.BendpointModel;
+
+type InterpreterModel = Interpreter<
+  unknown,
+  InterpreterNode,
+  InterpreterRelationship,
+  InterpreterProperty,
+  InterpreterView,
+  InterpreterFolder,
+  InterpreterCandidateView,
+  InterpreterViewNode,
+  InterpreterViewRelationship,
+  InterpreterBendpoint
+>;
+
+export class InputTranslator {
+  private readonly outputModel: Model;
+  private nodesMap: Map<string, Node>;
+  private relationshipsMap: Map<string, Relationship>;
+  private inputInterpreter: InterpreterModel;
+  private options: Option;
+  private readonly log: Log;
+
+  constructor(
+    inputInterpreter: InterpreterModel,
+    outputModel: Model,
+    options: Option,
+    logger: Log,
+  ) {
     this.outputModel = outputModel ? outputModel : new Model();
     this.nodesMap = new Map();
     this.relationshipsMap = new Map();
     this.inputInterpreter = inputInterpreter;
     this.options = options;
-    this.log = logger && logger.info ? logger.info : () => {};
+    this.log = logger ? logger : () => {};
   }
 
-  getOutputModel() {
-    return this.outputModel;
-  }
-
-  translate() {
+  /**
+   * Translates xml file in Model instance
+   * @example
+   * import { InputTranslator } from '@lib/processors/InputTranslator/InputTranslator';
+   * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+   * import { Model } from '@lib/models/Model';
+   *
+   * const model = {}; // AoeffModel | ArchiModel
+   * const interpreter = new AoeffInterpreter(model); //AoeffInterpreter | ArchiInterpreter | GraficoInterpreter
+   * const translator = new InputTranslator(interpreter, new Model(), {skipViews: false}, (message)=>{});
+   *
+   * translator.translate();
+   */
+  translate(): void {
     if (this.inputInterpreter.validate()) {
-      let nodes = [];
-      let relationships = [];
+      let nodes: Array<Node> = [];
+      let relationships: Array<Relationship> = [];
 
       this.log(`Starting model translation`);
 
@@ -60,15 +124,19 @@ class InputTranslator {
     }
   }
 
-  translateNodes(processedNodesList) {
+  /**
+   * Translates Nodes from xml model
+   * @param processedNodesList Nodes list for result storage
+   */
+  private translateNodes(processedNodesList: Array<Node>): void {
     try {
       this.inputInterpreter.forEachModelNode(currentNode => {
-        let nodeId = this.inputInterpreter.getNodeId(currentNode);
-        let nodeType;
-        let nodeName;
+        let nodeId: string = this.inputInterpreter.getNodeId(currentNode);
+        let nodeType: string;
+        let nodeName: string;
         let rawProperties;
-        let nodeProperties;
-        let documentation;
+        let nodeProperties: Array<NodeProperty>;
+        let documentation: string | null;
 
         if (this.inputInterpreter.isJunctionNode(currentNode)) {
           nodeType = this.inputInterpreter.getNodeJunctionType(currentNode);
@@ -103,16 +171,21 @@ class InputTranslator {
         this.nodesMap.set(nodeId, node);
       });
     } catch (e) {
-      throw new Error(`Error while processing nodes: ${e.message}`);
+      const { message } = e as Error;
+      throw new Error(`Error while processing nodes: ${message}`);
     }
   }
 
-  translateRelationships(relationships) {
+  /**
+   * Translates Relationships from xml model
+   * @param relationships Relationships list for result storage
+   */
+  private translateRelationships(relationships: Array<Relationship>) {
     try {
       this.inputInterpreter.forEachModelRelationship(currentRelationship => {
-        let isBidirectional = undefined;
-        let sourceId = this.inputInterpreter.getRelationshipSourceId(currentRelationship);
-        let targetId = this.inputInterpreter.getRelationshipTargetId(currentRelationship);
+        let isBidirectional: boolean | undefined = undefined;
+        let sourceId: string = this.inputInterpreter.getRelationshipSourceId(currentRelationship);
+        let targetId: string = this.inputInterpreter.getRelationshipTargetId(currentRelationship);
 
         if (this.inputInterpreter.isAssociationRelationship(currentRelationship)) {
           let isDirected =
@@ -141,7 +214,7 @@ class InputTranslator {
         }
 
         const relId = this.inputInterpreter.getRelationshipId(currentRelationship);
-        const rel = {
+        const rel: Relationship = {
           identifier: relId,
           sourceId,
           targetId,
@@ -153,19 +226,24 @@ class InputTranslator {
         this.relationshipsMap.set(relId, rel);
       });
     } catch (e) {
-      throw new Error(`Error while translating relationships: ${e.message}`);
+      const { message } = e as Error;
+      throw new Error(`Error while translating relationships: ${message}`);
     }
   }
 
   /**
    * Process the organization of folder (nested way)
-   * @param {*} fileParentFolder - The parent folder this level of child folders - File context
-   * @param {*} modelParentFolder - The parent folder this level of child folders - Model context
-   * @param {*} processViewDataEnable - Boolean that enable or disable the processing of child views (name, bounds, viewNodes and viewRelationships)
+   * @param fileParentFolder - The parent folder this level of child folders - File context
+   * @param modelParentFolder - The parent folder this level of child folders - Model context
+   * @param processViewDataEnable - Boolean that enable or disable the processing of child views (name, bounds, viewNodes and viewRelationships)
    */
-  processFolder(fileParentFolder, modelParentFolder, processViewDataEnable) {
+  private processFolder(
+    fileParentFolder: InterpreterFolder,
+    modelParentFolder: Array<Landscape> | Landscape,
+    processViewDataEnable: boolean,
+  ): void {
     try {
-      let currentModelFolder = this.outputModel.createFolder(
+      let currentModelFolder: Landscape = this.outputModel.createFolder(
         getUniqueId(),
         this.inputInterpreter.getFolderName(fileParentFolder),
       );
@@ -191,11 +269,16 @@ class InputTranslator {
 
       this.outputModel.addFolder(modelParentFolder, currentModelFolder);
     } catch (e) {
-      throw new Error(`Error while processing folder: ${e.message}`);
+      const { message } = e as Error;
+      throw new Error(`Error while processing folder: ${message}`);
     }
   }
 
-  translateViews() {
+  /**
+   * Translates views from xml model
+   * @private
+   */
+  private translateViews(): void {
     this.inputInterpreter.forEachDiagram(currentDiagram => {
       this.processView(null, currentDiagram, true);
     });
@@ -207,23 +290,27 @@ class InputTranslator {
    * @param {*} view - View of the current folder
    * @param {*} processViewDataEnable - Indicates if the processor must process a whole view data or just its reference in a folder
    */
-  processView(currentModelFolder, view, processViewDataEnable) {
+  private processView(
+    currentModelFolder: Landscape | null,
+    view: InterpreterView | InterpreterCandidateView,
+    processViewDataEnable: boolean,
+  ): void {
     try {
-      let nodes = [];
-      let relationships = [];
+      let nodes: Array<ViewNode> = [];
+      let relationships: Array<ViewRelationship> = [];
       let viewElements = null;
       let bounds = Model.createViewBounds(1000000, -1000000, 1000000, -1000000);
       let viewId = this.inputInterpreter.getViewId(view);
       let viewName = this.inputInterpreter.getViewName(view);
 
       if (processViewDataEnable) {
-        viewElements = this.inputInterpreter.getViewElements(view);
+        viewElements = this.inputInterpreter.getViewElements(<InterpreterView>view);
 
         this.processViewElements(view, nodes, relationships, viewElements, bounds, null, null);
 
         if (!this.inputInterpreter.hasViewElementChildRelationships) {
           // Then process relationships
-          this.inputInterpreter.forEachViewRelationship(view, relationship => {
+          this.inputInterpreter.forEachViewRelationship(<InterpreterView>view, relationship => {
             let relationshipRef = this.inputInterpreter.getViewRelationshipModelId(relationship);
 
             this.processViewRelationship(
@@ -249,7 +336,8 @@ class InputTranslator {
         text: viewName,
       });
     } catch (e) {
-      throw new Error(`Error while processing view: ${e.message}`);
+      const { message } = e as Error;
+      throw new Error(`Error while processing view: ${message}`);
     }
   }
 
@@ -261,7 +349,13 @@ class InputTranslator {
    * @param {*} width  - Width of the element
    * @param {*} height - Height of the element
    */
-  processBounds(bounds, x, y, width, height) {
+  private static processBounds(
+    bounds: Bounds,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ): void {
     if (x < bounds.horizontal.min) {
       bounds.horizontal.min = x;
     }
@@ -289,15 +383,15 @@ class InputTranslator {
    * @param {*} parent - Parent element of this iteration (for nested elements)
    * @param {*} parentViewElements - View elements at upper level of Parent element
    */
-  processViewElements(
-    view,
-    nodesResult,
-    relationshipsResult,
-    viewElements,
-    bounds,
-    parent,
-    parentViewElements,
-  ) {
+  private processViewElements(
+    view: InterpreterView | InterpreterCandidateView,
+    nodesResult: Array<ViewNode>,
+    relationshipsResult: Array<ViewRelationship>,
+    viewElements: Array<InterpreterViewNode>,
+    bounds: Bounds,
+    parent: string | null,
+    parentViewElements: Array<InterpreterViewNode> | null,
+  ): void {
     if (Array.isArray(viewElements)) {
       viewElements.forEach(viewElement => {
         let viewNodeId = this.inputInterpreter.getViewElementViewId(viewElement);
@@ -313,7 +407,7 @@ class InputTranslator {
         let elementType;
 
         // Checking and setting bounds for elements
-        this.processBounds(bounds, positionX, positionY, width, height);
+        InputTranslator.processBounds(bounds, positionX, positionY, width, height);
 
         let viewModelElement;
 
@@ -328,7 +422,7 @@ class InputTranslator {
             elementType = el.type.toLowerCase();
           } else {
             // Else it is a group
-            elementType = 'group';
+            elementType = ViewType.Group;
           }
 
           // Setting element view
@@ -354,9 +448,9 @@ class InputTranslator {
 
                 this.processViewRelationship(
                   modelElementId,
-                  this.inputInterpreter.getViewElements(view),
+                  this.inputInterpreter.getViewElements(<InterpreterView>view),
                   relationshipsResult,
-                  viewRelationship,
+                  viewRelationship as unknown as InterpreterViewRelationship,
                 );
               }
             }
@@ -364,10 +458,10 @@ class InputTranslator {
         } else {
           if (this.inputInterpreter.isViewNote(viewElement)) {
             elementName = this.inputInterpreter.getViewNoteContent(viewElement);
-            elementType = 'note';
+            elementType = ViewType.Note;
           } else {
             elementName = this.inputInterpreter.getViewGroupName(viewElement);
-            elementType = 'group';
+            elementType = ViewType.Group;
           }
 
           // Setting element view
@@ -409,7 +503,12 @@ class InputTranslator {
    * @param {*} relationshipsResult - Relationship list for result storage
    * @param {*} viewRelationship - Current view relationship
    */
-  processViewRelationship(modelSourceNodeId, viewNodes, relationshipsResult, viewRelationship) {
+  private processViewRelationship(
+    modelSourceNodeId: string,
+    viewNodes: Array<InterpreterViewNode>,
+    relationshipsResult: Array<ViewRelationship>,
+    viewRelationship: InterpreterViewRelationship,
+  ): void {
     if (viewRelationship !== undefined) {
       let viewModelRelationship = undefined;
       let bendPoints = [];
@@ -461,12 +560,15 @@ class InputTranslator {
           // There is an associated model relationship
           relationshipType = rel.type.toLowerCase().replace('relationship', '');
 
-          if (relationshipType === 'association' || relationshipType === 'access') {
+          if (
+            relationshipType === RelationshipType.Association ||
+            relationshipType === RelationshipType.Access
+          ) {
             isBidirectional = rel.isBidirectional;
           }
         } else {
           // There is no model relationship associated, so it's a connection (only exists in the view)
-          relationshipType = 'connection';
+          relationshipType = RelationshipType.Connection;
         }
 
         viewModelRelationship = Model.createViewRelationship({
@@ -484,5 +586,3 @@ class InputTranslator {
     }
   }
 }
-
-module.exports = InputTranslator;

@@ -1,12 +1,19 @@
 import fs from 'fs';
 import { Model } from '@lib/models/Model';
 import Grafico from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
-import InputTranslator from '@lib/processors/InputTranslator/InputTranslator';
-import Archi4Interpreter from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
-import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
+import { InputTranslator } from '@lib/processors/InputTranslator/InputTranslator';
+import {
+  Archi4Interpreter,
+  ArchiInterpreterModel,
+} from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
+import {
+  AoeffInterpreter,
+  AoeffInterpreterModel,
+} from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
 import { parseXml } from '@lib/common/utils/parseXml';
 import { AoeffModel } from '@lib/common/interfaces/aoeffModel/AoeffModel';
-import { ArchiModel } from '@lib/common/interfaces/ArchiModel';
+import { ArchiModel } from '@lib/common/interfaces/archiModel/ArchiModel';
+import { Interpreter } from '@lib/common/interfaces/Interpreter';
 
 interface Option {
   skipViews: boolean;
@@ -143,7 +150,7 @@ export class InputProcessorDirector {
     const xmlFile = await parseXml(fileString);
 
     if (xmlFile !== null) {
-      let interpreter = null;
+      let interpreter: AoeffInterpreterModel | ArchiInterpreterModel | null = null;
       const checkFileType = InputProcessorDirector.checkFileType(xmlFile);
       const isAoeffFile = checkFileType('model');
 
@@ -211,9 +218,12 @@ export class InputProcessorDirector {
   async translateModelFolder(folderPath): Promise<void> {
     // TODO: verify if really is a GRAFICO model
     try {
-      let interpreter = new Grafico(folderPath);
+      //TODO: Add GraficoInterpreter type
+      let interpreter: Interpreter<any, any, any, any, any, any, any, any, any, any> = new Grafico(
+        folderPath,
+      );
 
-      const translator = new InputTranslator(interpreter, this.model, this.log);
+      const translator = new InputTranslator(interpreter, this.model, this.options, this.log);
 
       translator.translate();
     } catch (e) {

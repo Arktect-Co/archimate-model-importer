@@ -15,24 +15,38 @@ import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { FolderType } from '@lib/common/enums/folderType';
-import { RelationshipType } from '@lib/common/enums/relationshipType';
-import { ViewType } from '@lib/common/enums/viewType';
+import { AoeffRelationshipType } from '@lib/common/enums/relationshipType';
+import { AoeffViewType } from '@lib/common/enums/viewType';
 import { ElementType } from '@lib/common/enums/elementType';
+import { Interpreter } from '@lib/common/interfaces/Interpreter';
 
 const UNKNOWN = 'Unknown Name';
 
-interface AccessRelationshipDirection {
+export interface AccessRelationshipDirection {
   source: boolean;
   target: boolean;
 }
+
+export type AoeffInterpreterModel = Interpreter<
+  Model,
+  ElementModel,
+  RelationshipModel,
+  Property,
+  ViewModel,
+  ItemModel,
+  CandidateView,
+  NodeModel,
+  ConnectionModel,
+  BendpointModel
+>;
 
 /**
  *  AOEFF has a limitation when loading relationships of nested elements with its parents. The model
  *  ignores this type of relationship
  */
-export class AoeffInterpreter {
-  private model: Model;
-  private readonly modelid: string;
+export class AoeffInterpreter implements AoeffInterpreterModel {
+  public model: Model;
+  public readonly modelid: string;
   public isNestedDiagramStructure: boolean;
   public hasViewElementChildRelationships: boolean;
 
@@ -376,7 +390,6 @@ export class AoeffInterpreter {
    */
   getFolderViews(folder: ItemModel): Array<CandidateView> {
     let folderViews: Array<CandidateView> = [];
-
     folder.item.forEach(candidateView => {
       if (candidateView !== undefined) {
         if ('$' in candidateView && candidateView.$ !== undefined) {
@@ -416,8 +429,9 @@ export class AoeffInterpreter {
    *
    * const id = inputInterpreter.getViewId(view);
    */
-  getViewId(view: ViewModel): string {
-    if (view.$.identifier !== undefined) return view.$.identifier.replace('id-', '');
+  getViewId(view: ViewModel | CandidateView): string {
+    if ('identifier' in view.$ && view.$.identifier !== undefined)
+      return view.$.identifier.replace('id-', '');
 
     return view.$.identifierRef.replace('id-', '');
   }
@@ -434,8 +448,8 @@ export class AoeffInterpreter {
    *
    * const name = inputInterpreter.getViewName(view);
    */
-  getViewName(view: ViewModel): string {
-    if (view !== undefined && view.name !== undefined) {
+  getViewName(view: ViewModel | CandidateView): string {
+    if ('name' in view && view !== undefined && view.name !== undefined) {
       // It's a view of the Views folder
       return view.name[0]['_'] ? view.name[0]['_'] : view.name[0];
     } else {
@@ -593,7 +607,7 @@ export class AoeffInterpreter {
    * const node = model.model.views[0].diagrams[0].view[0].node[0];
    * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(node);
    */
-  getViewElementSourceRelationships(viewElement: NodeModel): Array<NodeModel> {
+  getViewElementSourceRelationships(viewElement: NodeModel): Array<ConnectionModel> {
     return [];
   }
 
@@ -1018,7 +1032,7 @@ export class AoeffInterpreter {
    * const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
    */
   isAccessRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare(RelationshipType.Access) === 0;
+    return relationship.$['xsi:type'].localeCompare(AoeffRelationshipType.Access) === 0;
   }
 
   /**
@@ -1034,7 +1048,7 @@ export class AoeffInterpreter {
    * const isAssociationRelationship = inputInterpreter.isAssociationRelationship(relationship);
    */
   isAssociationRelationship(relationship: RelationshipModel): boolean {
-    return relationship.$['xsi:type'].localeCompare(RelationshipType.Association) === 0;
+    return relationship.$['xsi:type'].localeCompare(AoeffRelationshipType.Association) === 0;
   }
 
   /**
@@ -1050,7 +1064,7 @@ export class AoeffInterpreter {
    * const isViewObject = inputInterpreter.isViewObject(node);
    */
   isViewObject(viewElement: NodeModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare(ViewType.Element) === 0;
+    return viewElement.$['xsi:type'].localeCompare(AoeffViewType.Element) === 0;
   }
 
   /**
@@ -1066,7 +1080,7 @@ export class AoeffInterpreter {
    * const isViewNote = inputInterpreter.isViewNote(node);
    */
   isViewNote(viewElement: NodeModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare(ViewType.Label) === 0;
+    return viewElement.$['xsi:type'].localeCompare(AoeffViewType.Label) === 0;
   }
 
   /**
@@ -1082,7 +1096,7 @@ export class AoeffInterpreter {
    * const isViewGroup = inputInterpreter.isViewGroup(node);
    */
   isViewGroup(viewElement: ViewModel): boolean {
-    return viewElement.$['xsi:type'].localeCompare(ViewType.Container) === 0;
+    return viewElement.$['xsi:type'].localeCompare(AoeffViewType.Container) === 0;
   }
 
   /**
