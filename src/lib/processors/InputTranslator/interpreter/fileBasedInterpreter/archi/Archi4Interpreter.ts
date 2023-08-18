@@ -54,7 +54,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * Get the model identification
    * @return model ID
    * @example
-   * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';   * const model = {} // Aoeff Model
+   * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
+   * const model = {} // Archi Model
    * const inputInterpreter = new Archi4Interpreter(model);
    * const id = inputInterpreter.getModelId();
    */
@@ -67,7 +68,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * @param node Node
    * @return Node ID
    * @example
-   * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';   * const model = {} // Aoeff Model
+   * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
    * const model = {} // Archi Model
    * const inputInterpreter = new Archi4Interpreter(model);
    * const node = model['archimate:model'].folder[0].element[0];
