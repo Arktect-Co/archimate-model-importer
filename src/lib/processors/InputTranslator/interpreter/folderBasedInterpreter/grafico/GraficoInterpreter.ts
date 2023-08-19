@@ -42,7 +42,23 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     this.hasViewElementChildRelationships = true;
   }
 
-  _getFirstPropertyName(jsonObj: View | Relationship | Node) {
+  /**
+   * Returns the first property name
+   * @param jsonObj Grafico Model
+   * @return Property name
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * const node = {
+   *   "node":{
+   *     name: "Node 1"
+   *   }
+   * }
+   *
+   * const name = GraficoInterpreter._getFirstPropertyName(node);
+   */
+  private static _getFirstPropertyName(jsonObj: View | Relationship | Node): string {
     for (let key in jsonObj) {
       if (jsonObj.hasOwnProperty(key)) {
         return key;
@@ -69,26 +85,55 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
    * const inputInterpreter = new Grafico("modelPath");
+   * const node = {
+   *     firstNode: {
+   *       $: {
+   *         id: '30301dbd-300b-4657-b633-44ddea33d1ec',
+   *         name: 'FirstNode',
+   *         'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+   *       },
+   *     },
+   *   };
    * const id = inputInterpreter.getNodeId(node);
    */
   getNodeId(node: Node): string {
-    return node[this._getFirstPropertyName(node)].$.id;
+    const key = GraficoInterpreter._getFirstPropertyName(node);
+    return node[key].$.id;
   }
 
+  /**
+   * Returns the node name
+   * @param node Node
+   * @return Node name
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   * const node = {
+   *     firstNode: {
+   *       $: {
+   *         id: '30301dbd-300b-4657-b633-44ddea33d1ec',
+   *         name: 'FirstNode',
+   *         'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+   *       },
+   *     },
+   *   };
+   * const name = inputInterpreter.getNodeName(node);
+   */
   getNodeName(node: Node): string {
-    return node[this._getFirstPropertyName(node)].$.name || UNKNOWN;
+    const key = GraficoInterpreter._getFirstPropertyName(node);
+    return node[key].$.name || UNKNOWN;
   }
 
   getNodeType(node: Node): string {
-    return this._getFirstPropertyName(node).replace('archimate:', '');
+    return GraficoInterpreter._getFirstPropertyName(node).replace('archimate:', '');
   }
 
   getNodeDocumentation(node: Node): string {
-    return node[this._getFirstPropertyName(node)].$.documentation || null;
+    return node[GraficoInterpreter._getFirstPropertyName(node)].$.documentation || null;
   }
 
   getNodeJunctionType(node: Node): string {
-    let type = node[this._getFirstPropertyName(node)].$.type;
+    let type = node[GraficoInterpreter._getFirstPropertyName(node)].$.type;
 
     if (type === undefined) {
       // AND junction
@@ -99,7 +144,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   }
 
   getNodeProperties(node: Node): Array<Property> {
-    return node[this._getFirstPropertyName(node)].properties || [];
+    return node[GraficoInterpreter._getFirstPropertyName(node)].properties || [];
   }
 
   getPropertyEntry(property: Property): Array<string> {
@@ -111,11 +156,11 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   }
 
   getRelationshipId(relationship: Relationship): string {
-    return relationship[this._getFirstPropertyName(relationship)].$.id;
+    return relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.id;
   }
 
   getRelationshipName(relationship: Relationship): string {
-    let name = relationship[this._getFirstPropertyName(relationship)].$.name;
+    let name = relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.name;
 
     if (name !== undefined) {
       return name;
@@ -125,31 +170,32 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   }
 
   getRelationshipSourceId(relationship: Relationship): string {
-    return relationship[this._getFirstPropertyName(relationship)].source[0].$.href.replace(
-      /.*#(.*)/g,
-      '$1',
-    );
+    return relationship[
+      GraficoInterpreter._getFirstPropertyName(relationship)
+    ].source[0].$.href.replace(/.*#(.*)/g, '$1');
   }
 
   getRelationshipTargetId(relationship: Relationship): string {
-    return relationship[this._getFirstPropertyName(relationship)].target[0].$.href.replace(
-      /.*#(.*)/g,
-      '$1',
-    );
+    return relationship[
+      GraficoInterpreter._getFirstPropertyName(relationship)
+    ].target[0].$.href.replace(/.*#(.*)/g, '$1');
   }
 
   getRelationshipType(relationship: Relationship): string {
-    return this._getFirstPropertyName(relationship).replace('archimate:', '');
+    return GraficoInterpreter._getFirstPropertyName(relationship).replace('archimate:', '');
   }
 
   getAccessRelationshipDirection(relationship: Relationship): AccessRelationshipDirection {
-    if (relationship[this._getFirstPropertyName(relationship)].$.accessType === undefined) {
+    if (
+      relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.accessType ===
+      undefined
+    ) {
       return {
         source: false,
         target: true,
       };
     } else {
-      switch (relationship[this._getFirstPropertyName(relationship)].$.accessType) {
+      switch (relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.accessType) {
         case '1':
           return {
             source: true,
@@ -170,7 +216,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   }
 
   getAssociationRelationshipIsDirected(relationship: Relationship): boolean {
-    let isDirected = relationship[this._getFirstPropertyName(relationship)].$.directed;
+    let isDirected =
+      relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.directed;
 
     if (isDirected === undefined) {
       return false;
@@ -190,7 +237,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       let parser = new xml2js.Parser({ explicitArray: true });
 
       parser.parseString(data, function (err, folderData) {
-        folderName = folderData[_self._getFirstPropertyName(folderData)].$.name; // Seems to be wrong (async), but actually is sync behaviour
+        folderName = folderData[GraficoInterpreter._getFirstPropertyName(folderData)].$.name; // Seems to be wrong (async), but actually is sync behaviour
       });
     }
 
@@ -234,15 +281,15 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   }
 
   getViewElements(view: View): Array<ViewNode> {
-    return view[this._getFirstPropertyName(view)].children;
+    return view[GraficoInterpreter._getFirstPropertyName(view)].children;
   }
 
   getViewId(view: View): string {
-    return view[this._getFirstPropertyName(view)].$.id;
+    return view[GraficoInterpreter._getFirstPropertyName(view)].$.id;
   }
 
   getViewName(view: View): string {
-    return view[this._getFirstPropertyName(view)].$.name || UNKNOWN;
+    return view[GraficoInterpreter._getFirstPropertyName(view)].$.name || UNKNOWN;
   }
 
   getViewElementViewId(viewElement: ViewNode): string {
@@ -550,13 +597,15 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   isAccessRelationship(relationship: Relationship): boolean {
     return (
-      this._getFirstPropertyName(relationship).localeCompare('archimate:AccessRelationship') === 0
+      GraficoInterpreter._getFirstPropertyName(relationship).localeCompare(
+        'archimate:AccessRelationship',
+      ) === 0
     );
   }
 
   isAssociationRelationship(relationship: Relationship): boolean {
     return (
-      this._getFirstPropertyName(relationship).localeCompare(
+      GraficoInterpreter._getFirstPropertyName(relationship).localeCompare(
         'archimate:AssociationRelationship',
       ) === 0
     );
@@ -575,7 +624,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   }
 
   isJunctionNode(node: Node): boolean {
-    return this._getFirstPropertyName(node).localeCompare('archimate:Junction') === 0;
+    return GraficoInterpreter._getFirstPropertyName(node).localeCompare('archimate:Junction') === 0;
   }
 
   hasViewElementWithChildRelationships(): boolean {

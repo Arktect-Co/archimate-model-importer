@@ -2,7 +2,7 @@ interface NodeIdentification {
   'xmlns:archimate': string;
   name: string;
   id: string;
-  type: string;
+  type?: string;
   documentation?: string;
 }
 
