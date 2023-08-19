@@ -185,4 +185,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(triggeringRelationship.$.id);
     });
   });
+
+  describe('getRelationshipName', () => {
+    it('should return a default relationship name if the name property is not defined', () => {
+      const name = inputInterpreter.getRelationshipName(relationship);
+
+      expect(name).to.equal('');
+    });
+  });
 });

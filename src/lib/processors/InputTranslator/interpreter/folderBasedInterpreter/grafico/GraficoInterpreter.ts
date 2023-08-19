@@ -229,8 +229,21 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return relationship[key].$.id;
   }
 
+  /**
+   * Returns relationship name
+   * @param relationship Relationship
+   * @return Relationship Name
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const name = inputInterpreter.getRelationshipName(relationship);
+   * });
+   */
   getRelationshipName(relationship: Relationship): string {
-    let name = relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.name;
+    const key = GraficoInterpreter._getFirstPropertyName(relationship);
+    const name = relationship[key].$.name;
 
     if (name !== undefined) {
       return name;
