@@ -77,5 +77,14 @@ describe('GraficoInterpreter', () => {
 
       expect(documentation).to.equal(null);
     });
+
+    it('shoul return a node documentation', () => {
+      const locationDocumentation = 'Location documentation';
+      locationNode.$.documentation = locationDocumentation;
+
+      const documentation = inputInterpreter.getNodeDocumentation(node);
+
+      expect(documentation).to.equal(locationDocumentation);
+    });
   });
 });
