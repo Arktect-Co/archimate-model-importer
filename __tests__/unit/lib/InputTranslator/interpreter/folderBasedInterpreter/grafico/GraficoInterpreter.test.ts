@@ -28,4 +28,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal('');
     });
   });
+
+  describe('getNodeId', () => {
+    it('should return a node ID', () => {
+      const id = inputInterpreter.getNodeId(node);
+
+      expect(id).to.equal(node['firstNode'].$.id);
+    });
+  });
 });
