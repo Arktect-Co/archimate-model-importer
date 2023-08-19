@@ -1,6 +1,9 @@
 import fs from 'fs';
 import { Model } from '@lib/models/Model';
-import Grafico from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+import {
+  GraficoInterpreter,
+  GraficoInterpreterModel,
+} from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
 import { InputTranslator } from '@lib/processors/InputTranslator/InputTranslator';
 import {
   Archi4Interpreter,
@@ -13,7 +16,6 @@ import {
 import { parseXml } from '@lib/common/utils/parseXml';
 import { AoeffModel } from '@lib/common/interfaces/aoeffModel/AoeffModel';
 import { ArchiModel } from '@lib/common/interfaces/archiModel/ArchiModel';
-import { Interpreter } from '@lib/common/interfaces/Interpreter';
 
 interface Option {
   skipViews: boolean;
@@ -218,10 +220,7 @@ export class InputProcessorDirector {
   async translateModelFolder(folderPath): Promise<void> {
     // TODO: verify if really is a GRAFICO model
     try {
-      //TODO: Add GraficoInterpreter type
-      let interpreter: Interpreter<any, any, any, any, any, any, any, any, any, any> = new Grafico(
-        folderPath,
-      );
+      let interpreter: GraficoInterpreterModel = new GraficoInterpreter(folderPath);
 
       const translator = new InputTranslator(interpreter, this.model, this.options, this.log);
 
