@@ -192,5 +192,13 @@ describe('GraficoInterpreter', () => {
 
       expect(name).to.equal('');
     });
+
+    it('should return a relationship name', () => {
+      const relationshipName = 'test';
+      triggeringRelationship.$.name = relationshipName;
+      const name = inputInterpreter.getRelationshipName(relationship);
+
+      expect(name).to.equal(relationshipName);
+    });
   });
 });
