@@ -85,16 +85,10 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
    * const inputInterpreter = new Grafico("modelPath");
-   * const node = {
-   *     firstNode: {
-   *       $: {
-   *         id: '30301dbd-300b-4657-b633-44ddea33d1ec',
-   *         name: 'FirstNode',
-   *         'xmlns:archimate': 'http://www.archimatetool.com/archimate',
-   *       },
-   *     },
-   *   };
-   * const id = inputInterpreter.getNodeId(node);
+   *
+   * inputInterpreter.forEachModelNode((node) => {
+   *   const id = inputInterpreter.getNodeId(node);
+   * });
    */
   getNodeId(node: Node): string {
     const key = GraficoInterpreter._getFirstPropertyName(node);
@@ -108,22 +102,28 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
    * const inputInterpreter = new Grafico("modelPath");
-   * const node = {
-   *     firstNode: {
-   *       $: {
-   *         id: '30301dbd-300b-4657-b633-44ddea33d1ec',
-   *         name: 'FirstNode',
-   *         'xmlns:archimate': 'http://www.archimatetool.com/archimate',
-   *       },
-   *     },
-   *   };
-   * const name = inputInterpreter.getNodeName(node);
+   * inputInterpreter.forEachModelNode((node) => {
+   *   const name = inputInterpreter.getNodeName(node);
+   * });
    */
   getNodeName(node: Node): string {
     const key = GraficoInterpreter._getFirstPropertyName(node);
     return node[key].$.name || UNKNOWN;
   }
 
+  /**
+   * Returns the node type
+   * @param node Node
+   * @return Node type
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   *  inputInterpreter.forEachModelNode((node) => {
+   *   const type = inputInterpreter.getNodeType(node);
+   * });
+   *
+   */
   getNodeType(node: Node): string {
     return GraficoInterpreter._getFirstPropertyName(node).replace('archimate:', '');
   }

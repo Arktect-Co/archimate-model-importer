@@ -4,18 +4,20 @@ import path from 'path';
 import { expect } from 'chai';
 
 const UNKNOWN = 'Unknown Name';
+const node: Node = {
+  'archimate:Location': {
+    $: {
+      id: '30301dbd-300b-4657-b633-44ddea33d1ec',
+      name: 'Location',
+      'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+    },
+  },
+};
 
 describe('GraficoInterpreter', () => {
   let inputInterpreter: GraficoInterpreter;
-  const node: Node = {
-    firstNode: {
-      $: {
-        id: '30301dbd-300b-4657-b633-44ddea33d1ec',
-        name: 'FirstNode',
-        'xmlns:archimate': 'http://www.archimatetool.com/archimate',
-      },
-    },
-  };
+  const locationNode = node['archimate:Location'];
+
   before(() => {
     const rootPath = __dirname.split('\\').slice(0, -5).join('\\');
     const filePath = path.join(rootPath, '/models/grafico');
@@ -35,7 +37,7 @@ describe('GraficoInterpreter', () => {
     it('should return a node ID', () => {
       const id = inputInterpreter.getNodeId(node);
 
-      expect(id).to.equal(node['firstNode'].$.id);
+      expect(id).to.equal(locationNode.$.id);
     });
   });
 
@@ -43,21 +45,29 @@ describe('GraficoInterpreter', () => {
     it('should return a node name', () => {
       const name = inputInterpreter.getNodeName(node);
 
-      expect(name).to.equal(node['firstNode'].$.name);
+      expect(name).to.equal(locationNode.$.name);
     });
 
     it('should return a default node name if the name property is not defined', () => {
       const name = inputInterpreter.getNodeName({
         firstNode: {
           $: {
-            id: node['firstNode'].$.id,
+            id: locationNode.$.id,
             name: undefined,
-            'xmlns:archimate': node['firstNode'].$['xmlns:archimate'],
+            'xmlns:archimate': locationNode.$['xmlns:archimate'],
           },
         },
       });
 
       expect(name).to.equal(UNKNOWN);
+    });
+  });
+
+  describe('getNodeType', () => {
+    it('should return a node type', () => {
+      const type = inputInterpreter.getNodeType(node);
+
+      expect(type).to.equal('Location');
     });
   });
 });
