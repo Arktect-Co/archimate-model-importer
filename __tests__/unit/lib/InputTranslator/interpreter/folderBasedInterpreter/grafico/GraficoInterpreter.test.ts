@@ -201,4 +201,12 @@ describe('GraficoInterpreter', () => {
       expect(name).to.equal(relationshipName);
     });
   });
+
+  describe('getRelationshipSourceId', () => {
+    it('should return a relationship source ID', () => {
+      const id = inputInterpreter.getRelationshipSourceId(relationship);
+
+      expect(id).to.equal('fdfa517d-8d14-4ce7-96c4-7dbab4002dbf');
+    });
+  });
 });
