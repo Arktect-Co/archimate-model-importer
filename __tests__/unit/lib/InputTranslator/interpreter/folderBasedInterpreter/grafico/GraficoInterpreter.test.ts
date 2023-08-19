@@ -133,4 +133,15 @@ describe('GraficoInterpreter', () => {
       expect(properties).to.deep.equal(locationProperties);
     });
   });
+
+  describe('getPropertyEntry', () => {
+    it('should return a property entry', () => {
+      const property = { $: { key: 'Has Owner', value: 'true' } };
+
+      const propertyEntry = inputInterpreter.getPropertyEntry(property);
+
+      expect(propertyEntry.length).to.equal(2);
+      expect(propertyEntry).to.deep.equal([property.$.key, property.$.value]);
+    });
+  });
 });

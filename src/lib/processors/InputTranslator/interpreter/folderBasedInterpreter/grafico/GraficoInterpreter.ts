@@ -190,6 +190,20 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return node[key].properties || [];
   }
 
+  /**
+   * Returns the property entry
+   * @param property property
+   * @return Property entry
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   *  inputInterpreter.forEachModelNode((node) => {
+   *   const properties = inputInterpreter.getNodeProperties(node);
+   *   const propertyEntry = inputInterpreter.getPropertyEntry(properties[0]);
+   * });
+   *
+   */
   getPropertyEntry(property: Property): Array<string> {
     if (property && property.$ && property.$.key && property.$.value) {
       return [property.$.key, property.$.value];
