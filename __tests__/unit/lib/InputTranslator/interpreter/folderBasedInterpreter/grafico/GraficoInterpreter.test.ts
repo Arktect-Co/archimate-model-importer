@@ -103,5 +103,15 @@ describe('GraficoInterpreter', () => {
 
       expect(type).to.equal(ElementType.AndJunction);
     });
+
+    it('should return a OrJunction type', () => {
+      const type = inputInterpreter.getNodeJunctionType({
+        'archimate:Junction': {
+          ...node['archimate:Junction'],
+        },
+      });
+
+      expect(type).to.equal(ElementType.OrJunction);
+    });
   });
 });
