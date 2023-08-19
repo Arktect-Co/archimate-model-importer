@@ -13,6 +13,7 @@ import {
   Property,
 } from '@lib/common/interfaces/graficoModel';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
+import { ElementType } from '@lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -145,14 +146,29 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return node[key].$.documentation || null;
   }
 
+  /**
+   * Returns the node Junction type
+   * @param node
+   * @return Node Junctions type
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   *  inputInterpreter.forEachModelNode((node) => {
+   *   if(inputInterpreter.isJunctionNode(node))
+   *      const type = inputInterpreter.getNodeJunctionType(node);
+   * });
+   *
+   */
   getNodeJunctionType(node: Node): string {
-    let type = node[GraficoInterpreter._getFirstPropertyName(node)].$.type;
+    const key = GraficoInterpreter._getFirstPropertyName(node);
+    let type = node[key].$.type;
 
     if (type === undefined) {
       // AND junction
-      return 'AndJunction';
+      return ElementType.AndJunction;
     } else {
-      return 'OrJunction';
+      return ElementType.OrJunction;
     }
   }
 

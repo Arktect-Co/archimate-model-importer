@@ -2,6 +2,7 @@ import { GraficoInterpreter } from '@lib/processors/InputTranslator/interpreter/
 import { Node } from '@lib/common/interfaces/graficoModel';
 import path from 'path';
 import { expect } from 'chai';
+import { ElementType } from '../../../../../../../src/lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 const node: Node = {
@@ -10,6 +11,14 @@ const node: Node = {
       id: '30301dbd-300b-4657-b633-44ddea33d1ec',
       name: 'Location',
       'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+    },
+  },
+  'archimate:Junction': {
+    $: {
+      'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+      name: 'Junction',
+      id: '2ab6d200-8f6a-4185-b0a4-4f6828107951',
+      type: 'or',
     },
   },
 };
@@ -85,6 +94,14 @@ describe('GraficoInterpreter', () => {
       const documentation = inputInterpreter.getNodeDocumentation(node);
 
       expect(documentation).to.equal(locationDocumentation);
+    });
+  });
+
+  describe('getNodeJunctionType', () => {
+    it('should return a AndJunctionType', () => {
+      const type = inputInterpreter.getNodeJunctionType(node);
+
+      expect(type).to.equal(ElementType.AndJunction);
     });
   });
 });
