@@ -9,7 +9,7 @@ interface RelationshipSetting {
   'xmlns:xsi': string;
   'xmlns:archimate': string;
   id: string;
-  name: string;
+  name?: string;
   accessType?: string;
   directed?: boolean | string;
 }

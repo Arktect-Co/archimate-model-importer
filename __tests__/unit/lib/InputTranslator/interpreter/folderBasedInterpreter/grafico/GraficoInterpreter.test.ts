@@ -1,8 +1,8 @@
 import { GraficoInterpreter } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
-import { Node } from '@lib/common/interfaces/graficoModel';
+import { Node, Relationship } from '@lib/common/interfaces/graficoModel';
 import path from 'path';
 import { expect } from 'chai';
-import { ElementType } from '../../../../../../../src/lib/common/enums/elementType';
+import { ElementType } from '@lib/common/enums/elementType';
 
 const UNKNOWN = 'Unknown Name';
 const node: Node = {
@@ -22,10 +22,36 @@ const node: Node = {
     },
   },
 };
+const relationship: Relationship = {
+  'archimate:TriggeringRelationship': {
+    $: {
+      'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+      'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+      id: 'fb81c5f0-efa0-43cd-bbce-85f86d78f319',
+    },
+    source: [
+      {
+        $: {
+          'xsi:type': 'archimate:ApplicationComponent',
+          href: 'ApplicationComponent_fdfa517d-8d14-4ce7-96c4-7dbab4002dbf.xml#fdfa517d-8d14-4ce7-96c4-7dbab4002dbf',
+        },
+      },
+    ],
+    target: [
+      {
+        $: {
+          'xsi:type': 'archimate:ApplicationFunction',
+          href: 'ApplicationFunction_dc730608-6513-4a77-b7bb-deb496d677c3.xml#dc730608-6513-4a77-b7bb-deb496d677c3',
+        },
+      },
+    ],
+  },
+};
 
 describe('GraficoInterpreter', () => {
   let inputInterpreter: GraficoInterpreter;
   const locationNode = node['archimate:Location'];
+  const triggeringRelationship = relationship['archimate:TriggeringRelationship'];
 
   before(() => {
     const rootPath = __dirname.split('\\').slice(0, -5).join('\\');
@@ -149,6 +175,14 @@ describe('GraficoInterpreter', () => {
 
       expect(propertyEntry.length).to.equal(0);
       expect(propertyEntry).to.deep.equal([]);
+    });
+  });
+
+  describe('getRelationshipId', () => {
+    it('should return a relationship id', () => {
+      const id = inputInterpreter.getRelationshipId(relationship);
+
+      expect(id).to.equal(triggeringRelationship.$.id);
     });
   });
 });

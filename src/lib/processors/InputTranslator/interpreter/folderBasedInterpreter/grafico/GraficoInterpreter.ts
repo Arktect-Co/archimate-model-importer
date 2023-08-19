@@ -212,8 +212,21 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     }
   }
 
+  /**
+   * Returns the relationship identification
+   * @param relationship Relationship
+   * @return Relationship ID
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const id = inputInterpreter.getRelationshipId(relationship);
+   * });
+   */
   getRelationshipId(relationship: Relationship): string {
-    return relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.id;
+    const key = GraficoInterpreter._getFirstPropertyName(relationship);
+    return relationship[key].$.id;
   }
 
   getRelationshipName(relationship: Relationship): string {
