@@ -128,8 +128,21 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return GraficoInterpreter._getFirstPropertyName(node).replace('archimate:', '');
   }
 
-  getNodeDocumentation(node: Node): string {
-    return node[GraficoInterpreter._getFirstPropertyName(node)].$.documentation || null;
+  /**
+   * Returns the node documentation
+   * @param node Node
+   * @return Node documentation
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   *  inputInterpreter.forEachModelNode((node) => {
+   *   const type = inputInterpreter.getNodeDocumentation(node);
+   * });
+   */
+  getNodeDocumentation(node: Node): string | null {
+    const key = GraficoInterpreter._getFirstPropertyName(node);
+    return node[key].$.documentation || null;
   }
 
   getNodeJunctionType(node: Node): string {

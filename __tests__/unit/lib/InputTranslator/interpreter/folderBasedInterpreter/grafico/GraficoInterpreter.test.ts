@@ -70,4 +70,12 @@ describe('GraficoInterpreter', () => {
       expect(type).to.equal('Location');
     });
   });
+
+  describe('getNodeDocumentation', () => {
+    it('should return null if the documentation property is not defined', () => {
+      const documentation = inputInterpreter.getNodeDocumentation(node);
+
+      expect(documentation).to.equal(null);
+    });
+  });
 });
