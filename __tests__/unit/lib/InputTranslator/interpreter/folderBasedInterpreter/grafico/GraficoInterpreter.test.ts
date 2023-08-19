@@ -36,4 +36,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(node['firstNode'].$.id);
     });
   });
+
+  describe('getNodeName', () => {
+    it('should return a node name', () => {
+      const name = inputInterpreter.getNodeName(node);
+
+      expect(name).to.equal(node['firstNode'].$.name);
+    });
+  });
 });
