@@ -10,26 +10,35 @@ import {
 } from '@lib/common/interfaces/model';
 import * as AoeffModel from '@lib/common/interfaces/aoeffModel';
 import { Interpreter } from '@lib/common/interfaces/Interpreter';
-import getUniqueId from 'uniqid';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
 import { ViewType } from '@lib/common/enums/viewType';
 import * as ArchiModel from '@lib/common/interfaces/archiModel';
+import * as GraficoModel from '@lib/common/interfaces/graficoModel';
+import getUniqueId from 'uniqid';
 
 interface Option {
   skipViews: boolean;
 }
 type Log = (message?: string) => void;
 
-// TODO: Add type for each interpreter
-type InterpreterNode = AoeffModel.ElementModel | ArchiModel.Element;
-type InterpreterRelationship = AoeffModel.RelationshipModel | ArchiModel.Element;
-type InterpreterProperty = AoeffModel.Property | ArchiModel.Property;
-type InterpreterView = AoeffModel.ViewModel | ArchiModel.View;
-type InterpreterFolder = AoeffModel.ItemModel | ArchiModel.Folder;
-type InterpreterCandidateView = AoeffModel.CandidateView | ArchiModel.Folder;
-type InterpreterViewNode = AoeffModel.NodeModel | ArchiModel.ChildElement;
-type InterpreterViewRelationship = AoeffModel.ConnectionModel | ArchiModel.Relationship;
-type InterpreterBendpoint = AoeffModel.BendpointModel | ArchiModel.BendpointModel;
+type InterpreterNode = AoeffModel.ElementModel | ArchiModel.Element | GraficoModel.Node;
+type InterpreterRelationship =
+  | AoeffModel.RelationshipModel
+  | ArchiModel.Element
+  | GraficoModel.Relationship;
+type InterpreterProperty = AoeffModel.Property | ArchiModel.Property | GraficoModel.Property;
+type InterpreterView = AoeffModel.ViewModel | ArchiModel.View | GraficoModel.View;
+type InterpreterFolder = AoeffModel.ItemModel | ArchiModel.Folder | string;
+type InterpreterCandidateView = AoeffModel.CandidateView | ArchiModel.Folder | GraficoModel.View;
+type InterpreterViewNode = AoeffModel.NodeModel | ArchiModel.ChildElement | GraficoModel.ViewNode;
+type InterpreterViewRelationship =
+  | AoeffModel.ConnectionModel
+  | ArchiModel.Relationship
+  | GraficoModel.ViewRelationship;
+type InterpreterBendpoint =
+  | AoeffModel.BendpointModel
+  | ArchiModel.BendpointModel
+  | GraficoModel.BendpointModel;
 
 type InterpreterModel = Interpreter<
   unknown,
