@@ -143,5 +143,12 @@ describe('GraficoInterpreter', () => {
       expect(propertyEntry.length).to.equal(2);
       expect(propertyEntry).to.deep.equal([property.$.key, property.$.value]);
     });
+
+    it('should return an empty array if property is not defined', () => {
+      const propertyEntry = inputInterpreter.getPropertyEntry(undefined);
+
+      expect(propertyEntry.length).to.equal(0);
+      expect(propertyEntry).to.deep.equal([]);
+    });
   });
 });
