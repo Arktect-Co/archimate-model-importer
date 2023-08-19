@@ -1,6 +1,6 @@
 interface NodeIdentification {
   'xmlns:archimate': string;
-  name: string;
+  name?: string;
   id: string;
   type?: string;
   documentation?: string;

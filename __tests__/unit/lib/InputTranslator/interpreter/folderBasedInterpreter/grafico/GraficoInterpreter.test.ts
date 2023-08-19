@@ -3,6 +3,8 @@ import { Node } from '@lib/common/interfaces/graficoModel';
 import path from 'path';
 import { expect } from 'chai';
 
+const UNKNOWN = 'Unknown Name';
+
 describe('GraficoInterpreter', () => {
   let inputInterpreter: GraficoInterpreter;
   const node: Node = {
@@ -42,6 +44,20 @@ describe('GraficoInterpreter', () => {
       const name = inputInterpreter.getNodeName(node);
 
       expect(name).to.equal(node['firstNode'].$.name);
+    });
+
+    it('should return a default node name if the name property is not defined', () => {
+      const name = inputInterpreter.getNodeName({
+        firstNode: {
+          $: {
+            id: node['firstNode'].$.id,
+            name: undefined,
+            'xmlns:archimate': node['firstNode'].$['xmlns:archimate'],
+          },
+        },
+      });
+
+      expect(name).to.equal(UNKNOWN);
     });
   });
 });
