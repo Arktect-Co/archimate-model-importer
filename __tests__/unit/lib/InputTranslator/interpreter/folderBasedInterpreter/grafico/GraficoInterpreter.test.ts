@@ -209,4 +209,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal('fdfa517d-8d14-4ce7-96c4-7dbab4002dbf');
     });
   });
+
+  describe('getRelationshipTargetId', () => {
+    it('should return a relationship source ID', () => {
+      const id = inputInterpreter.getRelationshipTargetId(relationship);
+
+      expect(id).to.equal('dc730608-6513-4a77-b7bb-deb496d677c3');
+    });
+  });
 });

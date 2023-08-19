@@ -270,10 +270,22 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return relationship[key].source[0].$.href.replace(/.*#(.*)/g, '$1');
   }
 
+  /**
+   * Returns the relationship target identification
+   * @param relationship Relationship
+   * @return Relationship target ID
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const targetId = inputInterpreter.getRelationshipTargetId(relationship);
+   * });
+   *
+   */
   getRelationshipTargetId(relationship: Relationship): string {
-    return relationship[
-      GraficoInterpreter._getFirstPropertyName(relationship)
-    ].target[0].$.href.replace(/.*#(.*)/g, '$1');
+    const key = GraficoInterpreter._getFirstPropertyName(relationship);
+    return relationship[key].target[0].$.href.replace(/.*#(.*)/g, '$1');
   }
 
   getRelationshipType(relationship: Relationship): string {
