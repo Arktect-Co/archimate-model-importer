@@ -114,4 +114,13 @@ describe('GraficoInterpreter', () => {
       expect(type).to.equal(ElementType.OrJunction);
     });
   });
+
+  describe('getNodeProperties', () => {
+    it('should return an empty array if the properties is not defined', () => {
+      const properties = inputInterpreter.getNodeProperties(node);
+
+      expect(properties.length).to.equal(0);
+      expect(properties).to.deep.equal([]);
+    });
+  });
 });

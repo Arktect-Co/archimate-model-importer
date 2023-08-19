@@ -172,8 +172,22 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     }
   }
 
+  /**
+   * Returns the node properties
+   * @param node Node
+   * @return Node properties
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';   * const model = {} // Archi Model
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   *  inputInterpreter.forEachModelNode((node) => {
+   *   const properties = inputInterpreter.getNodeProperties(node);
+   * });
+   *
+   */
   getNodeProperties(node: Node): Array<Property> {
-    return node[GraficoInterpreter._getFirstPropertyName(node)].properties || [];
+    const key = GraficoInterpreter._getFirstPropertyName(node);
+    return node[key].properties || [];
   }
 
   getPropertyEntry(property: Property): Array<string> {
