@@ -122,5 +122,15 @@ describe('GraficoInterpreter', () => {
       expect(properties.length).to.equal(0);
       expect(properties).to.deep.equal([]);
     });
+
+    it('should return a properties', () => {
+      const locationProperties = [{ $: { key: 'Has Owner', value: 'true' } }];
+      locationNode.properties = locationProperties;
+
+      const properties = inputInterpreter.getNodeProperties(node);
+
+      expect(properties.length).to.equal(1);
+      expect(properties).to.deep.equal(locationProperties);
+    });
   });
 });
