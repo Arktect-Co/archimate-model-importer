@@ -251,5 +251,14 @@ describe('GraficoInterpreter', () => {
       expect(source).to.equal(false);
       expect(target).to.equal(false);
     });
+
+    it('should return a relationship "3" access direction', () => {
+      triggeringRelationship.$.accessType = '3';
+
+      const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
+
+      expect(source).to.equal(true);
+      expect(target).to.equal(true);
+    });
   });
 });
