@@ -498,7 +498,7 @@ describe('GraficoInterpreter', () => {
   });
 
   describe('findViewElement', () => {
-    it('shpuld return a view element', () => {
+    it('should return a view element', () => {
       const id = diagramModel.children[0].$.id;
       const view = inputInterpreter.findViewElement(diagramModel.children, id);
 
@@ -509,6 +509,15 @@ describe('GraficoInterpreter', () => {
       diagramModel.children[0].children = undefined;
       const id = 'test';
       const view = inputInterpreter.findViewElement(diagramModel.children, id);
+
+      expect(view).to.equal(null);
+    });
+  });
+
+  describe('findViewElementParent', () => {
+    it('should return null if element is not found', () => {
+      const id = 'test';
+      const view = inputInterpreter.findViewElementParent(diagramModel.children, id);
 
       expect(view).to.equal(null);
     });
