@@ -624,5 +624,14 @@ describe('GraficoInterpreter', () => {
 
       expect(id).to.equal('e65bf3dd-9978-4a8f-8a14-847e9b5f074b');
     });
+
+    it('should return null if the archimateRelationship is not defined', () => {
+      const view = diagramModel.children[0].sourceConnections[0];
+      view.archimateRelationship = undefined;
+
+      const id = inputInterpreter.getViewRelationshipModelId(view);
+
+      expect(id).to.equal(null);
+    });
   });
 });
