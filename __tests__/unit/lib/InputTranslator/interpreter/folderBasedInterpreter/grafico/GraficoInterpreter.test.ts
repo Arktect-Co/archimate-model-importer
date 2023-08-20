@@ -596,4 +596,23 @@ describe('GraficoInterpreter', () => {
       expect(bendpoints.length).to.equal(1);
     });
   });
+
+  describe('getViewRelationshipBendpoint', () => {
+    it('should return a view relationship bendpoint', () => {
+      const source = diagramModel.children[0];
+      const target = diagramModel.children[0];
+      const bendpoint = diagramModel.children[0].sourceConnections[0].bendpoints[0];
+      const { x, y } = inputInterpreter.getViewRelationshipBendpoint(
+        bendpoint,
+        0,
+        1,
+        source,
+        target,
+        diagramModel.children,
+      );
+
+      expect(x).to.equal(779);
+      expect(y).to.equal(828);
+    });
+  });
 });

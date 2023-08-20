@@ -816,6 +816,23 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return viewRelationship.bendpoints;
   }
 
+  /**
+   * Returns the Relationship bendpoint
+   * @param bendpoint Bendpoint Model
+   * @param bendpointIndex Bendpoint index
+   * @param bendpointsLength Bendpoint quantity
+   * @param sourceViewElement Source View Element
+   * @param targetViewElement Target View Element
+   * @param viewNodes View Nodes
+   * @return Bendpoint
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const source = views[0]['key'].children[0];
+   * const target = views[0]['key'].children[1];
+   * const bendpoint = views[0]['key'].children[0].sourceConnections[0].bendpoints[0];
+   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(bendpoint, 0, 1, source, target, views[0]['key'].children);
+   */
   getViewRelationshipBendpoint(
     bendpoint: BendpointModel,
     bendpointIndex: number,
