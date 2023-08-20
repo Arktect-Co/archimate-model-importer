@@ -370,9 +370,18 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     }
   }
 
+  /**
+   * Returns the folder name
+   * @param folder Folder
+   * @return Folder name
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * const folderName = inputInterpreter.getFolderName("Folder Path");
+   */
   getFolderName(folder: string): string {
     let folderName = null;
-    let _self = this;
     const filePath = path.join(folder, 'folder.xml');
 
     if (fs.existsSync(filePath)) {

@@ -50,11 +50,12 @@ const relationship: Relationship = {
 
 describe('GraficoInterpreter', () => {
   let inputInterpreter: GraficoInterpreter;
+  let rootPath: string;
   const locationNode = node['archimate:Location'];
   const triggeringRelationship = relationship['archimate:TriggeringRelationship'];
 
   before(() => {
-    const rootPath = __dirname.split('\\').slice(0, -5).join('\\');
+    rootPath = __dirname.split('\\').slice(0, -5).join('\\');
     const filePath = path.join(rootPath, '/models/grafico');
 
     inputInterpreter = new GraficoInterpreter(filePath);
@@ -282,6 +283,16 @@ describe('GraficoInterpreter', () => {
 
       const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
       expect(isDirected).to.equal(false);
+    });
+  });
+
+  describe('getFolderName', () => {
+    it('should return a folder name', () => {
+      const name = inputInterpreter.getFolderName(
+        path.join(rootPath, '/models/grafico/model/diagrams'),
+      );
+
+      expect(name).to.equal('Views');
     });
   });
 });
