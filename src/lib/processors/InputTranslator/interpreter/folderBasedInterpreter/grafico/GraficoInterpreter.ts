@@ -1093,7 +1093,6 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
-   * const relationship = model.model.relationships[0].relationship[5];
    *
    * inputInterpreter.forEachModelRelationship((relationship) => {
    *  const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
@@ -1115,7 +1114,6 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
-   * const relationship = model.model.relationships[0].relationship[5];
    *
    * inputInterpreter.forEachModelRelationship((relationship) => {
    *  const isAssociationRelationship = inputInterpreter.isAssociationRelationship(relationship);
@@ -1129,6 +1127,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     );
   }
 
+  /**
+   * Checks if the view element type is Object
+   * @param viewElement View Element
+   * @return boolean
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelNode((node) => {
+   *   const isViewObject = inputInterpreter.isViewObject(node);
+   * });
+   *
+   */
   isViewObject(viewElement: ViewNode): boolean {
     return viewElement.$['xsi:type'].localeCompare('archimate:DiagramModelArchimateObject') === 0;
   }

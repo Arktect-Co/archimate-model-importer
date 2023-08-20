@@ -4,6 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import { ElementType } from '@lib/common/enums/elementType';
 import { ArchiRelationshipType } from '../../../../../../../src/lib/common/enums/relationshipType';
+import { GraficoViewType } from '../../../../../../../src/lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 const node: Node = {
@@ -711,6 +712,15 @@ describe('GraficoInterpreter', () => {
       });
 
       expect(isAccessRelationship).to.equal(true);
+    });
+  });
+
+  describe('isViewObject', () => {
+    it('should return false if view type is not equal Element', () => {
+      diagramModel.children[0].$['xsi:type'] = GraficoViewType.Note;
+      const isViewObject = inputInterpreter.isViewObject(diagramModel.children[0]);
+
+      expect(isViewObject).to.equal(false);
     });
   });
 });

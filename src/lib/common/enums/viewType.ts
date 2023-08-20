@@ -10,6 +10,12 @@ export enum ArchiViewType {
   Group = 'archimate:Group',
 }
 
+export enum GraficoViewType {
+  DiagramObject = 'archimate:DiagramModelArchimateObject',
+  Note = 'archimate:DiagramModelNote',
+  Group = 'archimate:DiagramModelGroup',
+}
+
 export enum ViewType {
   Group = 'group',
   Note = 'note',
