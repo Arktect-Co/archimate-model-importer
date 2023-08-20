@@ -758,6 +758,17 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return null;
   }
 
+  /**
+   * Returns the view note content
+   * @param viewElement View Element
+   * @return View note content
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const content = inputInterpreter.getViewNoteContent(views[0].children[0]);
+   */
   getViewNoteContent(viewElement: ViewNode): string {
     if (viewElement.$.content !== undefined) {
       if (typeof viewElement.$.content === 'string') {

@@ -545,9 +545,18 @@ describe('GraficoInterpreter', () => {
       ];
       const id = 'id test';
       const { y, x } = inputInterpreter.calculateNestedPosition(diagramModel.children, id);
-      console.log(diagramModel.children[0].bounds);
+
       expect(x).to.equal(1008);
       expect(y).to.equal(1512);
+    });
+  });
+
+  describe('getViewNoteContent', () => {
+    it('should return a view note content if content property is a string', () => {
+      diagramModel.children[0].$.content = 'Teste';
+
+      const content = inputInterpreter.getViewNoteContent(diagramModel.children[0]);
+      expect(content).to.equal('Teste');
     });
   });
 });
