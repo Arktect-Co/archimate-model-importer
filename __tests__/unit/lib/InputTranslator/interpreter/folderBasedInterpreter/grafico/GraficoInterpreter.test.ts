@@ -470,4 +470,14 @@ describe('GraficoInterpreter', () => {
       expect(height).to.equal(parseInt(diagramModel.children[0].bounds[0].$.height));
     });
   });
+
+  describe('getViewElementSourceRelationships', () => {
+    it('should return an element source relationships', () => {
+      const sourceRelationships = inputInterpreter.getViewElementSourceRelationships(
+        diagramModel.children[0],
+      );
+
+      expect(sourceRelationships.length).to.equal(1);
+    });
+  });
 });

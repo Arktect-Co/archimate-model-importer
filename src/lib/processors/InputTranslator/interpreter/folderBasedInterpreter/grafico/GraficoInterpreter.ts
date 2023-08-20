@@ -601,6 +601,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return parseInt(viewElement.bounds[0].$.height, 0);
   }
 
+  /**
+   * Returns the view element source relationship
+   * @param viewElement View Element
+   * @return Empty Array
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(views[0].children);
+   */
   getViewElementSourceRelationships(viewElement: ViewNode): Array<ViewRelationship> {
     return viewElement.sourceConnections;
   }
