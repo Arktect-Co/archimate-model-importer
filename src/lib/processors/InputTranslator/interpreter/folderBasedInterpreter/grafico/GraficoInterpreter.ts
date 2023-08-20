@@ -347,9 +347,21 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     }
   }
 
+  /**
+   * Checks if the association relationship is directed
+   * @param relationship Relationship
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
+   * });
+   *
+   */
   getAssociationRelationshipIsDirected(relationship: Relationship): boolean {
-    let isDirected =
-      relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.directed;
+    const key = GraficoInterpreter._getFirstPropertyName(relationship);
+    let isDirected = relationship[key].$.directed;
 
     if (isDirected === undefined) {
       return false;
