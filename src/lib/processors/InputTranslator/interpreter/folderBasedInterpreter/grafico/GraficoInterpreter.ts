@@ -453,8 +453,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return diagrams;
   }
 
+  /**
+   * Returns a view elements
+   * @param view View Model
+   * @return View Elements
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   * const elements = inputInterpreter.getViewElements(views[0]);
+   */
   getViewElements(view: View): Array<ViewNode> {
-    return view[GraficoInterpreter._getFirstPropertyName(view)].children;
+    const key = GraficoInterpreter._getFirstPropertyName(view);
+    return view[key].children;
   }
 
   getViewId(view: View): string {

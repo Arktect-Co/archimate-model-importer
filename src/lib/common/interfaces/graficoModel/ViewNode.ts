@@ -8,8 +8,8 @@ export interface BoundsModel {
 
 export interface ViewNode {
   $: BaseIdentification;
-  sourceConnections: Array<ViewRelationship>;
-  bounds: Array<BoundsModel>;
-  archimateElement: Array<Connection>;
+  sourceConnections?: Array<ViewRelationship>;
+  bounds?: Array<BoundsModel>;
+  archimateElement?: Array<Connection>;
   children?: Array<ViewNode>;
 }

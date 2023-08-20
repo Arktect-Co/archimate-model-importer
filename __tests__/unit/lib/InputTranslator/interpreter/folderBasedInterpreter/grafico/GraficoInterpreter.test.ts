@@ -1,5 +1,5 @@
 import { GraficoInterpreter } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
-import { Node, Relationship } from '@lib/common/interfaces/graficoModel';
+import { Node, Relationship, View } from '@lib/common/interfaces/graficoModel';
 import path from 'path';
 import { expect } from 'chai';
 import { ElementType } from '@lib/common/enums/elementType';
@@ -47,12 +47,58 @@ const relationship: Relationship = {
     ],
   },
 };
+const view: View = {
+  'archimate:ArchimateDiagramModel': {
+    $: {
+      'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+      'xmlns:archimate': 'http://www.archimatetool.com/archimate',
+      name: 'Relationships',
+      id: '9a578be1-0cde-4e09-91e6-f0742708a0da',
+    },
+    children: [
+      {
+        $: {
+          'xsi:type': 'archimate:DiagramModelArchimateObject',
+          id: 'a7134b7a-e727-4e5f-a5d7-a7ecb998fc12',
+        },
+        sourceConnections: [
+          {
+            $: {
+              'xsi:type': 'archimate:DiagramModelArchimateConnection',
+              id: '20e64c21-ebae-4c8d-a989-c24f0318e626',
+              source: 'a7134b7a-e727-4e5f-a5d7-a7ecb998fc12',
+              target: 'c0d824bc-233b-472b-907b-0e324a82ffae',
+            },
+            archimateRelationship: [
+              {
+                $: {
+                  'xsi:type': 'archimate:FlowRelationship',
+                  href: 'FlowRelationship_e65bf3dd-9978-4a8f-8a14-847e9b5f074b.xml#e65bf3dd-9978-4a8f-8a14-847e9b5f074b',
+                },
+              },
+            ],
+          },
+        ],
+        bounds: [{ $: { x: '504', y: '756', width: '120', height: '55' } }],
+        archimateElement: [
+          {
+            $: {
+              'xsi:type': 'archimate:Node',
+              href: 'Node_f935291b-77c1-4a3a-851e-1d74fbeb658c.xml#f935291b-77c1-4a3a-851e-1d74fbeb658c',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
 
 describe('GraficoInterpreter', () => {
   let inputInterpreter: GraficoInterpreter;
   let rootPath: string;
   const locationNode = node['archimate:Location'];
   const triggeringRelationship = relationship['archimate:TriggeringRelationship'];
+  const diagramModel = view['archimate:ArchimateDiagramModel'];
 
   before(() => {
     rootPath = __dirname.split('\\').slice(0, -5).join('\\');
@@ -342,6 +388,15 @@ describe('GraficoInterpreter', () => {
 
       expect(views.length).to.equal(0);
       expect(views).to.deep.equal([]);
+    });
+  });
+
+  describe('getViewElements', () => {
+    it('should return a view elements', () => {
+      const views = inputInterpreter.getViewElements(view);
+
+      expect(views.length).to.equal(1);
+      expect(views).to.deep.equal(diagramModel.children);
     });
   });
 });
