@@ -530,6 +530,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return viewElement.archimateElement[0].$.href.replace(/.*#(.*)/g, '$1');
   }
 
+  /**
+   * Returns the position x of view element
+   * @param viewElement View Element
+   * @param parentId parent ID
+   * @param parentViewElements List of parent view elements
+   * @return Position x
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const positionX = inputInterpreter.getViewElementPositionX(views[0].children, null, undefined);
+   */
   getViewElementPositionX(
     viewElement: ViewNode,
     parentId?: string,
