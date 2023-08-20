@@ -422,4 +422,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(UNKNOWN);
     });
   });
+
+  describe('getViewElementViewId', () => {
+    it('should return a element view ID', () => {
+      const id = inputInterpreter.getViewElementViewId(diagramModel.children[0]);
+
+      expect(id).to.equal(diagramModel.children[0].$.id);
+    });
+  });
 });
