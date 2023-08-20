@@ -276,5 +276,12 @@ describe('GraficoInterpreter', () => {
       const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
       expect(isDirected).to.equal(false);
     });
+
+    it('should return false if "directed" property of relationship is undefined', () => {
+      triggeringRelationship.$.directed = undefined;
+
+      const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
+      expect(isDirected).to.equal(false);
+    });
   });
 });
