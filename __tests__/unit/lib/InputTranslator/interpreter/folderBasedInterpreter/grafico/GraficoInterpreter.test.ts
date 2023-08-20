@@ -488,5 +488,12 @@ describe('GraficoInterpreter', () => {
       expect(elements.length).to.equal(0);
       expect(elements).to.deep.equal([]);
     });
+
+    it('should return a nested elements', () => {
+      diagramModel.children[0].children = diagramModel.children;
+      const elements = inputInterpreter.getViewElementNestedElements(diagramModel.children[0]);
+
+      expect(elements.length).to.equal(1);
+    });
   });
 });
