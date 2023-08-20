@@ -1108,10 +1108,23 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     );
   }
 
+  /**
+   * Checks if the relationship type is Association
+   * @param relationship Relationship
+   * @return boolean
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const relationship = model.model.relationships[0].relationship[5];
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const isAssociationRelationship = inputInterpreter.isAssociationRelationship(relationship);
+   * });
+   */
   isAssociationRelationship(relationship: Relationship): boolean {
     return (
       GraficoInterpreter._getFirstPropertyName(relationship).localeCompare(
-        'archimate:AssociationRelationship',
+        ArchiRelationshipType.Association,
       ) === 0
     );
   }
