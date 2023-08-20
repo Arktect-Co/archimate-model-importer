@@ -664,4 +664,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(view.$.target);
     });
   });
+
+  describe('getOrganizationFolders', () => {
+    it('should return an organizations folders', () => {
+      const folders = inputInterpreter.getOrganizationFolders();
+
+      expect(folders.length).to.equal(1);
+    });
+  });
 });

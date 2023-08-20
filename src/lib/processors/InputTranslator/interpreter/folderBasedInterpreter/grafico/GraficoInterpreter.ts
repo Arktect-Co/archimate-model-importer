@@ -965,6 +965,15 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return viewRelationship.$.target;
   }
 
+  /**
+   * Returns an organizations folders
+   * @return List of Organization's folder
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * const folders = inputInterpreter.getOrganizationFolders();
+   */
   getOrganizationFolders(): Array<string> {
     return [path.join(this.modelPath, 'diagrams')];
   }
