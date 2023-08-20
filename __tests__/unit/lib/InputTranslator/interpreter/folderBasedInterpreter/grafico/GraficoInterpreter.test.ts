@@ -294,5 +294,13 @@ describe('GraficoInterpreter', () => {
 
       expect(name).to.equal('Views');
     });
+
+    it("should return a default folder name if the folder doesn't exist", () => {
+      const name = inputInterpreter.getFolderName(
+        path.join(rootPath, '/models/grafico/model/test'),
+      );
+
+      expect(name).to.equal(UNKNOWN);
+    });
   });
 });
