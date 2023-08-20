@@ -397,6 +397,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return folderName || UNKNOWN;
   }
 
+  /**
+   * Returns the sub folders
+   * @param folder Folder
+   * @return List of sub folder
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * const folders = inputInterpreter.getSubFolders("Folder Path");
+   */
   getSubFolders(folder: string): Array<string> {
     let folders = [];
 

@@ -315,5 +315,14 @@ describe('GraficoInterpreter', () => {
         path.join(rootPath, '/models/grafico/model/diagrams/52f6f298-6fca-4971-a604-ce1e7938115f'),
       );
     });
+
+    it('should return an empty array if the folder does not exist', () => {
+      const folders = inputInterpreter.getSubFolders(
+        path.join(rootPath, '/models/grafico/model/test'),
+      );
+
+      expect(folders.length).to.equal(0);
+      expect(folders).to.deep.equal([]);
+    });
   });
 });
