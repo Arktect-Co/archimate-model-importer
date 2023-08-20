@@ -305,17 +305,29 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return GraficoInterpreter._getFirstPropertyName(relationship).replace('archimate:', '');
   }
 
+  /**
+   * Returns the access relationship direction
+   * @param relationship Relationship
+   * @return The access relationship direction
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
+   * });
+   *
+   */
   getAccessRelationshipDirection(relationship: Relationship): AccessRelationshipDirection {
-    if (
-      relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.accessType ===
-      undefined
-    ) {
+    const key = GraficoInterpreter._getFirstPropertyName(relationship);
+    const accessType = relationship[key].$.accessType;
+    if (accessType === undefined) {
       return {
         source: false,
         target: true,
       };
     } else {
-      switch (relationship[GraficoInterpreter._getFirstPropertyName(relationship)].$.accessType) {
+      switch (accessType) {
         case '1':
           return {
             source: true,

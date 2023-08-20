@@ -225,4 +225,13 @@ describe('GraficoInterpreter', () => {
       expect(type).to.equal('TriggeringRelationship');
     });
   });
+
+  describe('getAccessRelationshipDirection', () => {
+    it('should return a default access relationship direction if "accesstype" is not defined', () => {
+      const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
+
+      expect(source).to.equal(false);
+      expect(target).to.equal(true);
+    });
+  });
 });
