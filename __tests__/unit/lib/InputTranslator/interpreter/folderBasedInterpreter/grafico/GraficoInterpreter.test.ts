@@ -738,5 +738,13 @@ describe('GraficoInterpreter', () => {
 
       expect(isViewNote).to.equal(false);
     });
+
+    it('should return true if view type is equal archimate:DiagramModelNote', () => {
+      diagramModel.children[0].$['xsi:type'] = GraficoViewType.Note;
+
+      const isViewNote = inputInterpreter.isViewNote(diagramModel.children[0]);
+
+      expect(isViewNote).to.equal(true);
+    });
   });
 });
