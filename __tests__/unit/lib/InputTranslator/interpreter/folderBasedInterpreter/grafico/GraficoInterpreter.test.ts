@@ -3,6 +3,7 @@ import { Node, Relationship, View } from '@lib/common/interfaces/graficoModel';
 import path from 'path';
 import { expect } from 'chai';
 import { ElementType } from '@lib/common/enums/elementType';
+import { ArchiRelationshipType } from '../../../../../../../src/lib/common/enums/relationshipType';
 
 const UNKNOWN = 'Unknown Name';
 const node: Node = {
@@ -686,6 +687,14 @@ describe('GraficoInterpreter', () => {
       const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
 
       expect(isAccessRelationship).to.equal(false);
+    });
+
+    it('should return true if relationship type is equal Access', () => {
+      const isAccessRelationship = inputInterpreter.isAccessRelationship({
+        [ArchiRelationshipType.Access]: { ...triggeringRelationship },
+      });
+
+      expect(isAccessRelationship).to.equal(true);
     });
   });
 });
