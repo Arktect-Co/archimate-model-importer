@@ -978,6 +978,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return [path.join(this.modelPath, 'diagrams')];
   }
 
+  /**
+   * Validates the Grafico model
+   */
   validate(): boolean {
     return (
       fs.existsSync(path.join(this.modelPath, 'diagrams')) &&

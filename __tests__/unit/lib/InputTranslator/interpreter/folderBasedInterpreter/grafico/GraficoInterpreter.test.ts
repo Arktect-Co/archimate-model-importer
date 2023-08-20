@@ -672,4 +672,12 @@ describe('GraficoInterpreter', () => {
       expect(folders.length).to.equal(1);
     });
   });
+
+  describe('validate', () => {
+    it('should return true if Grafico model is valid', () => {
+      const isValid = inputInterpreter.validate();
+
+      expect(isValid).to.equal(true);
+    });
+  });
 });
