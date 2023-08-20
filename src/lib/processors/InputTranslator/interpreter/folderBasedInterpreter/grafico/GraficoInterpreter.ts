@@ -429,7 +429,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    *
-   * const folders = inputInterpreter.getFolderViews("Folder Path");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
    */
   getFolderViews(folder: string): Array<View> {
     let diagrams = [];

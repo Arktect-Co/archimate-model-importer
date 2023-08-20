@@ -327,13 +327,21 @@ describe('GraficoInterpreter', () => {
   });
 
   describe('getFolderViews', () => {
+    it('should return a folder views', () => {
+      const views = inputInterpreter.getFolderViews(
+        path.join(rootPath, '/models/grafico/model/diagrams/52f6f298-6fca-4971-a604-ce1e7938115f'),
+      );
+
+      expect(views.length).to.equal(4);
+    });
+
     it('should return an empty array if the folder does not exist', () => {
-      const folders = inputInterpreter.getFolderViews(
+      const views = inputInterpreter.getFolderViews(
         path.join(rootPath, '/models/grafico/model/test'),
       );
 
-      expect(folders.length).to.equal(0);
-      expect(folders).to.deep.equal([]);
+      expect(views.length).to.equal(0);
+      expect(views).to.deep.equal([]);
     });
   });
 });
