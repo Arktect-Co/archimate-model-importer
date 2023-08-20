@@ -615,4 +615,14 @@ describe('GraficoInterpreter', () => {
       expect(y).to.equal(828);
     });
   });
+
+  describe('getViewRelationshipModelId', () => {
+    it('should return a relationship model id', () => {
+      const view = diagramModel.children[0].sourceConnections[0];
+
+      const id = inputInterpreter.getViewRelationshipModelId(view);
+
+      expect(id).to.equal('e65bf3dd-9978-4a8f-8a14-847e9b5f074b');
+    });
+  });
 });
