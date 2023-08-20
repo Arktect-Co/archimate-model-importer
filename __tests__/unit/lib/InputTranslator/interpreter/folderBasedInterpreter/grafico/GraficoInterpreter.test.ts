@@ -441,17 +441,25 @@ describe('GraficoInterpreter', () => {
 
   describe('getViewElementPositionX', () => {
     it('should return a element position x', () => {
-      const id = inputInterpreter.getViewElementPositionX(diagramModel.children[0]);
+      const x = inputInterpreter.getViewElementPositionX(diagramModel.children[0]);
 
-      expect(id).to.equal(parseInt(diagramModel.children[0].bounds[0].$.x));
+      expect(x).to.equal(parseInt(diagramModel.children[0].bounds[0].$.x));
     });
   });
 
   describe('getViewElementPositionY', () => {
     it('should return a element position y', () => {
-      const id = inputInterpreter.getViewElementPositionY(diagramModel.children[0]);
+      const y = inputInterpreter.getViewElementPositionY(diagramModel.children[0]);
 
-      expect(id).to.equal(parseInt(diagramModel.children[0].bounds[0].$.y));
+      expect(y).to.equal(parseInt(diagramModel.children[0].bounds[0].$.y));
+    });
+  });
+
+  describe('getViewElementWidth', () => {
+    it('should return a view element width', () => {
+      const width = inputInterpreter.getViewElementWidth(diagramModel.children[0]);
+
+      expect(width).to.equal(parseInt(diagramModel.children[0].bounds[0].$.width));
     });
   });
 });

@@ -571,6 +571,17 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return parseInt(viewElement.bounds[0].$.y, 0);
   }
 
+  /**
+   * Returns the view element width
+   * @param viewElement View Element
+   * @return View Element width
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const width = inputInterpreter.getViewElementWidth(views[0].children);
+   */
   getViewElementWidth(viewElement: ViewNode): number {
     return parseInt(viewElement.bounds[0].$.width, 0);
   }
