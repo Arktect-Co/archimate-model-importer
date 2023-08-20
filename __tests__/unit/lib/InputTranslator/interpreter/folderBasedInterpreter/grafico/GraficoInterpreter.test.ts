@@ -217,4 +217,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal('dc730608-6513-4a77-b7bb-deb496d677c3');
     });
   });
+
+  describe('getRelationshipType', () => {
+    it('should return a relationship type', () => {
+      const type = inputInterpreter.getRelationshipType(relationship);
+
+      expect(type).to.equal('TriggeringRelationship');
+    });
+  });
 });

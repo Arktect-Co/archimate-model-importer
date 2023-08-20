@@ -288,6 +288,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return relationship[key].target[0].$.href.replace(/.*#(.*)/g, '$1');
   }
 
+  /**
+   * Returns the relationship type
+   * @param relationship Relationship
+   * @return Relationship type
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const type = inputInterpreter.getRelationshipType(relationship);
+   * });
+   *
+   */
   getRelationshipType(relationship: Relationship): string {
     return GraficoInterpreter._getFirstPropertyName(relationship).replace('archimate:', '');
   }
