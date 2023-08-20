@@ -2,7 +2,7 @@ import { GraficoInterpreter } from '@lib/processors/InputTranslator/interpreter/
 import { Node, Relationship, View } from '@lib/common/interfaces/graficoModel';
 import path from 'path';
 import { expect } from 'chai';
-import { ElementType } from '@lib/common/enums/elementType';
+import { ArchiElementType, ElementType } from '@lib/common/enums/elementType';
 import { ArchiRelationshipType } from '../../../../../../../src/lib/common/enums/relationshipType';
 import { GraficoViewType } from '../../../../../../../src/lib/common/enums/viewType';
 
@@ -769,6 +769,14 @@ describe('GraficoInterpreter', () => {
       const isJunctionNode = inputInterpreter.isJunctionNode(node);
 
       expect(isJunctionNode).to.equal(false);
+    });
+
+    it('should return true if element is junction node', () => {
+      const isJunctionNode = inputInterpreter.isJunctionNode({
+        [ArchiElementType.Junction]: { ...locationNode },
+      });
+
+      expect(isJunctionNode).to.equal(true);
     });
   });
 });

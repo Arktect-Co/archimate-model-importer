@@ -13,7 +13,7 @@ import {
   Property,
 } from '@lib/common/interfaces/graficoModel';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
-import { ElementType } from '@lib/common/enums/elementType';
+import { ArchiElementType, ElementType } from '@lib/common/enums/elementType';
 import { ArchiRelationshipType } from '@lib/common/enums/relationshipType';
 import { GraficoViewType } from '@lib/common/enums/viewType';
 
@@ -1193,7 +1193,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    */
   isJunctionNode(node: Node): boolean {
-    return GraficoInterpreter._getFirstPropertyName(node).localeCompare('archimate:Junction') === 0;
+    return (
+      GraficoInterpreter._getFirstPropertyName(node).localeCompare(ArchiElementType.Junction) === 0
+    );
   }
 
   hasViewElementWithChildRelationships(): boolean {
