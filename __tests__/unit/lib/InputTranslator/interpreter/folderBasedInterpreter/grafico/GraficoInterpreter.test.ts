@@ -521,5 +521,14 @@ describe('GraficoInterpreter', () => {
 
       expect(view).to.equal(null);
     });
+
+    it('should return a view element parent', () => {
+      diagramModel.children[0].children = [{ $: { id: 'id test', 'xsi:type': '' } }];
+
+      const id = 'id test';
+      const view = inputInterpreter.findViewElementParent(diagramModel.children, id);
+
+      expect(view.$.id).to.equal(diagramModel.children[0].$.id);
+    });
   });
 });
