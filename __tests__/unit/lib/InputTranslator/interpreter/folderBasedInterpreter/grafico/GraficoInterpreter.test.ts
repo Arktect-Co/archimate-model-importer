@@ -747,4 +747,12 @@ describe('GraficoInterpreter', () => {
       expect(isViewNote).to.equal(true);
     });
   });
+
+  describe('isViewGroup', () => {
+    it('should return false if view type is not equal archimate:DiagramModelGroup', () => {
+      const isViewGroup = inputInterpreter.isViewGroup(diagramModel.children[0]);
+
+      expect(isViewGroup).to.equal(false);
+    });
+  });
 });
