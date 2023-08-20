@@ -446,4 +446,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(parseInt(diagramModel.children[0].bounds[0].$.x));
     });
   });
+
+  describe('getViewElementPositionY', () => {
+    it('should return a element position y', () => {
+      const id = inputInterpreter.getViewElementPositionY(diagramModel.children[0]);
+
+      expect(id).to.equal(parseInt(diagramModel.children[0].bounds[0].$.y));
+    });
+  });
 });
