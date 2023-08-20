@@ -399,4 +399,12 @@ describe('GraficoInterpreter', () => {
       expect(views).to.deep.equal(diagramModel.children);
     });
   });
+
+  describe('getViewId', () => {
+    it('should return a view id', () => {
+      const id = inputInterpreter.getViewId(view);
+
+      expect(id).to.equal(diagramModel.$.id);
+    });
+  });
 });
