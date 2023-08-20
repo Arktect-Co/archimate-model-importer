@@ -754,5 +754,13 @@ describe('GraficoInterpreter', () => {
 
       expect(isViewGroup).to.equal(false);
     });
+
+    it('should return true if view type is equal archimate:DiagramModelGroup', () => {
+      diagramModel.children[0].$['xsi:type'] = GraficoViewType.Group;
+
+      const isViewGroup = inputInterpreter.isViewGroup(diagramModel.children[0]);
+
+      expect(isViewGroup).to.equal(true);
+    });
   });
 });
