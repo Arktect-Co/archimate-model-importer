@@ -3,6 +3,6 @@ export interface BaseIdentification {
   id: string;
   targetConnections?: string;
   textAlignment?: string;
-  content?: string;
+  content?: string | Array<string>;
   name?: string;
 }

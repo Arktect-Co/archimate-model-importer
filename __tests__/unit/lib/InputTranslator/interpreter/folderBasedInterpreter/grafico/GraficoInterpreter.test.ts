@@ -558,5 +558,12 @@ describe('GraficoInterpreter', () => {
       const content = inputInterpreter.getViewNoteContent(diagramModel.children[0]);
       expect(content).to.equal('Teste');
     });
+
+    it('should return a view note content if the content property is an array of string', () => {
+      diagramModel.children[0].$.content = ['Teste'];
+
+      const content = inputInterpreter.getViewNoteContent(diagramModel.children[0]);
+      expect(content).to.equal('Teste');
+    });
   });
 });
