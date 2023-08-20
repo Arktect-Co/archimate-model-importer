@@ -914,6 +914,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       : null;
   }
 
+  /**
+   * Returns the view relationship identification
+   * @param viewRelationship View Relationship
+   * @return View relationship id
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const viewRelationship = views[0]['key'].children[0].sourceConnections[0];
+   *
+   * const id = inputInterpreter.getViewRelationshipId(viewRelationship);
+   */
   getViewRelationshipId(viewRelationship: ViewRelationship): string {
     return viewRelationship.$.id;
   }
