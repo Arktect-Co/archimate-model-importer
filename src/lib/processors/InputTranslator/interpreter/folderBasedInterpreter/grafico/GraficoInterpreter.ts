@@ -515,6 +515,17 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return viewElement.$.id;
   }
 
+  /**
+   * Returns the view element model identification
+   * @param viewElement View Element
+   * @return View element model ID
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const id = inputInterpreter.getViewElementModelId(views[0].children);
+   */
   getViewElementModelId(viewElement: ViewNode): string {
     return viewElement.archimateElement[0].$.href.replace(/.*#(.*)/g, '$1');
   }
