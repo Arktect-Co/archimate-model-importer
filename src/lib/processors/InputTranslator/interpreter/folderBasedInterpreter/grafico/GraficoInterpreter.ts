@@ -781,6 +781,17 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return 'No Content';
   }
 
+  /**
+   * Returns the view group name
+   * @param viewElement View Element
+   * @return View group name
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const name = inputInterpreter.getViewGroupName(views[0].children[0]);
+   */
   getViewGroupName(viewElement: ViewNode): string {
     if (viewElement.$.name !== undefined) {
       return viewElement.$.name;

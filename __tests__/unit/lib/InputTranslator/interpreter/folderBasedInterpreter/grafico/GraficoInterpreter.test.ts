@@ -573,4 +573,11 @@ describe('GraficoInterpreter', () => {
       expect(content).to.equal('No Content');
     });
   });
+
+  describe('getViewGroupName', () => {
+    it('should return a default name if name property is not defined', () => {
+      const name = inputInterpreter.getViewGroupName(diagramModel.children[0]);
+      expect(name).to.equal(UNKNOWN);
+    });
+  });
 });
