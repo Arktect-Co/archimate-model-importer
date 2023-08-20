@@ -15,6 +15,7 @@ import {
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { ElementType } from '@lib/common/enums/elementType';
 import { ArchiRelationshipType } from '@lib/common/enums/relationshipType';
+import { GraficoViewType } from '@lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -1141,11 +1142,24 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    */
   isViewObject(viewElement: ViewNode): boolean {
-    return viewElement.$['xsi:type'].localeCompare('archimate:DiagramModelArchimateObject') === 0;
+    return viewElement.$['xsi:type'].localeCompare(GraficoViewType.DiagramObject) === 0;
   }
 
+  /**
+   * Checks if the view element type is Note
+   * @param viewElement View Element
+   * @return boolean
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelNode((node) => {
+   *   const isViewNote = inputInterpreter.isViewNote(node);
+   * });
+   *
+   */
   isViewNote(viewElement: ViewNode): boolean {
-    return viewElement.$['xsi:type'].localeCompare('archimate:DiagramModelNote') === 0;
+    return viewElement.$['xsi:type'].localeCompare(GraficoViewType.Note) === 0;
   }
 
   isViewGroup(viewElement: ViewNode): boolean {

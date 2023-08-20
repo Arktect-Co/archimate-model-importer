@@ -716,19 +716,27 @@ describe('GraficoInterpreter', () => {
   });
 
   describe('isViewObject', () => {
-    it('should return false if view type is not equal Element', () => {
+    it('should return false if view type is not equal archimate:DiagramModelArchimateObject', () => {
       diagramModel.children[0].$['xsi:type'] = GraficoViewType.Note;
       const isViewObject = inputInterpreter.isViewObject(diagramModel.children[0]);
 
       expect(isViewObject).to.equal(false);
     });
 
-    it('should return true if view type is equal Element', () => {
+    it('should return true if view type is equal archimate:DiagramModelArchimateObject', () => {
       diagramModel.children[0].$['xsi:type'] = GraficoViewType.DiagramObject;
 
       const isViewObject = inputInterpreter.isViewObject(diagramModel.children[0]);
 
       expect(isViewObject).to.equal(true);
+    });
+  });
+
+  describe('isViewNote', () => {
+    it('should return false if view type is not equal archimate:DiagramModelNote', () => {
+      const isViewNote = inputInterpreter.isViewNote(diagramModel.children[0]);
+
+      expect(isViewNote).to.equal(false);
     });
   });
 });
