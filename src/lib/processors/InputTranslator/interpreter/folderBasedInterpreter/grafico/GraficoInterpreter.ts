@@ -630,6 +630,21 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return viewElement.children || [];
   }
 
+  /**
+   * Returns the view Element
+   * @param viewElements View Elements
+   * @param id View element ID
+   * @return View Element
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const element = inputInterpreter.findViewElement(
+   *    views,
+   *   '4ac2c3f6-739a-4598-9e8f-2600e0964ace',
+   * );
+   */
   findViewElement(viewElements: Array<ViewNode>, id: string): ViewNode | null {
     if (Array.isArray(viewElements)) {
       for (let i = 0; i < viewElements.length; i++) {

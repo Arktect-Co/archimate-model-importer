@@ -496,4 +496,13 @@ describe('GraficoInterpreter', () => {
       expect(elements.length).to.equal(1);
     });
   });
+
+  describe('findViewElement', () => {
+    it('shpuld return a view element', () => {
+      const id = diagramModel.children[0].$.id;
+      const view = inputInterpreter.findViewElement(diagramModel.children, id);
+
+      expect(view.$.id).to.equal(id);
+    });
+  });
 });
