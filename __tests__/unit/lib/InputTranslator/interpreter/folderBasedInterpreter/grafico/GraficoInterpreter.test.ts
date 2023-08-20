@@ -407,4 +407,12 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(diagramModel.$.id);
     });
   });
+
+  describe('getViewName', () => {
+    it('should return a view name', () => {
+      const id = inputInterpreter.getViewName(view);
+
+      expect(id).to.equal(diagramModel.$.name);
+    });
+  });
 });
