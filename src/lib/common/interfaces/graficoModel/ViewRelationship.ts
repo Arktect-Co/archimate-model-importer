@@ -1,7 +1,7 @@
 import { Connection } from '@lib/common/interfaces/graficoModel/Relationship';
 
 export interface BendpointModel {
-  $: { startX: string; startY: string; endX: string; endY: string };
+  $: { startX?: string; startY?: string; endX?: string; endY?: string };
 }
 
 interface ViewRelationshipSetting {

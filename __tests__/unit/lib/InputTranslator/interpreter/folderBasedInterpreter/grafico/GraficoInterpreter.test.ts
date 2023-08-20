@@ -77,6 +77,7 @@ const view: View = {
                 },
               },
             ],
+            bendpoints: [{ $: { startX: '10', startY: '69', endX: '420', endY: '21' } }],
           },
         ],
         bounds: [{ $: { x: '504', y: '756', width: '120', height: '55' } }],
@@ -584,6 +585,15 @@ describe('GraficoInterpreter', () => {
       diagramModel.children[0].$.name = 'test';
       const content = inputInterpreter.getViewGroupName(diagramModel.children[0]);
       expect(content).to.equal('test');
+    });
+  });
+
+  describe('getViewRelationshipBendpoints', () => {
+    it('should return a bendpoints', () => {
+      const viewRelationship = diagramModel.children[0].sourceConnections[0];
+      const bendpoints = inputInterpreter.getViewRelationshipBendpoints(viewRelationship);
+
+      expect(bendpoints.length).to.equal(1);
     });
   });
 });
