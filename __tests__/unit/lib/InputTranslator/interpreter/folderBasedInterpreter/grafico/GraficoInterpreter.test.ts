@@ -303,4 +303,17 @@ describe('GraficoInterpreter', () => {
       expect(name).to.equal(UNKNOWN);
     });
   });
+
+  describe('getSubFolders', () => {
+    it('should return a sub folders', () => {
+      const folders = inputInterpreter.getSubFolders(
+        path.join(rootPath, '/models/grafico/model/diagrams'),
+      );
+
+      expect(folders.length).to.equal(1);
+      expect(folders[0]).to.equal(
+        path.join(rootPath, '/models/grafico/model/diagrams/52f6f298-6fca-4971-a604-ce1e7938115f'),
+      );
+    });
+  });
 });
