@@ -654,4 +654,14 @@ describe('GraficoInterpreter', () => {
       expect(id).to.equal(view.$.source);
     });
   });
+
+  describe('getViewRelationshipTargetElementId', () => {
+    it('should return a view relationship target', () => {
+      const view = diagramModel.children[0].sourceConnections[0];
+
+      const id = inputInterpreter.getViewRelationshipTargetElementId(view);
+
+      expect(id).to.equal(view.$.target);
+    });
+  });
 });
