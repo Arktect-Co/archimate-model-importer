@@ -462,4 +462,12 @@ describe('GraficoInterpreter', () => {
       expect(width).to.equal(parseInt(diagramModel.children[0].bounds[0].$.width));
     });
   });
+
+  describe('getViewElementHeight', () => {
+    it('should return a view element height', () => {
+      const height = inputInterpreter.getViewElementHeight(diagramModel.children[0]);
+
+      expect(height).to.equal(parseInt(diagramModel.children[0].bounds[0].$.height));
+    });
+  });
 });

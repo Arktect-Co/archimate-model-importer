@@ -586,6 +586,17 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return parseInt(viewElement.bounds[0].$.width, 0);
   }
 
+  /**
+   * Returns the view element height
+   * @param viewElement View Element
+   * @return View Element height
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const height = inputInterpreter.getViewElementHeight(views[0].children);
+   */
   getViewElementHeight(viewElement: ViewNode): number {
     return parseInt(viewElement.bounds[0].$.height, 0);
   }
