@@ -1136,9 +1136,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    *
-   * inputInterpreter.forEachModelNode((node) => {
-   *   const isViewObject = inputInterpreter.isViewObject(node);
-   * });
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const isViewObject = inputInterpreter.isViewObject(views[0]['key'].children[1]);
    *
    */
   isViewObject(viewElement: ViewNode): boolean {
@@ -1153,9 +1153,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    *
-   * inputInterpreter.forEachModelNode((node) => {
-   *   const isViewNote = inputInterpreter.isViewNote(node);
-   * });
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const isViewNote = inputInterpreter.isViewNote(views[0]['key'].children[1]);
    *
    */
   isViewNote(viewElement: ViewNode): boolean {
@@ -1169,10 +1169,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * inputInterpreter.forEachModelNode((node) => {
-   *   const isViewGroup = inputInterpreter.isViewGroup(node);
-   * });
+   * const isViewGroup = inputInterpreter.isViewGroup(views[0]['key'].children[1]);
    *
    */
   isViewGroup(viewElement: ViewNode): boolean {
@@ -1198,6 +1197,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     );
   }
 
+  /**
+   * Returns the "viewElementChildRelationships" value
+   */
   hasViewElementWithChildRelationships(): boolean {
     return this.hasViewElementChildRelationships;
   }
