@@ -531,4 +531,12 @@ describe('GraficoInterpreter', () => {
       expect(view.$.id).to.equal(diagramModel.children[0].$.id);
     });
   });
+
+  describe('calculateNestedPosition', () => {
+    it('should return null if view elements is an empty array', () => {
+      const response = inputInterpreter.calculateNestedPosition([], '');
+
+      expect(response).to.equal(null);
+    });
+  });
 });

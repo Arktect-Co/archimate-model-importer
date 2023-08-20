@@ -709,6 +709,18 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return null;
   }
 
+  /**
+   * Calculate and returns a nested element position
+   * @param viewElements Views elements
+   * @param id Element ID
+   * @return Bendpoint
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const positions = inputInterpreter.calculateNestedPosition(views,'id-90587bb4-b903-4d1e-af17-ec1deb1a6a3e');
+   */
   calculateNestedPosition(viewElements: Array<ViewNode>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
       for (let i = 0; i < viewElements.length; i++) {
