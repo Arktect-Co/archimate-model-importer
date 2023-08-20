@@ -1179,6 +1179,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return viewElement.$['xsi:type'].localeCompare(GraficoViewType.Group) === 0;
   }
 
+  /**
+   * Checks if the node element type is JunctionNode
+   * @param node Element model
+   * @return boolean
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelNode((node) => {
+   *   const isJunctionNode = inputInterpreter.isJunctionNode(element);
+   * });
+   *
+   */
   isJunctionNode(node: Node): boolean {
     return GraficoInterpreter._getFirstPropertyName(node).localeCompare('archimate:Junction') === 0;
   }

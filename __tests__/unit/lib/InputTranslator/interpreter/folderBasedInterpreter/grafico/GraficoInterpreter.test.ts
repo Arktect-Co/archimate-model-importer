@@ -763,4 +763,12 @@ describe('GraficoInterpreter', () => {
       expect(isViewGroup).to.equal(true);
     });
   });
+
+  describe('isJunctionNode', () => {
+    it('should return false if element is not junction node', () => {
+      const isJunctionNode = inputInterpreter.isJunctionNode(node);
+
+      expect(isJunctionNode).to.equal(false);
+    });
+  });
 });
