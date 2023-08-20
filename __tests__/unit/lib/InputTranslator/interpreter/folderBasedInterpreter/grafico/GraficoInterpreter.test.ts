@@ -538,5 +538,16 @@ describe('GraficoInterpreter', () => {
 
       expect(response).to.equal(null);
     });
+
+    it('should return a nested position', () => {
+      diagramModel.children[0].children = [
+        { ...diagramModel.children[0], $: { id: 'id test', 'xsi:type': '' } },
+      ];
+      const id = 'id test';
+      const { y, x } = inputInterpreter.calculateNestedPosition(diagramModel.children, id);
+      console.log(diagramModel.children[0].bounds);
+      expect(x).to.equal(1008);
+      expect(y).to.equal(1512);
+    });
   });
 });
