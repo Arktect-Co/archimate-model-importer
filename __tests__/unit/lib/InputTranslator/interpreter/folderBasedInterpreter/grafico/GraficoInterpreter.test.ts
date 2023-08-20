@@ -722,5 +722,13 @@ describe('GraficoInterpreter', () => {
 
       expect(isViewObject).to.equal(false);
     });
+
+    it('should return true if view type is equal Element', () => {
+      diagramModel.children[0].$['xsi:type'] = GraficoViewType.DiagramObject;
+
+      const isViewObject = inputInterpreter.isViewObject(diagramModel.children[0]);
+
+      expect(isViewObject).to.equal(true);
+    });
   });
 });
