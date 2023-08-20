@@ -704,5 +704,13 @@ describe('GraficoInterpreter', () => {
 
       expect(isAccessRelationship).to.equal(false);
     });
+
+    it('should return true if relationship type is equal Association', () => {
+      const isAccessRelationship = inputInterpreter.isAssociationRelationship({
+        [ArchiRelationshipType.Association]: { ...triggeringRelationship },
+      });
+
+      expect(isAccessRelationship).to.equal(true);
+    });
   });
 });
