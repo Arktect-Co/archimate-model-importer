@@ -565,5 +565,12 @@ describe('GraficoInterpreter', () => {
       const content = inputInterpreter.getViewNoteContent(diagramModel.children[0]);
       expect(content).to.equal('Teste');
     });
+
+    it('should return a default content if label property is not defined', () => {
+      diagramModel.children[0].$.content = undefined;
+
+      const content = inputInterpreter.getViewNoteContent(diagramModel.children[0]);
+      expect(content).to.equal('No Content');
+    });
   });
 });
