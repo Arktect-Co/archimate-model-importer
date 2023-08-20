@@ -680,4 +680,12 @@ describe('GraficoInterpreter', () => {
       expect(isValid).to.equal(true);
     });
   });
+
+  describe('isAccessRelationship', () => {
+    it('should return false if relationship type is not equal Access', () => {
+      const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
+
+      expect(isAccessRelationship).to.equal(false);
+    });
+  });
 });

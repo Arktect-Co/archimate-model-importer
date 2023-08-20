@@ -14,6 +14,7 @@ import {
 } from '@lib/common/interfaces/graficoModel';
 import { Bendpoint } from '@lib/common/interfaces/Bendpoint';
 import { ElementType } from '@lib/common/enums/elementType';
+import { ArchiRelationshipType } from '@lib/common/enums/relationshipType';
 
 const UNKNOWN = 'Unknown Name';
 
@@ -989,8 +990,28 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     );
   }
 
+  /**
+   * Loops through a list of views relationships
+   * @param view View Model
+   * @param action Action foe each relationship view in the list
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * inputInterpreter.forEachViewRelationship(view[0], (view) =>{});
+   */
   forEachViewRelationship(view: View, action: (view: ViewRelationship) => void): void {}
 
+  /**
+   * Loops through a list of nodes
+   * @param action Action for each node in the list
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelNode((node) => {});
+   */
   forEachModelNode(action: (node: Node) => void): void {
     let nodeFolders = [
       'strategy',
@@ -1023,6 +1044,15 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     });
   }
 
+  /**
+   * Loops through a list of relationship
+   * @param action Action for each relationship in the list
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {});
+   */
   forEachModelRelationship(action: (relationship: Relationship) => void): void {
     let relationshipDirectory = path.join(this.modelPath, 'relations');
 
@@ -1043,14 +1073,37 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     }
   }
 
+  /**
+   * Loops through a list of diagram
+   * @param action Action for each diagram in the list
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * inputInterpreter.forEachDiagram((view) => {});
+   */
   forEachDiagram(action: (view: View) => void) {
     return null;
   }
 
+  /**
+   * Checks if the relationship type is Access
+   * @param relationship Relationship
+   * @return boolean
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const relationship = model.model.relationships[0].relationship[5];
+   *
+   * inputInterpreter.forEachModelRelationship((relationship) => {
+   *  const isAccessRelationship = inputInterpreter.isAccessRelationship(relationship);
+   * });
+   *
+   */
   isAccessRelationship(relationship: Relationship): boolean {
     return (
       GraficoInterpreter._getFirstPropertyName(relationship).localeCompare(
-        'archimate:AccessRelationship',
+        ArchiRelationshipType.Access,
       ) === 0
     );
   }
