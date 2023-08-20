@@ -480,4 +480,13 @@ describe('GraficoInterpreter', () => {
       expect(sourceRelationships.length).to.equal(1);
     });
   });
+
+  describe('getViewElementNestedElements', () => {
+    it('should return an empty array if the element does not have a nested element', () => {
+      const elements = inputInterpreter.getViewElementNestedElements(diagramModel.children[0]);
+
+      expect(elements.length).to.equal(0);
+      expect(elements).to.deep.equal([]);
+    });
+  });
 });

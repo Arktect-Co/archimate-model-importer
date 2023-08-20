@@ -509,7 +509,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const id = inputInterpreter.getViewElementViewId(views[0].children);
+   * const id = inputInterpreter.getViewElementViewId(views[0].children[0]);
    */
   getViewElementViewId(viewElement: ViewNode): string {
     return viewElement.$.id;
@@ -524,7 +524,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const id = inputInterpreter.getViewElementModelId(views[0].children);
+   * const id = inputInterpreter.getViewElementModelId(views[0].children[0]);
    */
   getViewElementModelId(viewElement: ViewNode): string {
     return viewElement.archimateElement[0].$.href.replace(/.*#(.*)/g, '$1');
@@ -541,7 +541,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(views[0].children, null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX(views[0].children[0], null, undefined);
    */
   getViewElementPositionX(
     viewElement: ViewNode,
@@ -561,7 +561,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
-   * const positionY = inputInterpreter.getViewElementPositionY(views[0].children, null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY(views[0].children[0], null, undefined);
    */
   getViewElementPositionY(
     viewElement: ViewNode,
@@ -580,7 +580,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const width = inputInterpreter.getViewElementWidth(views[0].children);
+   * const width = inputInterpreter.getViewElementWidth(views[0].children[0]);
    */
   getViewElementWidth(viewElement: ViewNode): number {
     return parseInt(viewElement.bounds[0].$.width, 0);
@@ -595,7 +595,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const height = inputInterpreter.getViewElementHeight(views[0].children);
+   * const height = inputInterpreter.getViewElementHeight(views[0].children[0]);
    */
   getViewElementHeight(viewElement: ViewNode): number {
     return parseInt(viewElement.bounds[0].$.height, 0);
@@ -609,12 +609,23 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
-   * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(views[0].children);
+   * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(views[0].children[0]);
    */
   getViewElementSourceRelationships(viewElement: ViewNode): Array<ViewRelationship> {
     return viewElement.sourceConnections;
   }
 
+  /**
+   * Returns the view element nested elements
+   * @param viewElement View Element
+   * @return Nested elements
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   * const views = inputInterpreter.getFolderViews("Folder Path");
+   *
+   * const nestedElements = inputInterpreter.getViewElementNestedElements(views[0].children[0]);
+   */
   getViewElementNestedElements(viewElement: ViewNode): Array<ViewNode> {
     return viewElement.children || [];
   }
