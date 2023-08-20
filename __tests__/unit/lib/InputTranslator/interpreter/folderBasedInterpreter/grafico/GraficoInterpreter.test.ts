@@ -504,5 +504,13 @@ describe('GraficoInterpreter', () => {
 
       expect(view.$.id).to.equal(id);
     });
+
+    it('should return null if element is not found', () => {
+      diagramModel.children[0].children = undefined;
+      const id = 'test';
+      const view = inputInterpreter.findViewElement(diagramModel.children, id);
+
+      expect(view).to.equal(null);
+    });
   });
 });
