@@ -421,6 +421,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     return folders;
   }
 
+  /**
+   * Returns a folder views
+   * @param folder Folder
+   * @return Folder views
+   * @example
+   * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
+   * const inputInterpreter = new Grafico("modelPath");
+   *
+   * const folders = inputInterpreter.getFolderViews("Folder Path");
+   */
   getFolderViews(folder: string): Array<View> {
     let diagrams = [];
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {

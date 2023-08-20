@@ -325,4 +325,15 @@ describe('GraficoInterpreter', () => {
       expect(folders).to.deep.equal([]);
     });
   });
+
+  describe('getFolderViews', () => {
+    it('should return an empty array if the folder does not exist', () => {
+      const folders = inputInterpreter.getFolderViews(
+        path.join(rootPath, '/models/grafico/model/test'),
+      );
+
+      expect(folders.length).to.equal(0);
+      expect(folders).to.deep.equal([]);
+    });
+  });
 });
