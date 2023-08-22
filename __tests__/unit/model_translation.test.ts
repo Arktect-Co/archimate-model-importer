@@ -4,15 +4,19 @@ import path from 'path';
 
 import { modelResultArchi } from './modelResults/modelResultArchi';
 import { modelResultVisualParadigm } from './modelResults/modelResultVisualParadigm';
+import { modelResultArchi5 } from './modelResults/modelResultArchi5';
 
 import { InputProcessorDirector } from '@lib/processors/InputProcessingDirector/InputProcessorDirector';
+import { Landscape, View } from '../../src/lib/common/interfaces/model';
 
 chai.use(deepEqualInAnyOrder);
 
-function removeFolderIds(folders) {
-  for (let i = 0; i < folders.length; i++) {
-    let folder = folders[i];
-
+/**
+ * Removes folders Id
+ * @param folders
+ */
+function removeFolderIds(folders: Array<Landscape>): void {
+  for (const folder of folders) {
     if (folder.isDirectory) {
       delete folder.id;
     }
@@ -23,13 +27,13 @@ function removeFolderIds(folders) {
   }
 }
 
-function removeUndefinedValues(views) {
-  for (let i = 0; i < views.length; i++) {
-    let view = views[i];
-
-    for (let j = 0; j < view.viewRelationships.length; j++) {
-      let rel = view.viewRelationships[j];
-
+/**
+ * Remove undefined values of views
+ * @param views
+ */
+function removeUndefinedValues(views: Array<View>): void {
+  for (const view of views) {
+    for (const rel of view.viewRelationships) {
       if (rel.isBidirectional === undefined) {
         delete rel.isBidirectional;
       }
@@ -64,6 +68,29 @@ describe('Model Translation', () => {
       removeUndefinedValues(response.model.views);
 
       chai.expect(response).to.deep.equalInAnyOrder(modelResultArchi);
+    });
+
+    it('Importing Archi Model v5.0', async () => {
+      let inputProcessorDirector = new InputProcessorDirector({
+        label: 'Archi Test v5',
+        description: 'Test model for Archi Files',
+      });
+
+      await inputProcessorDirector.translateModelFile(
+        path.join(path.dirname(__filename), '/models/archi_v5.archimate'),
+      );
+
+      let response = inputProcessorDirector.getOutputModel();
+
+      delete response.modelsourceid;
+
+      // Removing Folder ids
+      removeFolderIds(response.model.landscape);
+
+      // Removing [undefined] values in View Relationships for isBidirectional
+      removeUndefinedValues(response.model.views);
+
+      chai.expect(response).to.deep.equalInAnyOrder(modelResultArchi5);
     });
 
     it('Importing Archi Model v4.6 Skipping Views', async () => {
