@@ -93,6 +93,29 @@ describe('Model Translation', () => {
       chai.expect(response).to.deep.equalInAnyOrder(modelResultArchi5);
     });
 
+    it('Importing Archi Model v5.0 Skipping Views', async () => {
+      let inputProcessorDirector = new InputProcessorDirector({
+        label: 'Archi Test v5',
+        description: 'Test model for Archi Files',
+        options: { skipViews: true },
+      });
+
+      await inputProcessorDirector.translateModelFile(
+        path.join(path.dirname(__filename), '/models/archi_v5.archimate'),
+      );
+
+      let response = inputProcessorDirector.getOutputModel();
+
+      delete response.modelsourceid;
+
+      chai.expect(response.model.nodes).to.deep.equalInAnyOrder(modelResultArchi5.model.nodes);
+      chai
+        .expect(response.model.relationships)
+        .to.deep.equalInAnyOrder(modelResultArchi5.model.relationships);
+      chai.expect(response.model.views).to.be.empty;
+      chai.expect(response.model.landscape).to.be.empty;
+    });
+
     it('Importing Archi Model v4.6 Skipping Views', async () => {
       let inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
