@@ -75,7 +75,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getNodeId(node);
    */
   getNodeId(node: Element): string {
-    return node.$.id;
+    return node.$.id.replace('id-', '');
   }
 
   /**
@@ -196,7 +196,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getRelationshipId(relationship);
    */
   getRelationshipId(relationship: Element): string {
-    return relationship.$.id;
+    return relationship.$.id.replace('id-', '');
   }
 
   /**
@@ -232,7 +232,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const sourceId = inputInterpreter.getRelationshipSourceId(relationship);
    */
   getRelationshipSourceId(relationship: Element): string {
-    return relationship.$.source;
+    return relationship.$.source.replace('id-', '');
   }
 
   /**
@@ -248,7 +248,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const targetId = inputInterpreter.getRelationshipTargetId(relationship);
    */
   getRelationshipTargetId(relationship: Element): string {
-    return relationship.$.target;
+    return relationship.$.target.replace('id-', '');
   }
 
   /**
@@ -404,7 +404,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewId(view);
    */
   getViewId(view: View): string {
-    return view.$.id;
+    return view.$.id.replace('id-', '');
   }
 
   /**
@@ -436,7 +436,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewElementViewId(viewElement);
    */
   getViewElementViewId(viewElement: ChildElement): string {
-    return viewElement.$.id;
+    return viewElement.$.id.replace('id-', '');
   }
 
   /**
@@ -452,7 +452,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewElementModelId(viewElement);
    */
   getViewElementModelId(viewElement: ChildElement): string {
-    return viewElement.$.archimateElement;
+    return viewElement.$.archimateElement.replace('id-', '');
   }
 
   /**
@@ -584,7 +584,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
       for (let i = 0; i < viewElements.length; i++) {
         const element = viewElements[i];
 
-        if (element.$.id.localeCompare(id) === 0) {
+        if (element.$.id.replace('id-', '').localeCompare(id) === 0) {
           return element;
         }
 
@@ -852,7 +852,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   getViewRelationshipModelId(viewRelationship: Relationship): string | null {
     return viewRelationship.$.archimateRelationship
-      ? viewRelationship.$.archimateRelationship
+      ? viewRelationship.$.archimateRelationship.replace('id-', '')
       : null;
   }
 
@@ -870,7 +870,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewRelationshipId(relationship);
    */
   getViewRelationshipId(viewRelationship: Relationship): string {
-    return viewRelationship.$.id;
+    return viewRelationship.$.id.replace('id-', '');
   }
 
   /**
@@ -887,7 +887,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewRelationshipSourceElementId(relationship);
    */
   getViewRelationshipSourceElementId(viewRelationship: Relationship): string {
-    return viewRelationship.$.source;
+    return viewRelationship.$.source.replace('id-', '');
   }
 
   /**
@@ -904,7 +904,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewRelationshipTargetElementId(relationship);
    */
   getViewRelationshipTargetElementId(viewRelationship: Relationship): string {
-    return viewRelationship.$.target;
+    return viewRelationship.$.target.replace('id-', '');
   }
 
   /**
