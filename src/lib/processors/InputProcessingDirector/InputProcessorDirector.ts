@@ -126,7 +126,8 @@ export class InputProcessorDirector {
         modelVersion.startsWith('4.6') || // Tested
         modelVersion.startsWith('4.7') ||
         modelVersion.startsWith('4.8') ||
-        modelVersion.startsWith('4.9')) // Tested
+        modelVersion.startsWith('4.9') || // Tested
+        modelVersion.startsWith('5.0'))
     );
   }
 
