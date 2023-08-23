@@ -60,7 +60,7 @@ export class Model {
     const nodes: Array<Node> = [];
 
     for (const nodeType in this.model.nodes) {
-      if (this.model.nodes.hasOwnProperty(nodeType)) {
+      if (Object.prototype.hasOwnProperty.call(this.model.nodes, nodeType)) {
         const nodeTypeSet = this.model.nodes[nodeType];
 
         for (let i = 0; i < nodeTypeSet.length; i++) {
@@ -87,7 +87,7 @@ export class Model {
     const relationships: Array<Relationship> = [];
 
     for (const relType in this.model.relationships) {
-      if (this.model.relationships.hasOwnProperty(relType)) {
+      if (Object.prototype.hasOwnProperty.call(this.model.relationships, relType)) {
         const relTypeSet = this.model.relationships[relType];
 
         for (let i = 0; i < relTypeSet.length; i++) {
@@ -504,7 +504,7 @@ export class Model {
     });
 
     for (const nodeType in categorizedNodes) {
-      if (categorizedNodes.hasOwnProperty(nodeType)) {
+      if (Object.prototype.hasOwnProperty.call(categorizedNodes, nodeType)) {
         this.totalByType['nodeTypes'][nodeType] = categorizedNodes[nodeType].length;
       }
     }
@@ -567,7 +567,7 @@ export class Model {
     });
 
     for (const relType in categorizedRelationships) {
-      if (categorizedRelationships.hasOwnProperty(relType)) {
+      if (Object.prototype.hasOwnProperty.call(categorizedRelationships, relType)) {
         const sumarizedType = relType.replace('relationship', '');
 
         this.totalByType['relationshipTypes'][sumarizedType] =

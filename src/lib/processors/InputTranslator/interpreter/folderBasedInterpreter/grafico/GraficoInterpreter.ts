@@ -63,7 +63,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   private static _getFirstPropertyName(jsonObj: View | Relationship | Node): string {
     for (let key in jsonObj) {
-      if (jsonObj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(jsonObj, key)) {
         return key;
       }
     }
