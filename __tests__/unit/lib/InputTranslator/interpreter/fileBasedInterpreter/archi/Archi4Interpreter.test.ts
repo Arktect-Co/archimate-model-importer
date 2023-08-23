@@ -172,7 +172,7 @@ describe('ArchiInterpreter', () => {
 
     it('should return a relationship "1" access direction', () => {
       const relationships = model['archimate:model'].folder[7].element;
-      const relationship = relationships.find(e => e.$.accessType == '1');
+      const relationship = relationships.find(e => e.$.accessType === '1');
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -182,7 +182,7 @@ describe('ArchiInterpreter', () => {
 
     it('should return a relationship "2" access direction', () => {
       const relationships = model['archimate:model'].folder[7].element;
-      const relationship = relationships.find(e => e.$.accessType == '2');
+      const relationship = relationships.find(e => e.$.accessType === '2');
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -192,7 +192,7 @@ describe('ArchiInterpreter', () => {
 
     it('should return a relationship "3" access direction', () => {
       const relationships = model['archimate:model'].folder[7].element;
-      const relationship = relationships.find(e => e.$.accessType == '3');
+      const relationship = relationships.find(e => e.$.accessType === '3');
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
