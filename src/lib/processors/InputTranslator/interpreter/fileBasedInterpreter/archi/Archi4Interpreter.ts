@@ -137,7 +137,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const type = inputInterpreter.getNodeJunctionType(node);
    */
   getNodeJunctionType(node: Element): string {
-    let type = node.$.type;
+    const type = node.$.type;
 
     if (type === undefined) {
       // AND junction
@@ -318,7 +318,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
    */
   getAssociationRelationshipIsDirected(relationship: Element): boolean {
-    let isDirected = relationship.$.directed;
+    const isDirected = relationship.$.directed;
 
     if (isDirected === undefined) {
       return false;
@@ -591,7 +591,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let result = this.findViewElement(child, id);
+          const result = this.findViewElement(child, id);
 
           if (result !== null) {
             return result;
@@ -624,7 +624,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.findViewElementParent(child, id);
+          const response = this.findViewElementParent(child, id);
 
           if (response !== null) {
             return response;
@@ -665,11 +665,11 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.calculateNestedPosition(child, id);
+          const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            let x = this.getViewElementPositionX(element) || 0;
-            let y = this.getViewElementPositionY(element) || 0;
+            const x = this.getViewElementPositionX(element) || 0;
+            const y = this.getViewElementPositionY(element) || 0;
 
             response.x += x;
             response.y += y;
@@ -806,10 +806,10 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
     let targetIncrementX = 0;
     let targetIncrementY = 0;
 
-    let sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
-    let sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
-    let targetWidth = targetBounds.width ? +targetBounds.width : 0;
-    let targetHeight = targetBounds.height ? +targetBounds.height : 0;
+    const sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
+    const sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
+    const targetWidth = targetBounds.width ? +targetBounds.width : 0;
+    const targetHeight = targetBounds.height ? +targetBounds.height : 0;
 
     if (sourceParentPositionIncrement !== null) {
       sourceIncrementX = sourceParentPositionIncrement.x;
@@ -821,16 +821,16 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
       targetIncrementY = targetParentPositionIncrement.y;
     }
 
-    let sourcePositionX = sourceXPosition + sourceIncrementX;
-    let sourcePositionY = sourceYPosition + sourceIncrementY;
-    let targetPositionX = targetXPosition + targetIncrementX;
-    let targetPositionY = targetYPosition + targetIncrementY;
-    let weight = (bendpointIndex + 1) / (bendpointsLength + 1);
+    const sourcePositionX = sourceXPosition + sourceIncrementX;
+    const sourcePositionY = sourceYPosition + sourceIncrementY;
+    const targetPositionX = targetXPosition + targetIncrementX;
+    const targetPositionY = targetYPosition + targetIncrementY;
+    const weight = (bendpointIndex + 1) / (bendpointsLength + 1);
 
-    let x =
+    const x =
       (sourcePositionX + sx + sourceWidth / 2) * (1.0 - weight) +
       weight * (targetPositionX + ex + targetWidth / 2);
-    let y =
+    const y =
       (sourcePositionY + sy + sourceHeight / 2) * (1.0 - weight) +
       weight * (targetPositionY + ey + targetHeight / 2);
 
@@ -976,7 +976,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
         folder.$.type.localeCompare(ArchiElementType.Relations) !== 0 &&
         folder.$.type.localeCompare(ArchiElementType.Diagrams) !== 0
       ) {
-        let modelElements = folder.element;
+        const modelElements = folder.element;
 
         if (Array.isArray(modelElements)) {
           modelElements.forEach(action);
