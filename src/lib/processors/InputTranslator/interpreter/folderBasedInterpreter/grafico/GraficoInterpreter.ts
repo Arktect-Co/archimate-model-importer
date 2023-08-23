@@ -1000,7 +1000,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    * inputInterpreter.forEachViewRelationship(view[0], (view) =>{});
    */
-  forEachViewRelationship(view: View, action: (view: ViewRelationship) => void): void {}
+  forEachViewRelationship(view: View, action: (view: ViewRelationship) => void): void {
+    // Empty because the GRAFICO interpreter does not need to use this function
+  }
 
   /**
    * Loops through a list of nodes

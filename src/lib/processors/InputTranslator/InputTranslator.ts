@@ -72,7 +72,11 @@ export class InputTranslator {
     this.relationshipsMap = new Map();
     this.inputInterpreter = inputInterpreter;
     this.options = options;
-    this.log = logger ? logger : () => {};
+    this.log = logger
+      ? logger
+      : () => {
+          // Empty because there needs to be a function to run
+        };
   }
 
   /**

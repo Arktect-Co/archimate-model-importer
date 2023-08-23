@@ -959,7 +959,9 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    *
    * inputInterpreter.forEachViewRelationship(view, (connection) =>{});
    */
-  forEachViewRelationship(view: View, action: (relationship: Relationship) => void): void {}
+  forEachViewRelationship(view: View, action: (relationship: Relationship) => void): void {
+    // Empty because the Archi interpreter does not need to use this function
+  }
 
   /**
    * Loops through a list of nodes
