@@ -379,7 +379,7 @@ export class Model {
     isBidirectional,
     identifier,
   }: Relationship): Relationship {
-    let relationship: Relationship = {
+    const relationship: Relationship = {
       sourceId,
       targetId,
       type: type ? type.toLowerCase() : '',
@@ -435,7 +435,7 @@ export class Model {
     documentation,
   }: Node): Node {
     const nodeName = name !== null ? name : 'Unknown Name';
-    let nodeObj: Node = { identifier, name: nodeName, type };
+    const nodeObj: Node = { identifier, name: nodeName, type };
 
     if (properties) {
       nodeObj.properties = properties;
@@ -472,7 +472,7 @@ export class Model {
    *  model.setManyNodes(nodes);
    */
   setManyNodes(nodeList: Array<Node>): void {
-    let categorizedNodes: Nodes = {};
+    const categorizedNodes: Nodes = {};
     let totalNodes = 0;
 
     nodeList.forEach(node => {
@@ -487,7 +487,7 @@ export class Model {
           categorizedNodes[type] = [];
         }
 
-        let nodeObj: Node = { identifier: node.identifier, name };
+        const nodeObj: Node = { identifier: node.identifier, name };
 
         if (properties) {
           nodeObj.properties = properties;
@@ -538,7 +538,7 @@ export class Model {
    *  model.setManyRelationships(relationships);
    */
   setManyRelationships(relationshipList: Array<Relationship>): void {
-    let categorizedRelationships: Relationships = {};
+    const categorizedRelationships: Relationships = {};
     let totalRelationships = 0;
 
     relationshipList.forEach(rel => {
@@ -550,7 +550,7 @@ export class Model {
           categorizedRelationships[type] = [];
         }
 
-        let relationship: Relationship = {
+        const relationship: Relationship = {
           identifier: rel.identifier,
           sourceId: rel.sourceId,
           targetId: rel.targetId,
