@@ -188,7 +188,7 @@ describe('AoeffInterpreter', () => {
 
     it('should return a relationship "Write" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
-      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Write);
+      const relationship = relationships.find(e => e.$.accessType === RelationshipAccessType.Write);
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -198,7 +198,7 @@ describe('AoeffInterpreter', () => {
 
     it('should return a relationship "Read" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
-      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Read);
+      const relationship = relationships.find(e => e.$.accessType === RelationshipAccessType.Read);
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -208,7 +208,9 @@ describe('AoeffInterpreter', () => {
 
     it('should return a relationship "Access" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
-      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Access);
+      const relationship = relationships.find(
+        e => e.$.accessType === RelationshipAccessType.Access,
+      );
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -219,7 +221,7 @@ describe('AoeffInterpreter', () => {
     it('should return a relationship "ReadWrite" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
       const relationship = relationships.find(
-        e => e.$.accessType == RelationshipAccessType.ReadWrite,
+        e => e.$.accessType === RelationshipAccessType.ReadWrite,
       );
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
