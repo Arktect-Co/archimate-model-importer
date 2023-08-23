@@ -8,7 +8,7 @@ import { ArchiModel } from '@lib/common/interfaces/archiModel/ArchiModel';
  */
 export async function parseXml(fileString: Buffer) {
   return new Promise<AoeffModel | ArchiModel>((resolve, reject): void => {
-    let parser = new xml2js.Parser({ explicitArray: true });
+    const parser = new xml2js.Parser({ explicitArray: true });
 
     parser.parseString(fileString, function (error, result) {
       if (error) {
