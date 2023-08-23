@@ -6,7 +6,7 @@ import { ArchiModel } from '@lib/common/interfaces/archiModel/ArchiModel';
  * Returns a json xml template from the xml file buffer
  * @param fileString File buffer
  */
-export async function parseXml(fileString: Buffer) {
+export function parseXml(fileString: Buffer) {
   return new Promise<AoeffModel | ArchiModel>((resolve, reject): void => {
     const parser = new xml2js.Parser({ explicitArray: true });
 
