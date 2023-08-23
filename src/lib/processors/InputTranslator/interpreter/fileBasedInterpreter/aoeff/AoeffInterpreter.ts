@@ -127,9 +127,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const documentation = inputInterpreter.getNodeDocumentation(node);
    */
   getNodeDocumentation(node: ElementModel): string | null {
-    return node.documentation && node.documentation[0] && node.documentation[0]._
-      ? node.documentation[0]._
-      : null;
+    return node?.documentation?.[0]?._ ? node.documentation[0]._ : null;
   }
 
   /**
@@ -178,14 +176,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const propertyEntry = inputInterpreter.getPropertyEntry(property);
    */
   getPropertyEntry(property?: Property): Array<string> {
-    if (
-      property &&
-      property.$ &&
-      property.$.propertyDefinitionRef &&
-      property.value &&
-      property.value[0] &&
-      property.value[0]._
-    ) {
+    if (property?.$?.propertyDefinitionRef && property?.value?.[0]?._) {
       return [property.$.propertyDefinitionRef, property.value[0]._];
     } else {
       return [];
@@ -464,7 +455,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
         return v.$.identifier.localeCompare(view.$.identifierRef) === 0;
       });
 
-      if (el && el.name) {
+      if (el?.name) {
         const name = el.name[0];
 
         if (typeof name !== 'string' && '_' in name) return name._;
@@ -761,7 +752,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   getViewNoteContent(viewElement: NodeModel): string {
     const { label } = viewElement;
-    return label && label[0] ? label[0]['_'] || label[0] : 'No Content';
+    return label?.[0] ? label[0]['_'] || label[0] : 'No Content';
   }
 
   /**
@@ -779,7 +770,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
   getViewGroupName(viewElement: NodeModel): string {
     const { label } = viewElement;
 
-    return label && label[0] ? label[0]['_'] || label[0] : UNKNOWN;
+    return label?.[0] ? label[0]['_'] || label[0] : UNKNOWN;
   }
 
   /**

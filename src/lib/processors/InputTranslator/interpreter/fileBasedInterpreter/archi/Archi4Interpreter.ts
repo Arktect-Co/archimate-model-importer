@@ -120,7 +120,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const documentation = inputInterpreter.getNodeDocumentation(node);
    */
   getNodeDocumentation(node: Element): string | null {
-    return node.documentation && node.documentation[0] ? node.documentation[0] : null;
+    return node?.documentation?.[0] ? node.documentation[0] : null;
   }
 
   /**
@@ -176,7 +176,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const propertyEntry = inputInterpreter.getPropertyEntry(property);
    */
   getPropertyEntry(property: Property): Array<string> {
-    if (property && property.$ && property.$.key && property.$.value) {
+    if (property?.$?.key && property?.$?.value) {
       return [property.$.key, property.$.value];
     } else {
       return [];

@@ -209,7 +209,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    */
   getPropertyEntry(property: Property): Array<string> {
-    if (property && property.$ && property.$.key && property.$.value) {
+    if (property?.$?.key && property?.$?.value) {
       return [property.$.key, property.$.value];
     } else {
       return [];
