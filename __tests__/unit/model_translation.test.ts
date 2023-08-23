@@ -144,8 +144,8 @@ describe('Model Translation', () => {
       chai
         .expect(response.model.relationships)
         .to.deep.equalInAnyOrder(modelResultArchi5.model.relationships);
-      chai.expect(response.model.views).to.be.empty;
-      chai.expect(response.model.landscape).to.be.empty;
+      chai.expect(response.model.views.length).to.equal(0);
+      chai.expect(response.model.landscape.length).to.equal(0);
     });
 
     it('Importing Archi Model v4.6 Skipping Views', async () => {
@@ -167,8 +167,8 @@ describe('Model Translation', () => {
       chai
         .expect(response.model.relationships)
         .to.deep.equalInAnyOrder(modelResultArchi.model.relationships);
-      chai.expect(response.model.views).to.be.empty;
-      chai.expect(response.model.landscape).to.be.empty;
+      chai.expect(response.model.views.length).to.equal(0);
+      chai.expect(response.model.landscape.length).to.equal(0);
     });
   });
 
