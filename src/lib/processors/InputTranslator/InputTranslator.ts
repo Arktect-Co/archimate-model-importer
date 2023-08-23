@@ -192,7 +192,7 @@ export class InputTranslator {
   private translateRelationships(relationships: Array<Relationship>) {
     try {
       this.inputInterpreter.forEachModelRelationship(currentRelationship => {
-        let isBidirectional: boolean | undefined = undefined;
+        let isBidirectional: boolean | undefined;
         let sourceId: string = this.inputInterpreter.getRelationshipSourceId(currentRelationship);
         let targetId: string = this.inputInterpreter.getRelationshipTargetId(currentRelationship);
 
@@ -516,11 +516,11 @@ export class InputTranslator {
   ): void {
     if (viewRelationship !== undefined) {
       const bendPoints = [];
-      let viewModelRelationship = undefined;
-      let relationshipBendpoints = undefined;
-      let modelRelationshipId = undefined;
+      let viewModelRelationship;
+      let relationshipBendpoints;
+      let modelRelationshipId;
       let relationshipType = '';
-      let isBidirectional = undefined;
+      let isBidirectional;
       const sourceViewElementId =
         this.inputInterpreter.getViewRelationshipSourceElementId(viewRelationship);
       const targetViewElementId =
