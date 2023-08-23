@@ -10,7 +10,7 @@ import { getXmlModel } from '../../../../../utils/getXmlModel';
 
 const UNKNOWN = 'Unknown Name';
 
-describe('AoeffInterpreter', async () => {
+describe('AoeffInterpreter', () => {
   let inputInterpreter: AoeffInterpreter;
   let model: AoeffModel;
 
@@ -280,7 +280,7 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getSubFolders', () => {
-    it('should return a sub folders', async () => {
+    it('should return a sub folders', () => {
       const folder = model.model.organizations[0].item[0];
       const subFolders = inputInterpreter.getSubFolders(folder);
 
@@ -290,7 +290,7 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getFolderViews', () => {
-    it('should return a folder Views', async () => {
+    it('should return a folder Views', () => {
       const folder = model.model.organizations[0].item[0];
       const folderViews = inputInterpreter.getFolderViews(folder);
 
