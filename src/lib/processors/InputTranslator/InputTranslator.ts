@@ -8,11 +8,14 @@ import {
   ViewNode,
   ViewRelationship,
 } from '@lib/common/interfaces/model';
-import * as AoeffModel from '@lib/common/interfaces/aoeffModel';
 import { Interpreter } from '@lib/common/interfaces/Interpreter';
 import { RelationshipType } from '@lib/common/enums/relationshipType';
 import { ViewType } from '@lib/common/enums/viewType';
+// skipcq: JS-C1003
+import * as AoeffModel from '@lib/common/interfaces/aoeffModel';
+// skipcq: JS-C1003
 import * as ArchiModel from '@lib/common/interfaces/archiModel';
+// skipcq: JS-C1003
 import * as GraficoModel from '@lib/common/interfaces/graficoModel';
 import getUniqueId from 'uniqid';
 
