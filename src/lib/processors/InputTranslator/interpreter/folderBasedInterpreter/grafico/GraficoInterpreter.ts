@@ -848,10 +848,10 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   ): Bendpoint {
     const sourceBounds = sourceViewElement.bounds[0].$;
     const targetBounds = targetViewElement.bounds[0].$;
-    const sourceXPosition = sourceBounds.x ? +sourceBounds.x : 0;
-    const sourceYPosition = sourceBounds.y ? +sourceBounds.y : 0;
-    const targetXPosition = targetBounds.x ? +targetBounds.x : 0;
-    const targetYPosition = targetBounds.y ? +targetBounds.y : 0;
+    const sourceXPosition = sourceBounds.x ? Number(sourceBounds.x) : 0;
+    const sourceYPosition = sourceBounds.y ? Number(sourceBounds.y) : 0;
+    const targetXPosition = targetBounds.x ? Number(targetBounds.x) : 0;
+    const targetYPosition = targetBounds.y ? Number(targetBounds.y) : 0;
     const sourceParentPositionIncrement = this.calculateNestedPosition(
       viewNodes,
       sourceViewElement.$.id,
@@ -860,19 +860,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       viewNodes,
       targetViewElement.$.id,
     );
-    const sx = bendpoint.$.startX ? +bendpoint.$.startX : 0;
-    const sy = bendpoint.$.startY ? +bendpoint.$.startY : 0;
-    const ex = bendpoint.$.endX ? +bendpoint.$.endX : 0;
-    const ey = bendpoint.$.endY ? +bendpoint.$.endY : 0;
+    const sx = bendpoint.$.startX ? Number(bendpoint.$.startX) : 0;
+    const sy = bendpoint.$.startY ? Number(bendpoint.$.startY) : 0;
+    const ex = bendpoint.$.endX ? Number(bendpoint.$.endX) : 0;
+    const ey = bendpoint.$.endY ? Number(bendpoint.$.endY) : 0;
     let sourceIncrementX = 0;
     let sourceIncrementY = 0;
     let targetIncrementX = 0;
     let targetIncrementY = 0;
 
-    const sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
-    const sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
-    const targetWidth = targetBounds.width ? +targetBounds.width : 0;
-    const targetHeight = targetBounds.height ? +targetBounds.height : 0;
+    const sourceWidth = sourceBounds.width ? Number(sourceBounds.width) : 0;
+    const sourceHeight = sourceBounds.height ? Number(sourceBounds.height) : 0;
+    const targetWidth = targetBounds.width ? Number(targetBounds.width) : 0;
+    const targetHeight = targetBounds.height ? Number(targetBounds.height) : 0;
 
     if (sourceParentPositionIncrement !== null) {
       sourceIncrementX = sourceParentPositionIncrement.x;
