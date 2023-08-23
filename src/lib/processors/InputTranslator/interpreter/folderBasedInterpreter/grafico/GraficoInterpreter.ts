@@ -345,6 +345,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
             source: true,
             target: true,
           };
+        default:
+          break;
       }
     }
   }

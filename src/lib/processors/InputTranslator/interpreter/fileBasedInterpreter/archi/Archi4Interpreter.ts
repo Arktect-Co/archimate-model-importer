@@ -302,6 +302,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
             source: true,
             target: true,
           };
+        default:
+          break;
       }
     }
   }
