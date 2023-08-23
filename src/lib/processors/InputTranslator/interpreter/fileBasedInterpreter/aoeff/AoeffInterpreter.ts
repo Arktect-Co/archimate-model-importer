@@ -723,11 +723,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
           const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            const x = this.getViewElementPositionX({ viewElement: element }) || 0;
-            const y = this.getViewElementPositionY({ viewElement: element }) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element });
+            const y = this.getViewElementPositionY({ viewElement: element });
 
-            response.x += x;
-            response.y += y;
+            response.x += x ? x : 0;
+            response.y += y ? y : 0;
 
             return response;
           } else {

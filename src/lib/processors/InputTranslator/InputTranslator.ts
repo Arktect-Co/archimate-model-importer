@@ -409,18 +409,18 @@ export class InputTranslator {
     if (Array.isArray(viewElements)) {
       viewElements.forEach(viewElement => {
         const viewNodeId = this.inputInterpreter.getViewElementViewId(viewElement);
-        const positionX =
-          this.inputInterpreter.getViewElementPositionX({
-            viewElement,
-            parentId: parent,
-            parentViewElements,
-          }) || 0;
-        const positionY =
-          this.inputInterpreter.getViewElementPositionY({
-            viewElement,
-            parentId: parent,
-            parentViewElements,
-          }) || 0;
+        const elementPositionX = this.inputInterpreter.getViewElementPositionX({
+          viewElement,
+          parentId: parent,
+          parentViewElements,
+        });
+        const elementPositionY = this.inputInterpreter.getViewElementPositionY({
+          viewElement,
+          parentId: parent,
+          parentViewElements,
+        });
+        const positionX = elementPositionX ? elementPositionX : 0;
+        const positionY = elementPositionY ? elementPositionY : 0;
         const width = this.inputInterpreter.getViewElementWidth(viewElement);
         const height = this.inputInterpreter.getViewElementHeight(viewElement);
         let elementName = '';
