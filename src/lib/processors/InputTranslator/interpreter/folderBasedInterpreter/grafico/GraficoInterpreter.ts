@@ -415,7 +415,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     let folders = [];
 
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {
-      fs.readdirSync(folder).map(name => {
+      fs.readdirSync(folder).forEach(name => {
         if (fs.statSync(path.join(folder, name)).isDirectory()) {
           folders.push(path.join(folder, name));
         }
@@ -438,7 +438,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
   getFolderViews(folder: string): Array<View> {
     let diagrams = [];
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {
-      fs.readdirSync(folder).map(name => {
+      const folders = fs.readdirSync(folder);
+
+      folders.forEach(name => {
         if (
           name.localeCompare('folder.xml') !== 0 &&
           fs.statSync(path.join(folder, name)).isFile()
@@ -1032,7 +1034,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       let nodeDirectory = path.join(this.modelPath, folder);
 
       if (fs.existsSync(nodeDirectory) && fs.lstatSync(nodeDirectory).isDirectory()) {
-        fs.readdirSync(nodeDirectory).map(name => {
+        fs.readdirSync(nodeDirectory).forEach(name => {
           const filePath = path.join(nodeDirectory, name);
 
           if (name.localeCompare('folder.xml') !== 0 && fs.lstatSync(filePath).isFile()) {
@@ -1062,7 +1064,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     let relationshipDirectory = path.join(this.modelPath, 'relations');
 
     if (fs.existsSync(relationshipDirectory) && fs.lstatSync(relationshipDirectory).isDirectory()) {
-      fs.readdirSync(relationshipDirectory).map(name => {
+      fs.readdirSync(relationshipDirectory).forEach(name => {
         const filePath = path.join(relationshipDirectory, name);
 
         if (name.localeCompare('folder.xml') !== 0 && fs.lstatSync(filePath).isFile()) {
