@@ -1009,8 +1009,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Loops through a list of views relationships
-   * @param view View Model
-   * @param action Action foe each relationship view in the list
+   * @param _view View Model
+   * @param _action Action foe each relationship view in the list
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
@@ -1018,7 +1018,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    * inputInterpreter.forEachViewRelationship(view[0], (view) =>{});
    */
-  forEachViewRelationship(view: View, action: (view: ViewRelationship) => void): void {
+  forEachViewRelationship(_view: View, _action: (_view: ViewRelationship) => void): void {
     // Empty because the GRAFICO interpreter does not need to use this function
   }
 
@@ -1098,14 +1098,14 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Loops through a list of diagram
-   * @param action Action for each diagram in the list
+   * @param _action Action for each diagram in the list
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    *
    * inputInterpreter.forEachDiagram((view) => {});
    */
-  forEachDiagram(action: (view: View) => void) {
+  forEachDiagram(_action: (_view: View) => void) {
     return null;
   }
 

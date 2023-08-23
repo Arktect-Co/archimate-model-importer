@@ -954,8 +954,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Loops through a list of views relationships
-   * @param view View Model
-   * @param action Action foe each relationship view in the list
+   * @param _view View Model
+   * @param _action Action foe each relationship view in the list
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
    * const model = {} // Archi Model
@@ -964,7 +964,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    *
    * inputInterpreter.forEachViewRelationship(view, (connection) =>{});
    */
-  forEachViewRelationship(view: View, action: (relationship: Relationship) => void): void {
+  forEachViewRelationship(_view: View, _action: (_relationship: Relationship) => void): void {
     // Empty because the Archi interpreter does not need to use this function
   }
 
@@ -1018,7 +1018,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Loops through a list of diagram
-   * @param action Action for each diagram in the list
+   * @param _action Action for each diagram in the list
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
    * const model = {} // Archi Model
@@ -1026,7 +1026,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    *
    * inputInterpreter.forEachDiagram((view) => {});
    */
-  forEachDiagram(action: (diagram: Element) => void) {
+  forEachDiagram(_action: (_diagram: Element) => void) {
     return null;
   }
 
