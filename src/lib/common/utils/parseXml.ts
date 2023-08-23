@@ -10,7 +10,7 @@ export function parseXml(fileString: Buffer) {
   return new Promise<AoeffModel | ArchiModel>((resolve, reject): void => {
     const parser = new xml2js.Parser({ explicitArray: true });
 
-    parser.parseString(fileString, function (error, result) {
+    parser.parseString(fileString, (error, result) => {
       if (error) {
         reject(error);
       } else {
