@@ -51,7 +51,7 @@ export class InputProcessorDirector {
     } = settings;
 
     if (options.skipViews === undefined) {
-      throw new Error(`Invalid options`);
+      throw new Error('Invalid options');
     }
 
     this.model = new Model(label, description);
@@ -200,10 +200,10 @@ export class InputProcessorDirector {
           throw new Error(`Input model processing: ${message}`);
         }
       } else {
-        throw new Error(`Not compatible model`);
+        throw new Error('Not compatible model');
       }
     } else {
-      throw new Error(`Invalid model format. Only XML models are accepted`);
+      throw new Error('Invalid model format. Only XML models are accepted');
     }
   }
 

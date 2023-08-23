@@ -100,7 +100,7 @@ export class InputTranslator {
       const nodes: Array<Node> = [];
       const relationships: Array<Relationship> = [];
 
-      this.log(`Starting model translation`);
+      this.log('Starting model translation');
 
       this.translateNodes(nodes);
 
@@ -121,7 +121,7 @@ export class InputTranslator {
         if (!processViewDataEnable) {
           this.translateViews();
 
-          this.log(`Sequential Views translated`);
+          this.log('Sequential Views translated');
         }
 
         organizationFolders.forEach(organizationFolder => {
@@ -131,7 +131,7 @@ export class InputTranslator {
             processViewDataEnable,
           );
 
-          this.log(`Folders and nested views translated`);
+          this.log('Folders and nested views translated');
         });
       }
     } else {
