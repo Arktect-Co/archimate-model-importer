@@ -298,6 +298,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
           source: true,
           target: true,
         };
+      default:
+        return {
+          source: false,
+          target: true,
+        };
     }
   }
 
