@@ -221,7 +221,7 @@ export class InputProcessorDirector {
   async translateModelFolder(folderPath): Promise<void> {
     // TODO: verify if really is a GRAFICO model
     try {
-      let interpreter: GraficoInterpreterModel = new GraficoInterpreter(folderPath);
+      const interpreter: GraficoInterpreterModel = new GraficoInterpreter(folderPath);
 
       const translator = new InputTranslator(interpreter, this.model, this.options, this.log);
 
