@@ -63,9 +63,7 @@ export class Model {
       if (Object.prototype.hasOwnProperty.call(this.model.nodes, nodeType)) {
         const nodeTypeSet = this.model.nodes[nodeType];
 
-        for (let i = 0; i < nodeTypeSet.length; i++) {
-          const node = nodeTypeSet[i];
-
+        for (const node of nodeTypeSet) {
           nodes.push({ ...node, type: nodeType });
         }
       }
@@ -90,9 +88,7 @@ export class Model {
       if (Object.prototype.hasOwnProperty.call(this.model.relationships, relType)) {
         const relTypeSet = this.model.relationships[relType];
 
-        for (let i = 0; i < relTypeSet.length; i++) {
-          const relationship = relTypeSet[i];
-
+        for (const relationship of relTypeSet) {
           relationships.push({ ...relationship, type: relType });
         }
       }
