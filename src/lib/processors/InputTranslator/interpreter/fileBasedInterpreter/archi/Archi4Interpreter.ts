@@ -586,9 +586,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   findViewElement(viewElements: Array<ChildElement>, id: string): ChildElement | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         if (element.$.id.replace('id-', '').localeCompare(id) === 0) {
           return element;
         }
@@ -623,9 +621,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   findViewElementParent(viewElements: Array<ChildElement>, id: string): ChildElement | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
@@ -634,9 +630,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
           if (response !== null) {
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return element;
               }
@@ -664,9 +658,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   calculateNestedPosition(viewElements: Array<ChildElement>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
@@ -681,9 +673,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return {
                   x: this.getViewElementPositionX(element, null, null),
