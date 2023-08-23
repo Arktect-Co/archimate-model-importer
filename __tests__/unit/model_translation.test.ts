@@ -19,10 +19,10 @@ chai.use(deepEqualInAnyOrder);
  * @param model model result
  */
 function removeViewRelationship(model: Partial<Model>): Model {
-  let deepCopyModelResult = JSON.parse(JSON.stringify(model));
+  const deepCopyModelResult = JSON.parse(JSON.stringify(model));
 
   // Finding view with hided relationships
-  let index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
+  const index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
 
   if (index !== -1) {
     // Finding and Removing Grouping -> Goal relationship
@@ -80,7 +80,7 @@ function removeUndefinedValues(views: Array<View>): void {
 describe('Model Translation', () => {
   describe('Archi Import', () => {
     it('Importing Archi Model v4.6', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -89,7 +89,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/migration_guide_3_1.archimate'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -103,7 +103,7 @@ describe('Model Translation', () => {
     });
 
     it('Importing Archi Model v5.0', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test v5',
         description: 'Test model for Archi Files',
       });
@@ -112,7 +112,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/archi_v5.archimate'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -126,7 +126,7 @@ describe('Model Translation', () => {
     });
 
     it('Importing Archi Model v5.0 Skipping Views', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test v5',
         description: 'Test model for Archi Files',
         options: { skipViews: true },
@@ -136,7 +136,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/archi_v5.archimate'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -149,7 +149,7 @@ describe('Model Translation', () => {
     });
 
     it('Importing Archi Model v4.6 Skipping Views', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
         options: { skipViews: true },
@@ -159,7 +159,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/migration_guide_3_1.archimate'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -174,7 +174,7 @@ describe('Model Translation', () => {
 
   describe('AOEFF Import', () => {
     it('Importing AOEFF for Archimate 3.1 - From Archi', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -183,7 +183,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/aoeff_3_1.xml'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -201,7 +201,7 @@ describe('Model Translation', () => {
     });
 
     it('Importing AOEFF for Archimate 3.1 - From Archi v5', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test v5',
         description: 'Test model for Archi Files',
       });
@@ -210,7 +210,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/aoeff_3_1_archi_5_0_2.xml'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -228,7 +228,7 @@ describe('Model Translation', () => {
     });
 
     it('Importing AOEFF for Archimate 3.1 - From Visual Paradigm', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -237,7 +237,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/aoeff_3_1_visual_paradigm.xml'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -257,7 +257,7 @@ describe('Model Translation', () => {
 
   describe('GRAFICO Import', () => {
     it('Importing GRAFICO for Archi 4.6', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -266,7 +266,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/grafico'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
