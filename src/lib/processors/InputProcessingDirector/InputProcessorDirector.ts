@@ -56,12 +56,11 @@ export class InputProcessorDirector {
 
     this.model = new Model(label, description);
     this.options = options;
-    this.log =
-      logger && logger.info
-        ? logger.info
-        : () => {
-            // Empty because there needs to be a function to run
-          };
+    this.log = logger?.info
+      ? logger.info
+      : () => {
+          // Empty because there needs to be a function to run
+        };
   }
 
   /**
