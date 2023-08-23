@@ -645,9 +645,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   findViewElement(viewElements: Array<NodeModel>, id: string): NodeModel | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         if (element.$.identifier.replace('id-', '').localeCompare(id) === 0) {
           return element;
         }
@@ -682,15 +680,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   findViewElementParent(viewElements: Array<NodeModel>, id: string): NodeModel | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          for (let j = 0; j < child.length; j++) {
-            const childElement = child[j];
-
+          for (const childElement of child) {
             if (childElement.$.identifier.localeCompare(id) === 0) {
               return element;
             }
@@ -717,9 +711,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   calculateNestedPosition(viewElements: Array<NodeModel>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
@@ -734,9 +726,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (this.getViewElementViewId(childElement).localeCompare(id) === 0) {
                 return {
                   x: this.getViewElementPositionX(element),
