@@ -299,7 +299,10 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
           target: true,
         };
       default:
-        break;
+        return {
+          source: false,
+          target: true,
+        };
     }
   }
 

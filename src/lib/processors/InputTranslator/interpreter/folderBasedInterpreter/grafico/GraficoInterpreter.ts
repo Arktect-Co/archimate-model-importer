@@ -67,6 +67,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
         return key;
       }
     }
+
+    return 'Unknown Property';
   }
 
   /**
@@ -346,7 +348,10 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
             target: true,
           };
         default:
-          break;
+          return {
+            source: false,
+            target: true,
+          };
       }
     }
   }
