@@ -320,8 +320,8 @@ export class Model {
    */
   static createBendpoint(x?: number, y?: number): BendPoint {
     return {
-      x: x || 0,
-      y: y || 0,
+      x: x ? x : 0,
+      y: y ? y : 0,
     };
   }
 
@@ -474,7 +474,7 @@ export class Model {
     nodeList.forEach(node => {
       if (node.type && node.identifier) {
         const type = node.type.toLowerCase();
-        const name = node.name || 'Unknown Name';
+        const name = node.name ? node.name : 'Unknown Name';
         const properties = node.properties;
         const documentation = node.documentation;
 
