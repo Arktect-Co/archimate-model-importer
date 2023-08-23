@@ -65,7 +65,6 @@ export interface Interpreter<
   getViewElementHeight(viewElement: TViewNode): number;
   isViewObject(viewElement: TViewNode): boolean;
   getViewElementSourceRelationships(viewElement: TViewNode): Array<TViewRelationship>;
-  getViewElements(viewElement: TView): Array<TViewNode>;
   isViewNote(viewElement: TViewNode): boolean;
   getViewNoteContent(viewElement: TViewNode): string;
   getViewGroupName(viewElement: TViewNode): string;
@@ -74,7 +73,6 @@ export interface Interpreter<
   getViewRelationshipTargetElementId(viewRelationship: TViewRelationship): string;
   findViewElement(viewElements: Array<TViewNode>, id: string): TViewNode | null;
   getViewRelationshipBendpoints(viewRelationship: TViewRelationship): Array<TBendpoint>;
-  getViewRelationshipModelId(viewRelationship: TViewRelationship): string | null;
   getViewRelationshipBendpoint(
     bendpoint: TBendpoint,
     bendpointIndex?: number,
