@@ -594,7 +594,7 @@ describe('AoeffInterpreter', () => {
       const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
       const [bendpoint] = inputInterpreter.getViewRelationshipBendpoints(relationship);
 
-      const { y, x } = inputInterpreter.getViewRelationshipBendpoint(bendpoint);
+      const { y, x } = inputInterpreter.getViewRelationshipBendpoint({ bendpoint });
 
       expect(x).to.equal(528);
       expect(y).to.equal(492);

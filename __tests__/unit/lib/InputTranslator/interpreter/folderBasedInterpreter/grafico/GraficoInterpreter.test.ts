@@ -604,14 +604,14 @@ describe('GraficoInterpreter', () => {
       const source = diagramModel.children[0];
       const target = diagramModel.children[0];
       const bendpoint = diagramModel.children[0].sourceConnections[0].bendpoints[0];
-      const { x, y } = inputInterpreter.getViewRelationshipBendpoint(
+      const { x, y } = inputInterpreter.getViewRelationshipBendpoint({
         bendpoint,
-        0,
-        1,
-        source,
-        target,
-        diagramModel.children,
-      );
+        bendpointIndex: 0,
+        bendpointsLength: 1,
+        sourceViewElement: source,
+        targetViewElement: target,
+        viewNodes: diagramModel.children,
+      });
 
       expect(x).to.equal(779);
       expect(y).to.equal(828);

@@ -20,6 +20,15 @@ import { ArchiViewType } from '@lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
+interface ViewRelationshipBendpointSetting {
+  bendpoint: BendpointModel;
+  bendpointIndex: number;
+  bendpointsLength: number;
+  sourceViewElement: ChildElement | null;
+  targetViewElement: ChildElement | null;
+  viewNodes: Array<ChildElement>;
+}
+
 export type ArchiInterpreterModel = Interpreter<
   ArchiModel,
   Element,
@@ -751,12 +760,13 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Returns the Relationship bendpoint
-   * @param bendpoint Bendpoint Model
-   * @param bendpointIndex Bendpoint index
-   * @param bendpointsLength Bendpoint quantity
-   * @param sourceViewElement Source View Element
-   * @param targetViewElement Target View Element
-   * @param viewNodes View Nodes
+   * @param setting
+   * @param setting.bendpoint Bendpoint Model
+   * @param setting.bendpointIndex Bendpoint index
+   * @param setting.bendpointsLength Bendpoint quantity
+   * @param setting.sourceViewElement Source View Element
+   * @param setting.targetViewElement Target View Element
+   * @param setting.viewNodes View Nodes
    * @return Bendpoint
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
@@ -768,16 +778,22 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const targetViewElement = model['archimate:model'].folder[8].folder[0].element[1].child[1];
    * const views = model['archimate:model'].folder[8].folder[0].element[1].child;
    *
-   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(relationship.bendpoint, 1, 0, sourceViewElement, targetViewElement, views);
+   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint({
+   *         bendpoint:relationship.bendpoint,
+   *         bendpointIndex: 1,
+   *         bendpointsLength: 1,
+   *         sourceViewElement,
+   *         targetViewElement,
+   *         viewNodes: views});
    */
-  getViewRelationshipBendpoint(
-    bendpoint: BendpointModel,
-    bendpointIndex: number,
-    bendpointsLength: number,
-    sourceViewElement: ChildElement | null,
-    targetViewElement: ChildElement | null,
-    viewNodes: Array<ChildElement>,
-  ): Bendpoint {
+  getViewRelationshipBendpoint({
+    bendpoint,
+    bendpointIndex,
+    bendpointsLength,
+    sourceViewElement,
+    targetViewElement,
+    viewNodes,
+  }: ViewRelationshipBendpointSetting): Bendpoint {
     const sourceBounds = sourceViewElement.bounds[0].$;
     const targetBounds = targetViewElement.bounds[0].$;
     const sourceXPosition = sourceBounds.x ? Number(sourceBounds.x) : 0;

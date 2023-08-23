@@ -27,6 +27,15 @@ export interface AccessRelationshipDirection {
   target: boolean;
 }
 
+interface ViewRelationshipBendpointSetting {
+  bendpoint: BendpointModel;
+  bendpointIndex?: number;
+  bendpointsLength?: number;
+  sourceViewElement?: NodeModel | null;
+  targetViewElement?: NodeModel | null;
+  viewNodes?: Array<NodeModel>;
+}
+
 export type AoeffInterpreterModel = Interpreter<
   Model,
   ElementModel,
@@ -593,7 +602,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the view element source relationship
-   * @param viewElement View Element
+   * @param _viewElement View Element
    * @return Empty Array
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -603,7 +612,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const node = model.model.views[0].diagrams[0].view[0].node[0];
    * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(node);
    */
-  getViewElementSourceRelationships(viewElement: NodeModel): Array<ConnectionModel> {
+  getViewElementSourceRelationships(_viewElement: NodeModel): Array<ConnectionModel> {
     return [];
   }
 
@@ -791,12 +800,8 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the Relationship bendpoint
-   * @param bendpoint Bendpoint Model
-   * @param bendpointIndex Bendpoint index
-   * @param bendpointsLength Bendpoint quantity
-   * @param sourceViewElement Source View Element
-   * @param targetViewElement Target View Element
-   * @param viewNodes View Nodes
+   * @param setting
+   * @param setting.bendpoint Bendpoint Model
    * @return Bendpoint
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -806,14 +811,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    *
    * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(relationship.bendpoint);
    */
-  getViewRelationshipBendpoint(
-    bendpoint: BendpointModel,
-    bendpointIndex?: number,
-    bendpointsLength?: number,
-    sourceViewElement?: NodeModel | null,
-    targetViewElement?: NodeModel | null,
-    viewNodes?: Array<NodeModel>,
-  ): Bendpoint {
+  getViewRelationshipBendpoint({ bendpoint }: ViewRelationshipBendpointSetting): Bendpoint {
     const x = parseInt(bendpoint.$.x, 0);
     const y = parseInt(bendpoint.$.y, 0);
 

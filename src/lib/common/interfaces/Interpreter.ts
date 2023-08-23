@@ -73,13 +73,13 @@ export interface Interpreter<
   getViewRelationshipTargetElementId(viewRelationship: TViewRelationship): string;
   findViewElement(viewElements: Array<TViewNode>, id: string): TViewNode | null;
   getViewRelationshipBendpoints(viewRelationship: TViewRelationship): Array<TBendpoint>;
-  getViewRelationshipBendpoint(
-    bendpoint: TBendpoint,
-    bendpointIndex?: number,
-    bendpointsLength?: number,
-    sourceViewElement?: TViewNode | null,
-    targetViewElement?: TViewNode | null,
-    viewNodes?: Array<TViewNode>,
-  ): Bendpoint;
+  getViewRelationshipBendpoint(settings: {
+    bendpoint: TBendpoint;
+    bendpointIndex?: number;
+    bendpointsLength?: number;
+    sourceViewElement?: TViewNode | null;
+    targetViewElement?: TViewNode | null;
+    viewNodes?: Array<TViewNode>;
+  }): Bendpoint;
   getViewRelationshipId(viewRelationship: TViewRelationship): string;
 }

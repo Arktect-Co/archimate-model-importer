@@ -549,14 +549,14 @@ export class InputTranslator {
 
             // TODO: Checking bounds limits for bend points
 
-            const resultedBendPoint = this.inputInterpreter.getViewRelationshipBendpoint(
-              bendPoint,
-              j,
-              len,
-              sourceElement,
-              targetElement,
+            const resultedBendPoint = this.inputInterpreter.getViewRelationshipBendpoint({
+              bendpoint: bendPoint,
+              bendpointIndex: j,
+              bendpointsLength: len,
+              sourceViewElement: sourceElement,
+              targetViewElement: targetElement,
               viewNodes,
-            ) || {
+            }) || {
               x: 0,
               y: 0,
             };

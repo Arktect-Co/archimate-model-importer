@@ -19,6 +19,15 @@ import { GraficoViewType } from '@lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
+interface ViewRelationshipBendpointSetting {
+  bendpoint: BendpointModel;
+  bendpointIndex?: number;
+  bendpointsLength?: number;
+  sourceViewElement?: ViewNode;
+  targetViewElement?: ViewNode;
+  viewNodes?: Array<ViewNode>;
+}
+
 export type GraficoInterpreterModel = Interpreter<
   unknown,
   Node,
@@ -823,12 +832,13 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Returns the Relationship bendpoint
-   * @param bendpoint Bendpoint Model
-   * @param bendpointIndex Bendpoint index
-   * @param bendpointsLength Bendpoint quantity
-   * @param sourceViewElement Source View Element
-   * @param targetViewElement Target View Element
-   * @param viewNodes View Nodes
+   * @param setting
+   * @param setting.bendpoint Bendpoint Model
+   * @param setting.bendpointIndex Bendpoint index
+   * @param setting.bendpointsLength Bendpoint quantity
+   * @param setting.sourceViewElement Source View Element
+   * @param setting.targetViewElement Target View Element
+   * @param setting.viewNodes View Nodes
    * @return Bendpoint
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
@@ -836,16 +846,23 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const source = views[0]['key'].children[0];
    * const target = views[0]['key'].children[1];
    * const bendpoint = views[0]['key'].children[0].sourceConnections[0].bendpoints[0];
-   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(bendpoint, 0, 1, source, target, views[0]['key'].children);
+   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint({
+   *    bendpoint,
+   *    bendpointIndex: 0,
+   *    bendpointsLength: 1,
+   *    sourceViewElement: source,
+   *    targetViewElement: target,
+   *    viewNodes: views[0]['key'].children,
+   * });
    */
-  getViewRelationshipBendpoint(
-    bendpoint: BendpointModel,
-    bendpointIndex: number,
-    bendpointsLength: number,
-    sourceViewElement: ViewNode,
-    targetViewElement: ViewNode,
-    viewNodes: Array<ViewNode>,
-  ): Bendpoint {
+  getViewRelationshipBendpoint({
+    bendpoint,
+    bendpointsLength,
+    bendpointIndex,
+    viewNodes,
+    sourceViewElement,
+    targetViewElement,
+  }: ViewRelationshipBendpointSetting): Bendpoint {
     const sourceBounds = sourceViewElement.bounds[0].$;
     const targetBounds = targetViewElement.bounds[0].$;
     const sourceXPosition = sourceBounds.x ? Number(sourceBounds.x) : 0;

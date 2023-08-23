@@ -534,14 +534,14 @@ describe('ArchiInterpreter', () => {
       relationship.bendpoint = bendpoint;
       const [relationshipBendpoint] = inputInterpreter.getViewRelationshipBendpoints(relationship);
 
-      const { y, x } = inputInterpreter.getViewRelationshipBendpoint(
-        relationshipBendpoint,
-        1,
-        1,
+      const { y, x } = inputInterpreter.getViewRelationshipBendpoint({
+        bendpoint: relationshipBendpoint,
+        bendpointIndex: 1,
+        bendpointsLength: 1,
         sourceViewElement,
         targetViewElement,
-        views,
-      );
+        viewNodes: views,
+      });
 
       expect(x).to.equal(172);
       expect(y).to.equal(797);
