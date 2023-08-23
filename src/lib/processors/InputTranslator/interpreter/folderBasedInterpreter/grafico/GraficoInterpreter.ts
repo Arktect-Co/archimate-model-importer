@@ -62,7 +62,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const name = GraficoInterpreter._getFirstPropertyName(node);
    */
   private static _getFirstPropertyName(jsonObj: View | Relationship | Node): string {
-    for (let key in jsonObj) {
+    for (const key in jsonObj) {
       if (Object.prototype.hasOwnProperty.call(jsonObj, key)) {
         return key;
       }
@@ -164,7 +164,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   getNodeJunctionType(node: Node): string {
     const key = GraficoInterpreter._getFirstPropertyName(node);
-    let type = node[key].$.type;
+    const type = node[key].$.type;
 
     if (type === undefined) {
       // AND junction
@@ -363,7 +363,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   getAssociationRelationshipIsDirected(relationship: Relationship): boolean {
     const key = GraficoInterpreter._getFirstPropertyName(relationship);
-    let isDirected = relationship[key].$.directed;
+    const isDirected = relationship[key].$.directed;
 
     if (isDirected === undefined) {
       return false;
@@ -387,9 +387,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     const filePath = path.join(folder, 'folder.xml');
 
     if (fs.existsSync(filePath)) {
-      let data = fs.readFileSync(filePath);
+      const data = fs.readFileSync(filePath);
 
-      let parser = new xml2js.Parser({ explicitArray: true });
+      const parser = new xml2js.Parser({ explicitArray: true });
 
       parser.parseString(data, function (err, folderData) {
         if (err) throw err;
@@ -412,7 +412,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const folders = inputInterpreter.getSubFolders("Folder Path");
    */
   getSubFolders(folder: string): Array<string> {
-    let folders = [];
+    const folders = [];
 
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {
       fs.readdirSync(folder).forEach(name => {
@@ -436,7 +436,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const views = inputInterpreter.getFolderViews("Folder Path");
    */
   getFolderViews(folder: string): Array<View> {
-    let diagrams = [];
+    const diagrams = [];
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {
       const folders = fs.readdirSync(folder);
 
@@ -445,9 +445,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
           name.localeCompare('folder.xml') !== 0 &&
           fs.statSync(path.join(folder, name)).isFile()
         ) {
-          let data = fs.readFileSync(path.join(folder, name));
+          const data = fs.readFileSync(path.join(folder, name));
 
-          let parser = new xml2js.Parser({ explicitArray: true });
+          const parser = new xml2js.Parser({ explicitArray: true });
 
           parser.parseString(data, function (err, diagramData) {
             if (err) throw err;
@@ -665,7 +665,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let result = this.findViewElement(child, id);
+          const result = this.findViewElement(child, id);
 
           if (result !== null) {
             return result;
@@ -697,7 +697,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.findViewElementParent(child, id);
+          const response = this.findViewElementParent(child, id);
 
           if (response !== null) {
             return response;
@@ -737,11 +737,11 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.calculateNestedPosition(child, id);
+          const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            let x = this.getViewElementPositionX(element, null, null) || 0;
-            let y = this.getViewElementPositionY(element, null, null) || 0;
+            const x = this.getViewElementPositionX(element, null, null) || 0;
+            const y = this.getViewElementPositionY(element, null, null) || 0;
 
             response.x += x;
             response.y += y;
@@ -872,10 +872,10 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     let targetIncrementX = 0;
     let targetIncrementY = 0;
 
-    let sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
-    let sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
-    let targetWidth = targetBounds.width ? +targetBounds.width : 0;
-    let targetHeight = targetBounds.height ? +targetBounds.height : 0;
+    const sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
+    const sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
+    const targetWidth = targetBounds.width ? +targetBounds.width : 0;
+    const targetHeight = targetBounds.height ? +targetBounds.height : 0;
 
     if (sourceParentPositionIncrement !== null) {
       sourceIncrementX = sourceParentPositionIncrement.x;
@@ -887,16 +887,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       targetIncrementY = targetParentPositionIncrement.y;
     }
 
-    let sourcePositionX = sourceXPosition + sourceIncrementX;
-    let sourcePositionY = sourceYPosition + sourceIncrementY;
-    let targetPositionX = targetXPosition + targetIncrementX;
-    let targetPositionY = targetYPosition + targetIncrementY;
-    let weight = (bendpointIndex + 1) / (bendpointsLength + 1);
+    const sourcePositionX = sourceXPosition + sourceIncrementX;
+    const sourcePositionY = sourceYPosition + sourceIncrementY;
+    const targetPositionX = targetXPosition + targetIncrementX;
+    const targetPositionY = targetYPosition + targetIncrementY;
+    const weight = (bendpointIndex + 1) / (bendpointsLength + 1);
 
-    let x =
+    const x =
       (sourcePositionX + sx + sourceWidth / 2) * (1.0 - weight) +
       weight * (targetPositionX + ex + targetWidth / 2);
-    let y =
+    const y =
       (sourcePositionY + sy + sourceHeight / 2) * (1.0 - weight) +
       weight * (targetPositionY + ey + targetHeight / 2);
 
@@ -1020,7 +1020,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * inputInterpreter.forEachModelNode((node) => {});
    */
   forEachModelNode(action: (node: Node) => void): void {
-    let nodeFolders = [
+    const nodeFolders = [
       'strategy',
       'motivation',
       'business',
@@ -1031,16 +1031,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     ];
 
     nodeFolders.forEach(folder => {
-      let nodeDirectory = path.join(this.modelPath, folder);
+      const nodeDirectory = path.join(this.modelPath, folder);
 
       if (fs.existsSync(nodeDirectory) && fs.lstatSync(nodeDirectory).isDirectory()) {
         fs.readdirSync(nodeDirectory).forEach(name => {
           const filePath = path.join(nodeDirectory, name);
 
           if (name.localeCompare('folder.xml') !== 0 && fs.lstatSync(filePath).isFile()) {
-            let data = fs.readFileSync(filePath);
+            const data = fs.readFileSync(filePath);
 
-            let parser = new xml2js.Parser({ explicitArray: true });
+            const parser = new xml2js.Parser({ explicitArray: true });
 
             parser.parseString(data, function (err, nodeData) {
               action(nodeData);
@@ -1061,16 +1061,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * inputInterpreter.forEachModelRelationship((relationship) => {});
    */
   forEachModelRelationship(action: (relationship: Relationship) => void): void {
-    let relationshipDirectory = path.join(this.modelPath, 'relations');
+    const relationshipDirectory = path.join(this.modelPath, 'relations');
 
     if (fs.existsSync(relationshipDirectory) && fs.lstatSync(relationshipDirectory).isDirectory()) {
       fs.readdirSync(relationshipDirectory).forEach(name => {
         const filePath = path.join(relationshipDirectory, name);
 
         if (name.localeCompare('folder.xml') !== 0 && fs.lstatSync(filePath).isFile()) {
-          let data = fs.readFileSync(filePath);
+          const data = fs.readFileSync(filePath);
 
-          let parser = new xml2js.Parser({ explicitArray: true });
+          const parser = new xml2js.Parser({ explicitArray: true });
 
           parser.parseString(data, function (err, relationshipData) {
             if (err) throw err;
