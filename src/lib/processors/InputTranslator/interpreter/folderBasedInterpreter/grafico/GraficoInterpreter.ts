@@ -392,6 +392,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       let parser = new xml2js.Parser({ explicitArray: true });
 
       parser.parseString(data, function (err, folderData) {
+        if (err) throw err;
+
         folderName = folderData[GraficoInterpreter._getFirstPropertyName(folderData)].$.name; // Seems to be wrong (async), but actually is sync behaviour
       });
     }
@@ -446,6 +448,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
           let parser = new xml2js.Parser({ explicitArray: true });
 
           parser.parseString(data, function (err, diagramData) {
+            if (err) throw err;
+
             diagrams.push(diagramData);
           });
         }
@@ -1067,6 +1071,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
           let parser = new xml2js.Parser({ explicitArray: true });
 
           parser.parseString(data, function (err, relationshipData) {
+            if (err) throw err;
+
             action(relationshipData);
           });
         }
