@@ -313,7 +313,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
    */
   getAssociationRelationshipIsDirected(relationship: RelationshipModel): boolean {
-    let isDirected = relationship.$.isDirected;
+    const isDirected = relationship.$.isDirected;
 
     if (isDirected === undefined) return false;
 
@@ -359,7 +359,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const folders = inputInterpreter.getSubFolders(folder);
    */
   getSubFolders(folder: ItemModel): Array<ItemModel> {
-    let subFolders: Array<ItemModel> = [];
+    const subFolders: Array<ItemModel> = [];
 
     folder.item.forEach(candidateFolder => {
       if ('label' in candidateFolder && candidateFolder.label !== undefined) {
@@ -389,7 +389,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const folders = inputInterpreter.getFolderViews(folder);
    */
   getFolderViews(folder: ItemModel): Array<CandidateView> {
-    let folderViews: Array<CandidateView> = [];
+    const folderViews: Array<CandidateView> = [];
     folder.item.forEach(candidateView => {
       if (candidateView !== undefined) {
         if ('$' in candidateView && candidateView.$ !== undefined) {
@@ -455,7 +455,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     } else {
       // It's a view of the Organizations' folder
       // Finding the view related with the ID indicated in the folder
-      let el = _.find(this.model.views[0].diagrams[0].view, v => {
+      const el = _.find(this.model.views[0].diagrams[0].view, v => {
         return v.$.identifier.localeCompare(view.$.identifierRef) === 0;
       });
 
@@ -525,7 +525,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     let x = parseInt(viewElement.$.x, 0);
 
     if (parentId) {
-      let parent = this.findViewElement(parentViewElements, parentId);
+      const parent = this.findViewElement(parentViewElements, parentId);
 
       x = x - parseInt(parent.$.x, 0);
     }
@@ -555,7 +555,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     let y = parseInt(viewElement.$.y, 0);
 
     if (parentId !== null) {
-      let parent = this.findViewElement(parentViewElements, parentId);
+      const parent = this.findViewElement(parentViewElements, parentId);
 
       y = y - parseInt(parent.$.y, 0);
     }
@@ -655,7 +655,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let result = this.findViewElement(child, id);
+          const result = this.findViewElement(child, id);
 
           if (result !== null) {
             return result;
@@ -723,11 +723,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.calculateNestedPosition(child, id);
+          const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            let x = this.getViewElementPositionX(element) || 0;
-            let y = this.getViewElementPositionY(element) || 0;
+            const x = this.getViewElementPositionX(element) || 0;
+            const y = this.getViewElementPositionY(element) || 0;
 
             response.x += x;
             response.y += y;
@@ -828,8 +828,8 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     targetViewElement?: NodeModel | null,
     viewNodes?: Array<NodeModel>,
   ): Bendpoint {
-    let x = parseInt(bendpoint.$.x, 0);
-    let y = parseInt(bendpoint.$.y, 0);
+    const x = parseInt(bendpoint.$.x, 0);
+    const y = parseInt(bendpoint.$.y, 0);
 
     return { x, y };
   }
@@ -911,7 +911,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const folders = inputInterpreter.getOrganizationFolders();
    */
   getOrganizationFolders(): Array<ItemModel> {
-    let organizationFolders: Array<ItemModel> = [];
+    const organizationFolders: Array<ItemModel> = [];
 
     if (
       Array.isArray(this.model.organizations) &&
@@ -920,7 +920,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     ) {
       this.model.organizations[0].item.forEach(folder => {
         if (folder.label) {
-          let folderName = folder.label[0]['_'] ? folder.label[0]['_'] : folder.label[0];
+          const folderName = folder.label[0]['_'] ? folder.label[0]['_'] : folder.label[0];
 
           if (folderName !== undefined) {
             if (
