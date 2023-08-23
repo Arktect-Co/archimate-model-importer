@@ -9,7 +9,7 @@ import { FolderType } from '@lib/common/enums/folderType';
 
 const UNKNOWN = 'Unknown Name';
 
-describe('ArchiInterpreter', async () => {
+describe('ArchiInterpreter', () => {
   let inputInterpreter: Archi4Interpreter;
   let model: ArchiModel;
 
@@ -247,7 +247,7 @@ describe('ArchiInterpreter', async () => {
   });
 
   describe('getSubFolders', () => {
-    it('should return a sub folders', async () => {
+    it('should return a sub folders', () => {
       const folder = model['archimate:model'].folder.find(folder => folder.folder);
       const subFolders = inputInterpreter.getSubFolders(folder);
 
@@ -257,7 +257,7 @@ describe('ArchiInterpreter', async () => {
   });
 
   describe('getFolderViews', () => {
-    it('should return a folder Views', async () => {
+    it('should return a folder Views', () => {
       const folder = model['archimate:model'].folder[0];
       const folderViews = inputInterpreter.getFolderViews(folder);
 
