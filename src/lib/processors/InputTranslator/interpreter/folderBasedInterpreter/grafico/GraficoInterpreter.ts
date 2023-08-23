@@ -1042,6 +1042,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
             const parser = new xml2js.Parser({ explicitArray: true });
 
             parser.parseString(data, (err, nodeData) => {
+              if (err) throw err;
+
               action(nodeData);
             });
           }
