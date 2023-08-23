@@ -90,8 +90,8 @@ export class InputTranslator {
    */
   translate(): void {
     if (this.inputInterpreter.validate()) {
-      let nodes: Array<Node> = [];
-      let relationships: Array<Relationship> = [];
+      const nodes: Array<Node> = [];
+      const relationships: Array<Relationship> = [];
 
       this.log(`Starting model translation`);
 
@@ -108,8 +108,8 @@ export class InputTranslator {
       this.log(`${relationships.length} relationships translated`);
 
       if (!this.options.skipViews) {
-        let organizationFolders = this.inputInterpreter.getOrganizationFolders();
-        let processViewDataEnable = this.inputInterpreter.isNestedDiagramStructure;
+        const organizationFolders = this.inputInterpreter.getOrganizationFolders();
+        const processViewDataEnable = this.inputInterpreter.isNestedDiagramStructure;
 
         if (!processViewDataEnable) {
           this.translateViews();
@@ -140,7 +140,7 @@ export class InputTranslator {
   private translateNodes(processedNodesList: Array<Node>): void {
     try {
       this.inputInterpreter.forEachModelNode(currentNode => {
-        let nodeId: string = this.inputInterpreter.getNodeId(currentNode);
+        const nodeId: string = this.inputInterpreter.getNodeId(currentNode);
         let nodeType: string;
         let nodeName: string;
         let rawProperties;
@@ -159,7 +159,7 @@ export class InputTranslator {
 
           if (rawProperties) {
             for (let i = 0; i < rawProperties.length; i++) {
-              let property = this.inputInterpreter.getPropertyEntry(rawProperties[i]);
+              const property = this.inputInterpreter.getPropertyEntry(rawProperties[i]);
 
               if (property.length === 2) {
                 nodeProperties.push({ key: property[0], value: property[1] });
@@ -168,7 +168,7 @@ export class InputTranslator {
           }
         }
 
-        let node = Model.createNonCategorizedNode({
+        const node = Model.createNonCategorizedNode({
           identifier: nodeId,
           name: nodeName,
           type: nodeType,
@@ -197,7 +197,7 @@ export class InputTranslator {
         let targetId: string = this.inputInterpreter.getRelationshipTargetId(currentRelationship);
 
         if (this.inputInterpreter.isAssociationRelationship(currentRelationship)) {
-          let isDirected =
+          const isDirected =
             this.inputInterpreter.getAssociationRelationshipIsDirected(currentRelationship);
 
           if (!isDirected) {
@@ -205,7 +205,8 @@ export class InputTranslator {
             isBidirectional = true;
           }
         } else if (this.inputInterpreter.isAccessRelationship(currentRelationship)) {
-          let direction = this.inputInterpreter.getAccessRelationshipDirection(currentRelationship);
+          const direction =
+            this.inputInterpreter.getAccessRelationshipDirection(currentRelationship);
 
           isBidirectional =
             (direction.source && direction.target) || (!direction.source && !direction.target);
@@ -213,7 +214,7 @@ export class InputTranslator {
           if (!isBidirectional) {
             if (direction.source) {
               // Inverted direction
-              let oldSourceId = sourceId;
+              const oldSourceId = sourceId;
 
               // Inverting direction
               sourceId = targetId;
@@ -252,15 +253,12 @@ export class InputTranslator {
     processViewDataEnable: boolean,
   ): void {
     try {
-      let currentModelFolder: Landscape = this.outputModel.createFolder(
+      const currentModelFolder: Landscape = this.outputModel.createFolder(
         getUniqueId(),
         this.inputInterpreter.getFolderName(fileParentFolder),
       );
-      let folders;
-      let views;
-
-      folders = this.inputInterpreter.getSubFolders(fileParentFolder);
-      views = this.inputInterpreter.getFolderViews(fileParentFolder);
+      const folders = this.inputInterpreter.getSubFolders(fileParentFolder);
+      const views = this.inputInterpreter.getFolderViews(fileParentFolder);
 
       // Processing child folders
       if (Array.isArray(folders)) {
@@ -305,12 +303,12 @@ export class InputTranslator {
     processViewDataEnable: boolean,
   ): void {
     try {
-      let nodes: Array<ViewNode> = [];
-      let relationships: Array<ViewRelationship> = [];
+      const nodes: Array<ViewNode> = [];
+      const relationships: Array<ViewRelationship> = [];
+      const bounds = Model.createViewBounds(1000000, -1000000, 1000000, -1000000);
+      const viewId = this.inputInterpreter.getViewId(view);
+      const viewName = this.inputInterpreter.getViewName(view);
       let viewElements = null;
-      let bounds = Model.createViewBounds(1000000, -1000000, 1000000, -1000000);
-      let viewId = this.inputInterpreter.getViewId(view);
-      let viewName = this.inputInterpreter.getViewName(view);
 
       if (processViewDataEnable) {
         viewElements = this.inputInterpreter.getViewElements(<InterpreterView>view);
@@ -320,7 +318,7 @@ export class InputTranslator {
         if (!this.inputInterpreter.hasViewElementChildRelationships) {
           // Then process relationships
           this.inputInterpreter.forEachViewRelationship(<InterpreterView>view, relationship => {
-            let relationshipRef = this.inputInterpreter.getViewRelationshipModelId(relationship);
+            const relationshipRef = this.inputInterpreter.getViewRelationshipModelId(relationship);
 
             this.processViewRelationship(
               relationshipRef,
@@ -403,15 +401,15 @@ export class InputTranslator {
   ): void {
     if (Array.isArray(viewElements)) {
       viewElements.forEach(viewElement => {
-        let viewNodeId = this.inputInterpreter.getViewElementViewId(viewElement);
-        let positionX =
+        const viewNodeId = this.inputInterpreter.getViewElementViewId(viewElement);
+        const positionX =
           this.inputInterpreter.getViewElementPositionX(viewElement, parent, parentViewElements) ||
           0;
-        let positionY =
+        const positionY =
           this.inputInterpreter.getViewElementPositionY(viewElement, parent, parentViewElements) ||
           0;
-        let width = this.inputInterpreter.getViewElementWidth(viewElement);
-        let height = this.inputInterpreter.getViewElementHeight(viewElement);
+        const width = this.inputInterpreter.getViewElementWidth(viewElement);
+        const height = this.inputInterpreter.getViewElementHeight(viewElement);
         let elementName = '';
         let elementType;
 
@@ -421,10 +419,10 @@ export class InputTranslator {
         let viewModelElement;
 
         if (this.inputInterpreter.isViewObject(viewElement)) {
-          let modelElementId = this.inputInterpreter.getViewElementModelId(viewElement);
+          const modelElementId = this.inputInterpreter.getViewElementModelId(viewElement);
 
           // Finding element on nodes model list
-          let el = this.nodesMap.get(modelElementId);
+          const el = this.nodesMap.get(modelElementId);
 
           if (el) {
             elementName = el.name;
@@ -448,7 +446,7 @@ export class InputTranslator {
           });
 
           if (this.inputInterpreter.hasViewElementChildRelationships) {
-            let sourceConnections =
+            const sourceConnections =
               this.inputInterpreter.getViewElementSourceRelationships(viewElement);
 
             if (Array.isArray(sourceConnections)) {
@@ -488,7 +486,7 @@ export class InputTranslator {
 
         nodesResult.push(viewModelElement);
 
-        let nestedElements = this.inputInterpreter.getViewElementNestedElements(viewElement);
+        const nestedElements = this.inputInterpreter.getViewElementNestedElements(viewElement);
 
         if (Array.isArray(nestedElements) && nestedElements.length > 0) {
           this.processViewElements(
@@ -519,18 +517,18 @@ export class InputTranslator {
     viewRelationship: InterpreterViewRelationship,
   ): void {
     if (viewRelationship !== undefined) {
+      const bendPoints = [];
       let viewModelRelationship = undefined;
-      let bendPoints = [];
       let relationshipBendpoints = undefined;
       let modelRelationshipId = undefined;
       let relationshipType = '';
       let isBidirectional = undefined;
-      let sourceViewElementId =
+      const sourceViewElementId =
         this.inputInterpreter.getViewRelationshipSourceElementId(viewRelationship);
-      let targetViewElementId =
+      const targetViewElementId =
         this.inputInterpreter.getViewRelationshipTargetElementId(viewRelationship);
-      let sourceElement = this.inputInterpreter.findViewElement(viewNodes, sourceViewElementId);
-      let targetElement = this.inputInterpreter.findViewElement(viewNodes, targetViewElementId);
+      const sourceElement = this.inputInterpreter.findViewElement(viewNodes, sourceViewElementId);
+      const targetElement = this.inputInterpreter.findViewElement(viewNodes, targetViewElementId);
 
       if (sourceElement !== undefined && targetElement !== undefined) {
         // Verifying orphan relationship
@@ -539,14 +537,14 @@ export class InputTranslator {
         modelRelationshipId = this.inputInterpreter.getViewRelationshipModelId(viewRelationship);
 
         if (Array.isArray(relationshipBendpoints)) {
-          let len = relationshipBendpoints.length;
+          const len = relationshipBendpoints.length;
 
           for (let j = 0; j < len; j++) {
             const bendPoint = relationshipBendpoints[j];
 
             // TODO: Checking bounds limits for bend points
 
-            let resultedBendPoint = this.inputInterpreter.getViewRelationshipBendpoint(
+            const resultedBendPoint = this.inputInterpreter.getViewRelationshipBendpoint(
               bendPoint,
               j,
               len,
@@ -563,7 +561,7 @@ export class InputTranslator {
         }
 
         // Finding relationship on relationships model list
-        let rel = this.relationshipsMap.get(modelRelationshipId);
+        const rel = this.relationshipsMap.get(modelRelationshipId);
 
         if (rel) {
           // There is an associated model relationship
