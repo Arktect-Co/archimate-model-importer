@@ -655,9 +655,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   findViewElement(viewElements: Array<ViewNode>, id: string): ViewNode | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         if (element.$.id.localeCompare(id) === 0) {
           return element;
         }
@@ -691,9 +689,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   findViewElementParent(viewElements: Array<ViewNode>, id: string): ViewNode | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
@@ -702,9 +698,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
           if (response !== null) {
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return element;
               }
@@ -731,9 +725,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   calculateNestedPosition(viewElements: Array<ViewNode>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
@@ -748,9 +740,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return {
                   x: this.getViewElementPositionX(element, null, null),
