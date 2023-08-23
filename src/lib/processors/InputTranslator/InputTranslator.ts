@@ -158,8 +158,8 @@ export class InputTranslator {
           nodeProperties = [];
 
           if (rawProperties) {
-            for (let i = 0; i < rawProperties.length; i++) {
-              const property = this.inputInterpreter.getPropertyEntry(rawProperties[i]);
+            for (const rawProperty of rawProperties) {
+              const property = this.inputInterpreter.getPropertyEntry(rawProperty);
 
               if (property.length === 2) {
                 nodeProperties.push({ key: property[0], value: property[1] });
@@ -450,9 +450,7 @@ export class InputTranslator {
               this.inputInterpreter.getViewElementSourceRelationships(viewElement);
 
             if (Array.isArray(sourceConnections)) {
-              for (let k = 0; k < sourceConnections.length; k++) {
-                const viewRelationship = sourceConnections[k];
-
+              for (const viewRelationship of sourceConnections) {
                 this.processViewRelationship(
                   modelElementId,
                   this.inputInterpreter.getViewElements(<InterpreterView>view),
