@@ -995,7 +995,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
   forEachModelRelationship(action: (relationship: Element) => void): void {
     this.modelFolders.forEach(folder => {
       if (folder.$.type.localeCompare(ArchiElementType.Relations) === 0) {
-        let modelElements = folder.element;
+        const modelElements = folder.element;
 
         if (Array.isArray(modelElements)) {
           modelElements.forEach(action);
