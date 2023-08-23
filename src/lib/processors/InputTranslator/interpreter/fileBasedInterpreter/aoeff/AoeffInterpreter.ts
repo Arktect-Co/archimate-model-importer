@@ -36,6 +36,12 @@ interface ViewRelationshipBendpointSetting {
   viewNodes?: Array<NodeModel>;
 }
 
+interface PositionSetting {
+  viewElement: NodeModel;
+  parentId?: string | null;
+  parentViewElements?: Array<NodeModel>;
+}
+
 export type AoeffInterpreterModel = Interpreter<
   Model,
   ElementModel,
@@ -510,9 +516,10 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the position x of view element
-   * @param viewElement View Element
-   * @param parentId parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
+   * @param setting.parentId parent ID
+   * @param setting.parentViewElements List of parent view elements
    * @return Position x
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -520,13 +527,9 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(viewElement, null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionX(
-    viewElement: NodeModel,
-    parentId?: string | null,
-    parentViewElements?: Array<NodeModel>,
-  ): number {
+  getViewElementPositionX({ viewElement, parentId, parentViewElements }: PositionSetting): number {
     let x = parseInt(viewElement.$.x, 0);
 
     if (parentId) {
@@ -540,9 +543,10 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the position y of view element
-   * @param viewElement View Element
-   * @param parentId Parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
+   * @param setting.parentId Parent ID
+   * @param setting.parentViewElements List of parent view elements
    * @return Position Y
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -550,16 +554,12 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const positionY = inputInterpreter.getViewElementPositionY(viewElement, null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionY(
-    viewElement: NodeModel,
-    parentId?: string,
-    parentViewElements?: Array<NodeModel>,
-  ): number {
+  getViewElementPositionY({ viewElement, parentId, parentViewElements }: PositionSetting): number {
     let y = parseInt(viewElement.$.y, 0);
 
-    if (parentId !== null) {
+    if (parentId) {
       const parent = this.findViewElement(parentViewElements, parentId);
 
       y = y - parseInt(parent.$.y, 0);
@@ -723,8 +723,8 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
           const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            const x = this.getViewElementPositionX(element) || 0;
-            const y = this.getViewElementPositionY(element) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element }) || 0;
+            const y = this.getViewElementPositionY({ viewElement: element }) || 0;
 
             response.x += x;
             response.y += y;
@@ -734,8 +734,8 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
             for (const childElement of child) {
               if (this.getViewElementViewId(childElement).localeCompare(id) === 0) {
                 return {
-                  x: this.getViewElementPositionX(element),
-                  y: this.getViewElementPositionY(element),
+                  x: this.getViewElementPositionX({ viewElement: element }),
+                  y: this.getViewElementPositionY({ viewElement: element }),
                 };
               }
             }

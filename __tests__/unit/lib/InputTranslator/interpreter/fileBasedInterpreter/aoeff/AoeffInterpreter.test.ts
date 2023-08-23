@@ -396,7 +396,7 @@ describe('AoeffInterpreter', () => {
   describe('getViewElementPositionX', () => {
     it('should return a position X of view element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
-      const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+      const positionX = inputInterpreter.getViewElementPositionX({ viewElement: node });
 
       expect(positionX).to.equal(38);
     });
@@ -405,11 +405,11 @@ describe('AoeffInterpreter', () => {
       const node = model.model.views[0].diagrams[0].view[1].node[12];
       const nestedElements = inputInterpreter.getViewElementNestedElements(node);
 
-      const positionX = inputInterpreter.getViewElementPositionX(
-        node,
-        '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
-        nestedElements,
-      );
+      const positionX = inputInterpreter.getViewElementPositionX({
+        viewElement: node,
+        parentId: '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
+        parentViewElements: nestedElements,
+      });
 
       expect(positionX).to.equal(-324);
     });
@@ -418,7 +418,7 @@ describe('AoeffInterpreter', () => {
   describe('getViewElementPositionY', () => {
     it('should return a position Y of view element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
-      const positionY = inputInterpreter.getViewElementPositionY(node, null, undefined);
+      const positionY = inputInterpreter.getViewElementPositionY({ viewElement: node });
 
       expect(positionY).to.equal(25);
     });
@@ -427,11 +427,11 @@ describe('AoeffInterpreter', () => {
       const node = model.model.views[0].diagrams[0].view[1].node[12];
       const nestedElements = inputInterpreter.getViewElementNestedElements(node);
 
-      const positionY = inputInterpreter.getViewElementPositionY(
-        node,
-        '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
-        nestedElements,
-      );
+      const positionY = inputInterpreter.getViewElementPositionY({
+        viewElement: node,
+        parentId: '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
+        parentViewElements: nestedElements,
+      });
 
       expect(positionY).to.equal(-80);
     });

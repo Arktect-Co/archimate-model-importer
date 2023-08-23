@@ -28,6 +28,12 @@ interface ViewRelationshipBendpointSetting {
   viewNodes?: Array<ViewNode>;
 }
 
+interface PositionSetting {
+  viewElement: ViewNode;
+  parentId?: string;
+  parentViewElements?: Array<ViewNode>;
+}
+
 export type GraficoInterpreterModel = Interpreter<
   unknown,
   Node,
@@ -556,42 +562,32 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Returns the position x of view element
-   * @param viewElement View Element
-   * @param parentId parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position x
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(views[0].children[0], null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX({viewElement: views[0].children[0]});
    */
-  getViewElementPositionX(
-    viewElement: ViewNode,
-    parentId?: string,
-    parentViewElements?: Array<ViewNode>,
-  ): number {
+  getViewElementPositionX({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.x, 0);
   }
 
   /**
    * Returns the position y of view element
-   * @param viewElement View Element
-   * @param parentId Parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position Y
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
-   * const positionY = inputInterpreter.getViewElementPositionY(views[0].children[0], null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY({viewElement: views[0].children[0]});
    */
-  getViewElementPositionY(
-    viewElement: ViewNode,
-    parentId?: string,
-    parentViewElements?: Array<ViewNode>,
-  ): number {
+  getViewElementPositionY({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.y, 0);
   }
 
@@ -748,8 +744,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
           const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            const x = this.getViewElementPositionX(element, null, null) || 0;
-            const y = this.getViewElementPositionY(element, null, null) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element }) || 0;
+            const y = this.getViewElementPositionY({ viewElement: element }) || 0;
 
             response.x += x;
             response.y += y;
@@ -759,8 +755,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
             for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return {
-                  x: this.getViewElementPositionX(element, null, null),
-                  y: this.getViewElementPositionY(element, null, null),
+                  x: this.getViewElementPositionX({ viewElement: element }),
+                  y: this.getViewElementPositionY({ viewElement: element }),
                 };
               }
             }

@@ -51,16 +51,16 @@ export interface Interpreter<
   forEachViewRelationship(view: TView, action: (relationship: TViewRelationship) => void): void;
   getViewRelationshipModelId(viewRelationship: TViewRelationship): string | null;
   getViewElementViewId(viewElement: TViewNode): string;
-  getViewElementPositionX(
-    viewElement: TViewNode,
-    parentId?: string | null,
-    parentViewElements?: Array<TViewNode>,
-  ): number;
-  getViewElementPositionY(
-    viewElement: TViewNode,
-    parentId?: string | null,
-    parentViewElements?: Array<TViewNode>,
-  ): number;
+  getViewElementPositionX(settings: {
+    viewElement: TViewNode;
+    parentId?: string | null;
+    parentViewElements?: Array<TViewNode>;
+  }): number;
+  getViewElementPositionY(settings: {
+    viewElement: TViewNode;
+    parentId?: string | null;
+    parentViewElements?: Array<TViewNode>;
+  }): number;
   getViewElementWidth(viewElement: TViewNode): number;
   getViewElementHeight(viewElement: TViewNode): number;
   isViewObject(viewElement: TViewNode): boolean;

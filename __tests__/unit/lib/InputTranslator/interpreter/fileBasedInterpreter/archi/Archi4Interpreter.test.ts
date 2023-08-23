@@ -340,7 +340,7 @@ describe('ArchiInterpreter', () => {
     it('should return a position X of view element', () => {
       const node = model['archimate:model'].folder[8].folder[0].element[0].child[0];
 
-      const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+      const positionX = inputInterpreter.getViewElementPositionX({ viewElement: node });
 
       expect(positionX).to.equal(38);
     });
@@ -349,7 +349,7 @@ describe('ArchiInterpreter', () => {
   describe('getViewElementPositionY', () => {
     it('should return a position Y of view element', () => {
       const node = model['archimate:model'].folder[8].folder[0].element[0].child[0];
-      const positionY = inputInterpreter.getViewElementPositionY(node, null, undefined);
+      const positionY = inputInterpreter.getViewElementPositionY({ viewElement: node });
 
       expect(positionY).to.equal(25);
     });

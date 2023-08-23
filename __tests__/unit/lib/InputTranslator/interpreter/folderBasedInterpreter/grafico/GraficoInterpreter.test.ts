@@ -444,7 +444,7 @@ describe('GraficoInterpreter', () => {
 
   describe('getViewElementPositionX', () => {
     it('should return a element position x', () => {
-      const x = inputInterpreter.getViewElementPositionX(diagramModel.children[0]);
+      const x = inputInterpreter.getViewElementPositionX({ viewElement: diagramModel.children[0] });
 
       expect(x).to.equal(parseInt(diagramModel.children[0].bounds[0].$.x));
     });
@@ -452,7 +452,7 @@ describe('GraficoInterpreter', () => {
 
   describe('getViewElementPositionY', () => {
     it('should return a element position y', () => {
-      const y = inputInterpreter.getViewElementPositionY(diagramModel.children[0]);
+      const y = inputInterpreter.getViewElementPositionY({ viewElement: diagramModel.children[0] });
 
       expect(y).to.equal(parseInt(diagramModel.children[0].bounds[0].$.y));
     });

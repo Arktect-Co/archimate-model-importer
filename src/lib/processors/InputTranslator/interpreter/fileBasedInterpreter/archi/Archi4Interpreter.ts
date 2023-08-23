@@ -29,6 +29,12 @@ interface ViewRelationshipBendpointSetting {
   viewNodes: Array<ChildElement>;
 }
 
+interface PositionSetting {
+  viewElement: ChildElement;
+  parentId?: string;
+  parentViewElements?: Array<ChildElement>;
+}
+
 export type ArchiInterpreterModel = Interpreter<
   ArchiModel,
   Element,
@@ -471,9 +477,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Returns the position x of view element
-   * @param viewElement View Element
-   * @param parentId parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position x
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
@@ -481,21 +486,16 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const inputInterpreter = new Archi4Interpreter(model);
    * const viewElement = model['archimate:model'].folder[8].folder[0].element[0];
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(viewElement, null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionX(
-    viewElement: ChildElement,
-    parentId?: string,
-    parentViewElements?: Array<ChildElement>,
-  ): number {
+  getViewElementPositionX({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.x, 0);
   }
 
   /**
    * Returns the position y of view element
-   * @param viewElement View Element
-   * @param parentId Parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position Y
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
@@ -503,13 +503,9 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const inputInterpreter = new Archi4Interpreter(model);
    * const viewElement = model['archimate:model'].folder[8].folder[0].element[0];
    *
-   * const positionY = inputInterpreter.getViewElementPositionY(viewElement, null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionY(
-    viewElement: ChildElement,
-    parentId?: string,
-    parentViewElements?: unknown,
-  ): number {
+  getViewElementPositionY({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.y, 0);
   }
 
@@ -674,8 +670,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
           const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            const x = this.getViewElementPositionX(element) || 0;
-            const y = this.getViewElementPositionY(element) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element }) || 0;
+            const y = this.getViewElementPositionY({ viewElement: element }) || 0;
 
             response.x += x;
             response.y += y;
@@ -685,8 +681,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
             for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return {
-                  x: this.getViewElementPositionX(element, null, null),
-                  y: this.getViewElementPositionY(element, null, null),
+                  x: this.getViewElementPositionX({ viewElement: element }),
+                  y: this.getViewElementPositionY({ viewElement: element }),
                 };
               }
             }
