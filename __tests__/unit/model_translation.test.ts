@@ -162,10 +162,12 @@ describe('Model Translation', () => {
 
       // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
       // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
-      let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi));
+      const deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi));
 
       // Finding view with hided relationships
-      let index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
+      const index = deepCopyModelResult.model.views.findIndex(
+        view => view.name === 'Relationships',
+      );
 
       if (index !== -1) {
         // Finding and Removing Grouping -> Goal relationship
@@ -208,10 +210,12 @@ describe('Model Translation', () => {
 
       // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
       // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
-      let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi5));
+      const deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi5));
 
       // Finding view with hided relationships
-      let index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
+      const index = deepCopyModelResult.model.views.findIndex(
+        view => view.name === 'Relationships',
+      );
 
       if (index !== -1) {
         // Finding and Removing Grouping -> Goal relationship
@@ -254,10 +258,12 @@ describe('Model Translation', () => {
 
       // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
       // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
-      let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultVisualParadigm));
+      const deepCopyModelResult = JSON.parse(JSON.stringify(modelResultVisualParadigm));
 
       // Finding view with hided relationships
-      let index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
+      const index = deepCopyModelResult.model.views.findIndex(
+        view => view.name === 'Relationships',
+      );
 
       if (index !== -1) {
         // Finding and Removing Grouping -> Goal relationship
