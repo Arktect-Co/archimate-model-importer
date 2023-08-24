@@ -40,6 +40,7 @@
   "scripts": {
     "test": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
     "test:unique": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts  --grep",
+    "test:cov": "nyc mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
     "build": "npx babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored && tsc --watch"
   },
   "license": "MIT",
