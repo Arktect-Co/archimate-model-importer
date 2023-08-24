@@ -1,15 +1,15 @@
 import {
   AoeffModel,
+  BendpointModel,
   CandidateView,
   ConnectionModel,
   ElementModel,
-  Model,
   ItemModel,
-  ViewModel,
+  Model,
   NodeModel,
   Property,
   RelationshipModel,
-  BendpointModel,
+  ViewModel,
 } from '@lib/common/interfaces/aoeffModel';
 import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
@@ -25,6 +25,10 @@ const UNKNOWN = 'Unknown Name';
 export interface AccessRelationshipDirection {
   source: boolean;
   target: boolean;
+}
+
+interface Data<T> {
+  [key: string]: T;
 }
 
 interface ViewRelationshipBendpointSetting {
@@ -62,14 +66,26 @@ export type AoeffInterpreterModel = Interpreter<
 export class AoeffInterpreter implements AoeffInterpreterModel {
   public model: Model;
   public readonly modelid: string;
+  public propertyDefinitions: Data<string>;
   public isNestedDiagramStructure: boolean;
   public hasViewElementChildRelationships: boolean;
 
   constructor(model: AoeffModel) {
+    const propertyDefinitions = model['model'].propertyDefinitions?.[0]?.propertyDefinition;
     this.model = model.model;
     this.modelid = model['model'].$['identifier'];
     this.isNestedDiagramStructure = false;
     this.hasViewElementChildRelationships = false;
+    this.propertyDefinitions =
+      propertyDefinitions && Array.isArray(propertyDefinitions)
+        ? propertyDefinitions.reduce((acc, currentValue) => {
+            const key = currentValue?.$?.identifier;
+            if (key && !acc[key]) {
+              acc[key] = currentValue?.name[0] ? currentValue?.name[0] : 'Unknown';
+            }
+            return acc;
+          }, {})
+        : undefined;
   }
 
   /**
@@ -191,8 +207,17 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const propertyEntry = inputInterpreter.getPropertyEntry(property);
    */
   getPropertyEntry(property?: Property): Array<string> {
-    if (property?.$?.propertyDefinitionRef && property?.value?.[0]?._) {
-      return [property.$.propertyDefinitionRef, property.value[0]._];
+    const key = property?.$?.propertyDefinitionRef;
+    const value = property?.value?.[0]?._;
+
+    if (key && value) {
+      // Checks if is a new version of Aoeff file
+      if (key.match('propid-') && this.propertyDefinitions) {
+        const propertyKey = this.propertyDefinitions[key] ? this.propertyDefinitions[key] : key;
+        return [propertyKey, value];
+      }
+
+      return [key, value];
     } else {
       return [];
     }
