@@ -3,6 +3,7 @@ import { RelationshipModel } from '@lib/common/interfaces/aoeffModel/Relationshi
 import { ElementModel } from '@lib/common/interfaces/aoeffModel/ElementModel';
 import { ItemModel } from '@lib/common/interfaces/aoeffModel/ItemModel';
 import { ViewModel } from '@lib/common/interfaces/aoeffModel/ViewModel';
+import { PropertyDefinition } from '@lib/common/interfaces/aoeffModel/PropertyDefinition';
 
 interface ModelSettings {
   identifier: string;
@@ -15,6 +16,7 @@ type Relationships = Array<{ relationship: Array<RelationshipModel> }>;
 type Elements = Array<{ element: Array<ElementModel> }>;
 type Organizations = Array<{ item: Array<ItemModel> }>;
 type Views = Array<{ diagrams: Array<{ view: Array<ViewModel> }> }>;
+type PropertyDefinitions = Array<{ propertyDefinition: Array<PropertyDefinition> }>;
 
 export interface Model {
   $: ModelSettings;
@@ -23,6 +25,7 @@ export interface Model {
   elements: Elements;
   organizations: Organizations;
   views: Views;
+  propertyDefinitions?: PropertyDefinitions;
 }
 
 export interface AoeffModel {
