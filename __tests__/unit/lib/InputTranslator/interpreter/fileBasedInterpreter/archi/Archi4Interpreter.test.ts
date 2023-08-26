@@ -9,7 +9,7 @@ import { FolderType } from '@lib/common/enums/folderType';
 
 const UNKNOWN = 'Unknown Name';
 
-describe('ArchiInterpreter', async () => {
+describe('ArchiInterpreter', () => {
   let inputInterpreter: Archi4Interpreter;
   let model: ArchiModel;
 
@@ -172,7 +172,7 @@ describe('ArchiInterpreter', async () => {
 
     it('should return a relationship "1" access direction', () => {
       const relationships = model['archimate:model'].folder[7].element;
-      const relationship = relationships.find(e => e.$.accessType == '1');
+      const relationship = relationships.find(e => e.$.accessType === '1');
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -182,7 +182,7 @@ describe('ArchiInterpreter', async () => {
 
     it('should return a relationship "2" access direction', () => {
       const relationships = model['archimate:model'].folder[7].element;
-      const relationship = relationships.find(e => e.$.accessType == '2');
+      const relationship = relationships.find(e => e.$.accessType === '2');
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -192,7 +192,7 @@ describe('ArchiInterpreter', async () => {
 
     it('should return a relationship "3" access direction', () => {
       const relationships = model['archimate:model'].folder[7].element;
-      const relationship = relationships.find(e => e.$.accessType == '3');
+      const relationship = relationships.find(e => e.$.accessType === '3');
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -247,7 +247,7 @@ describe('ArchiInterpreter', async () => {
   });
 
   describe('getSubFolders', () => {
-    it('should return a sub folders', async () => {
+    it('should return a sub folders', () => {
       const folder = model['archimate:model'].folder.find(folder => folder.folder);
       const subFolders = inputInterpreter.getSubFolders(folder);
 
@@ -257,7 +257,7 @@ describe('ArchiInterpreter', async () => {
   });
 
   describe('getFolderViews', () => {
-    it('should return a folder Views', async () => {
+    it('should return a folder Views', () => {
       const folder = model['archimate:model'].folder[0];
       const folderViews = inputInterpreter.getFolderViews(folder);
 
@@ -340,7 +340,7 @@ describe('ArchiInterpreter', async () => {
     it('should return a position X of view element', () => {
       const node = model['archimate:model'].folder[8].folder[0].element[0].child[0];
 
-      const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+      const positionX = inputInterpreter.getViewElementPositionX({ viewElement: node });
 
       expect(positionX).to.equal(38);
     });
@@ -349,7 +349,7 @@ describe('ArchiInterpreter', async () => {
   describe('getViewElementPositionY', () => {
     it('should return a position Y of view element', () => {
       const node = model['archimate:model'].folder[8].folder[0].element[0].child[0];
-      const positionY = inputInterpreter.getViewElementPositionY(node, null, undefined);
+      const positionY = inputInterpreter.getViewElementPositionY({ viewElement: node });
 
       expect(positionY).to.equal(25);
     });
@@ -534,14 +534,14 @@ describe('ArchiInterpreter', async () => {
       relationship.bendpoint = bendpoint;
       const [relationshipBendpoint] = inputInterpreter.getViewRelationshipBendpoints(relationship);
 
-      const { y, x } = inputInterpreter.getViewRelationshipBendpoint(
-        relationshipBendpoint,
-        1,
-        1,
+      const { y, x } = inputInterpreter.getViewRelationshipBendpoint({
+        bendpoint: relationshipBendpoint,
+        bendpointIndex: 1,
+        bendpointsLength: 1,
         sourceViewElement,
         targetViewElement,
-        views,
-      );
+        viewNodes: views,
+      });
 
       expect(x).to.equal(172);
       expect(y).to.equal(797);

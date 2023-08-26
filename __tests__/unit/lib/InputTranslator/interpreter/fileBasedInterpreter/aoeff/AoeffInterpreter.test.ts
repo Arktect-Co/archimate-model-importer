@@ -10,7 +10,7 @@ import { getXmlModel } from '../../../../../utils/getXmlModel';
 
 const UNKNOWN = 'Unknown Name';
 
-describe('AoeffInterpreter', async () => {
+describe('AoeffInterpreter', () => {
   let inputInterpreter: AoeffInterpreter;
   let model: AoeffModel;
 
@@ -188,7 +188,7 @@ describe('AoeffInterpreter', async () => {
 
     it('should return a relationship "Write" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
-      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Write);
+      const relationship = relationships.find(e => e.$.accessType === RelationshipAccessType.Write);
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -198,7 +198,7 @@ describe('AoeffInterpreter', async () => {
 
     it('should return a relationship "Read" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
-      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Read);
+      const relationship = relationships.find(e => e.$.accessType === RelationshipAccessType.Read);
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -208,7 +208,9 @@ describe('AoeffInterpreter', async () => {
 
     it('should return a relationship "Access" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
-      const relationship = relationships.find(e => e.$.accessType == RelationshipAccessType.Access);
+      const relationship = relationships.find(
+        e => e.$.accessType === RelationshipAccessType.Access,
+      );
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
 
@@ -219,7 +221,7 @@ describe('AoeffInterpreter', async () => {
     it('should return a relationship "ReadWrite" access direction', () => {
       const relationships = model.model.relationships[0].relationship;
       const relationship = relationships.find(
-        e => e.$.accessType == RelationshipAccessType.ReadWrite,
+        e => e.$.accessType === RelationshipAccessType.ReadWrite,
       );
 
       const { source, target } = inputInterpreter.getAccessRelationshipDirection(relationship);
@@ -280,7 +282,7 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getSubFolders', () => {
-    it('should return a sub folders', async () => {
+    it('should return a sub folders', () => {
       const folder = model.model.organizations[0].item[0];
       const subFolders = inputInterpreter.getSubFolders(folder);
 
@@ -290,7 +292,7 @@ describe('AoeffInterpreter', async () => {
   });
 
   describe('getFolderViews', () => {
-    it('should return a folder Views', async () => {
+    it('should return a folder Views', () => {
       const folder = model.model.organizations[0].item[0];
       const folderViews = inputInterpreter.getFolderViews(folder);
 
@@ -394,7 +396,7 @@ describe('AoeffInterpreter', async () => {
   describe('getViewElementPositionX', () => {
     it('should return a position X of view element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
-      const positionX = inputInterpreter.getViewElementPositionX(node, null, undefined);
+      const positionX = inputInterpreter.getViewElementPositionX({ viewElement: node });
 
       expect(positionX).to.equal(38);
     });
@@ -403,11 +405,11 @@ describe('AoeffInterpreter', async () => {
       const node = model.model.views[0].diagrams[0].view[1].node[12];
       const nestedElements = inputInterpreter.getViewElementNestedElements(node);
 
-      const positionX = inputInterpreter.getViewElementPositionX(
-        node,
-        '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
-        nestedElements,
-      );
+      const positionX = inputInterpreter.getViewElementPositionX({
+        viewElement: node,
+        parentId: '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
+        parentViewElements: nestedElements,
+      });
 
       expect(positionX).to.equal(-324);
     });
@@ -416,7 +418,7 @@ describe('AoeffInterpreter', async () => {
   describe('getViewElementPositionY', () => {
     it('should return a position Y of view element', () => {
       const node = model.model.views[0].diagrams[0].view[0].node[0];
-      const positionY = inputInterpreter.getViewElementPositionY(node, null, undefined);
+      const positionY = inputInterpreter.getViewElementPositionY({ viewElement: node });
 
       expect(positionY).to.equal(25);
     });
@@ -425,11 +427,11 @@ describe('AoeffInterpreter', async () => {
       const node = model.model.views[0].diagrams[0].view[1].node[12];
       const nestedElements = inputInterpreter.getViewElementNestedElements(node);
 
-      const positionY = inputInterpreter.getViewElementPositionY(
-        node,
-        '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
-        nestedElements,
-      );
+      const positionY = inputInterpreter.getViewElementPositionY({
+        viewElement: node,
+        parentId: '90587bb4-b903-4d1e-af17-ec1deb1a6a3e',
+        parentViewElements: nestedElements,
+      });
 
       expect(positionY).to.equal(-80);
     });
@@ -592,7 +594,7 @@ describe('AoeffInterpreter', async () => {
       const relationship = model.model.views[0].diagrams[0].view[1].connection[6];
       const [bendpoint] = inputInterpreter.getViewRelationshipBendpoints(relationship);
 
-      const { y, x } = inputInterpreter.getViewRelationshipBendpoint(bendpoint);
+      const { y, x } = inputInterpreter.getViewRelationshipBendpoint({ bendpoint });
 
       expect(x).to.equal(528);
       expect(y).to.equal(492);

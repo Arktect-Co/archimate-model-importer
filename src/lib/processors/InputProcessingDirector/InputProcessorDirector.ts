@@ -51,12 +51,16 @@ export class InputProcessorDirector {
     } = settings;
 
     if (options.skipViews === undefined) {
-      throw new Error(`Invalid options`);
+      throw new Error('Invalid options');
     }
 
     this.model = new Model(label, description);
     this.options = options;
-    this.log = logger && logger.info ? logger.info : () => {};
+    this.log = logger?.info
+      ? logger.info
+      : () => {
+          // Empty because there needs to be a function to run
+        };
   }
 
   /**
@@ -126,7 +130,8 @@ export class InputProcessorDirector {
         modelVersion.startsWith('4.6') || // Tested
         modelVersion.startsWith('4.7') ||
         modelVersion.startsWith('4.8') ||
-        modelVersion.startsWith('4.9')) // Tested
+        modelVersion.startsWith('4.9') || // Tested
+        modelVersion.startsWith('5.0'))
     );
   }
 
@@ -194,10 +199,10 @@ export class InputProcessorDirector {
           throw new Error(`Input model processing: ${message}`);
         }
       } else {
-        throw new Error(`Not compatible model`);
+        throw new Error('Not compatible model');
       }
     } else {
-      throw new Error(`Invalid model format. Only XML models are accepted`);
+      throw new Error('Invalid model format. Only XML models are accepted');
     }
   }
 
@@ -217,10 +222,10 @@ export class InputProcessorDirector {
    * );
    * const response = inputProcessorDirector.getOutputModel();
    */
-  async translateModelFolder(folderPath): Promise<void> {
+  translateModelFolder(folderPath): void {
     // TODO: verify if really is a GRAFICO model
     try {
-      let interpreter: GraficoInterpreterModel = new GraficoInterpreter(folderPath);
+      const interpreter: GraficoInterpreterModel = new GraficoInterpreter(folderPath);
 
       const translator = new InputTranslator(interpreter, this.model, this.options, this.log);
 

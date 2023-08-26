@@ -4,15 +4,19 @@ import path from 'path';
 
 import { modelResultArchi } from './modelResults/modelResultArchi';
 import { modelResultVisualParadigm } from './modelResults/modelResultVisualParadigm';
+import { modelResultArchi5 } from './modelResults/modelResultArchi5';
 
 import { InputProcessorDirector } from '@lib/processors/InputProcessingDirector/InputProcessorDirector';
+import { Landscape, View } from '../../src/lib/common/interfaces/model';
 
 chai.use(deepEqualInAnyOrder);
 
-function removeFolderIds(folders) {
-  for (let i = 0; i < folders.length; i++) {
-    let folder = folders[i];
-
+/**
+ * Removes folders Id
+ * @param folders
+ */
+function removeFolderIds(folders: Array<Landscape>): void {
+  for (const folder of folders) {
     if (folder.isDirectory) {
       delete folder.id;
     }
@@ -23,13 +27,13 @@ function removeFolderIds(folders) {
   }
 }
 
-function removeUndefinedValues(views) {
-  for (let i = 0; i < views.length; i++) {
-    let view = views[i];
-
-    for (let j = 0; j < view.viewRelationships.length; j++) {
-      let rel = view.viewRelationships[j];
-
+/**
+ * Remove undefined values of views
+ * @param views
+ */
+function removeUndefinedValues(views: Array<View>): void {
+  for (const view of views) {
+    for (const rel of view.viewRelationships) {
       if (rel.isBidirectional === undefined) {
         delete rel.isBidirectional;
       }
@@ -44,7 +48,7 @@ function removeUndefinedValues(views) {
 describe('Model Translation', () => {
   describe('Archi Import', () => {
     it('Importing Archi Model v4.6', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -53,7 +57,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/migration_guide_3_1.archimate'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -66,8 +70,53 @@ describe('Model Translation', () => {
       chai.expect(response).to.deep.equalInAnyOrder(modelResultArchi);
     });
 
+    it('Importing Archi Model v5.0', async () => {
+      const inputProcessorDirector = new InputProcessorDirector({
+        label: 'Archi Test v5',
+        description: 'Test model for Archi Files',
+      });
+
+      await inputProcessorDirector.translateModelFile(
+        path.join(path.dirname(__filename), '/models/archi_v5.archimate'),
+      );
+      const response = inputProcessorDirector.getOutputModel();
+
+      delete response.modelsourceid;
+
+      // Removing Folder ids
+      removeFolderIds(response.model.landscape);
+
+      // Removing [undefined] values in View Relationships for isBidirectional
+      removeUndefinedValues(response.model.views);
+
+      chai.expect(response).to.deep.equalInAnyOrder(modelResultArchi5);
+    });
+
+    it('Importing Archi Model v5.0 Skipping Views', async () => {
+      const inputProcessorDirector = new InputProcessorDirector({
+        label: 'Archi Test v5',
+        description: 'Test model for Archi Files',
+        options: { skipViews: true },
+      });
+
+      await inputProcessorDirector.translateModelFile(
+        path.join(path.dirname(__filename), '/models/archi_v5.archimate'),
+      );
+
+      const response = inputProcessorDirector.getOutputModel();
+
+      delete response.modelsourceid;
+
+      chai.expect(response.model.nodes).to.deep.equalInAnyOrder(modelResultArchi5.model.nodes);
+      chai
+        .expect(response.model.relationships)
+        .to.deep.equalInAnyOrder(modelResultArchi5.model.relationships);
+      chai.expect(response.model.views.length).to.equal(0);
+      chai.expect(response.model.landscape.length).to.equal(0);
+    });
+
     it('Importing Archi Model v4.6 Skipping Views', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
         options: { skipViews: true },
@@ -77,7 +126,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/migration_guide_3_1.archimate'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -85,14 +134,14 @@ describe('Model Translation', () => {
       chai
         .expect(response.model.relationships)
         .to.deep.equalInAnyOrder(modelResultArchi.model.relationships);
-      chai.expect(response.model.views).to.be.empty;
-      chai.expect(response.model.landscape).to.be.empty;
+      chai.expect(response.model.views.length).to.equal(0);
+      chai.expect(response.model.landscape.length).to.equal(0);
     });
   });
 
   describe('AOEFF Import', () => {
     it('Importing AOEFF for Archimate 3.1 - From Archi', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -101,7 +150,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/aoeff_3_1.xml'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -113,10 +162,12 @@ describe('Model Translation', () => {
 
       // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
       // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
-      let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi));
+      const deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi));
 
       // Finding view with hided relationships
-      let index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
+      const index = deepCopyModelResult.model.views.findIndex(
+        view => view.name === 'Relationships',
+      );
 
       if (index !== -1) {
         // Finding and Removing Grouping -> Goal relationship
@@ -137,17 +188,17 @@ describe('Model Translation', () => {
       chai.expect(response).to.deep.equalInAnyOrder(deepCopyModelResult);
     });
 
-    it('Importing AOEFF for Archimate 3.1 - From Visual Paradigm', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
-        label: 'Archi Test',
+    it('Importing AOEFF for Archimate 3.1 - From Archi v5', async () => {
+      const inputProcessorDirector = new InputProcessorDirector({
+        label: 'Archi Test v5',
         description: 'Test model for Archi Files',
       });
 
       await inputProcessorDirector.translateModelFile(
-        path.join(path.dirname(__filename), '/models/aoeff_3_1_visual_paradigm.xml'),
+        path.join(path.dirname(__filename), '/models/aoeff_3_1_archi_5_0_2.xml'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 
@@ -159,10 +210,60 @@ describe('Model Translation', () => {
 
       // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
       // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
-      let deepCopyModelResult = JSON.parse(JSON.stringify(modelResultVisualParadigm));
+      const deepCopyModelResult = JSON.parse(JSON.stringify(modelResultArchi5));
 
       // Finding view with hided relationships
-      let index = deepCopyModelResult.model.views.findIndex(view => view.name === 'Relationships');
+      const index = deepCopyModelResult.model.views.findIndex(
+        view => view.name === 'Relationships',
+      );
+
+      if (index !== -1) {
+        // Finding and Removing Grouping -> Goal relationship
+        deepCopyModelResult.model.views[index].viewRelationships = deepCopyModelResult.model.views[
+          index
+        ].viewRelationships.filter(rel => {
+          return rel.viewRelationshipId !== 'af60956d6d4e4cecb96ee272398b0493';
+        });
+
+        // Finding and Removing Grouping -> Driver relationship
+        deepCopyModelResult.model.views[index].viewRelationships = deepCopyModelResult.model.views[
+          index
+        ].viewRelationships.filter(rel => {
+          return rel.viewRelationshipId !== '5efc008fe2314e7caf852704e3886aa4';
+        });
+      }
+
+      chai.expect(response).to.deep.equalInAnyOrder(deepCopyModelResult);
+    });
+
+    it('Importing AOEFF for Archimate 3.1 - From Visual Paradigm', async () => {
+      const inputProcessorDirector = new InputProcessorDirector({
+        label: 'Archi Test',
+        description: 'Test model for Archi Files',
+      });
+
+      await inputProcessorDirector.translateModelFile(
+        path.join(path.dirname(__filename), '/models/aoeff_3_1_visual_paradigm.xml'),
+      );
+
+      const response = inputProcessorDirector.getOutputModel();
+
+      delete response.modelsourceid;
+
+      // Removing Folder ids
+      removeFolderIds(response.model.landscape);
+
+      // Removing [undefined] values in View Relationships for isBidirectional
+      removeUndefinedValues(response.model.views);
+
+      // WARNING! Handling AOEFF limitations: Not presenting hided view relationships. This kind of situation isn't
+      // exported in AOEFF, so in oder to test the import feature, the removal of this kind of relationships it is necessary
+      const deepCopyModelResult = JSON.parse(JSON.stringify(modelResultVisualParadigm));
+
+      // Finding view with hided relationships
+      const index = deepCopyModelResult.model.views.findIndex(
+        view => view.name === 'Relationships',
+      );
 
       if (index !== -1) {
         // Finding and Removing Grouping -> Goal relationship
@@ -186,7 +287,7 @@ describe('Model Translation', () => {
 
   describe('GRAFICO Import', () => {
     it('Importing GRAFICO for Archi 4.6', async () => {
-      let inputProcessorDirector = new InputProcessorDirector({
+      const inputProcessorDirector = new InputProcessorDirector({
         label: 'Archi Test',
         description: 'Test model for Archi Files',
       });
@@ -195,7 +296,7 @@ describe('Model Translation', () => {
         path.join(path.dirname(__filename), '/models/grafico'),
       );
 
-      let response = inputProcessorDirector.getOutputModel();
+      const response = inputProcessorDirector.getOutputModel();
 
       delete response.modelsourceid;
 

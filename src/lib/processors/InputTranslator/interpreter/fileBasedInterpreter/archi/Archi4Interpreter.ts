@@ -20,6 +20,21 @@ import { ArchiViewType } from '@lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
+interface ViewRelationshipBendpointSetting {
+  bendpoint: BendpointModel;
+  bendpointIndex: number;
+  bendpointsLength: number;
+  sourceViewElement: ChildElement | null;
+  targetViewElement: ChildElement | null;
+  viewNodes: Array<ChildElement>;
+}
+
+interface PositionSetting {
+  viewElement: ChildElement;
+  parentId?: string;
+  parentViewElements?: Array<ChildElement>;
+}
+
 export type ArchiInterpreterModel = Interpreter<
   ArchiModel,
   Element,
@@ -75,7 +90,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getNodeId(node);
    */
   getNodeId(node: Element): string {
-    return node.$.id;
+    return node.$.id.replace('id-', '');
   }
 
   /**
@@ -120,7 +135,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const documentation = inputInterpreter.getNodeDocumentation(node);
    */
   getNodeDocumentation(node: Element): string | null {
-    return node.documentation && node.documentation[0] ? node.documentation[0] : null;
+    return node?.documentation?.[0] ? node.documentation[0] : null;
   }
 
   /**
@@ -137,7 +152,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const type = inputInterpreter.getNodeJunctionType(node);
    */
   getNodeJunctionType(node: Element): string {
-    let type = node.$.type;
+    const type = node.$.type;
 
     if (type === undefined) {
       // AND junction
@@ -176,7 +191,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const propertyEntry = inputInterpreter.getPropertyEntry(property);
    */
   getPropertyEntry(property: Property): Array<string> {
-    if (property && property.$ && property.$.key && property.$.value) {
+    if (property?.$?.key && property?.$?.value) {
       return [property.$.key, property.$.value];
     } else {
       return [];
@@ -196,7 +211,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getRelationshipId(relationship);
    */
   getRelationshipId(relationship: Element): string {
-    return relationship.$.id;
+    return relationship.$.id.replace('id-', '');
   }
 
   /**
@@ -232,7 +247,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const sourceId = inputInterpreter.getRelationshipSourceId(relationship);
    */
   getRelationshipSourceId(relationship: Element): string {
-    return relationship.$.source;
+    return relationship.$.source.replace('id-', '');
   }
 
   /**
@@ -248,7 +263,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const targetId = inputInterpreter.getRelationshipTargetId(relationship);
    */
   getRelationshipTargetId(relationship: Element): string {
-    return relationship.$.target;
+    return relationship.$.target.replace('id-', '');
   }
 
   /**
@@ -302,6 +317,11 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
             source: true,
             target: true,
           };
+        default:
+          return {
+            source: false,
+            target: true,
+          };
       }
     }
   }
@@ -318,7 +338,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
    */
   getAssociationRelationshipIsDirected(relationship: Element): boolean {
-    let isDirected = relationship.$.directed;
+    const isDirected = relationship.$.directed;
 
     if (isDirected === undefined) {
       return false;
@@ -404,7 +424,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewId(view);
    */
   getViewId(view: View): string {
-    return view.$.id;
+    return view.$.id.replace('id-', '');
   }
 
   /**
@@ -436,7 +456,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewElementViewId(viewElement);
    */
   getViewElementViewId(viewElement: ChildElement): string {
-    return viewElement.$.id;
+    return viewElement.$.id.replace('id-', '');
   }
 
   /**
@@ -452,14 +472,13 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewElementModelId(viewElement);
    */
   getViewElementModelId(viewElement: ChildElement): string {
-    return viewElement.$.archimateElement;
+    return viewElement.$.archimateElement.replace('id-', '');
   }
 
   /**
    * Returns the position x of view element
-   * @param viewElement View Element
-   * @param parentId parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position x
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
@@ -467,21 +486,16 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const inputInterpreter = new Archi4Interpreter(model);
    * const viewElement = model['archimate:model'].folder[8].folder[0].element[0];
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(viewElement, null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionX(
-    viewElement: ChildElement,
-    parentId?: string,
-    parentViewElements?: Array<ChildElement>,
-  ): number {
+  getViewElementPositionX({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.x, 0);
   }
 
   /**
    * Returns the position y of view element
-   * @param viewElement View Element
-   * @param parentId Parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position Y
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
@@ -489,13 +503,9 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const inputInterpreter = new Archi4Interpreter(model);
    * const viewElement = model['archimate:model'].folder[8].folder[0].element[0];
    *
-   * const positionY = inputInterpreter.getViewElementPositionY(viewElement, null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionY(
-    viewElement: ChildElement,
-    parentId?: string,
-    parentViewElements?: unknown,
-  ): number {
+  getViewElementPositionY({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.y, 0);
   }
 
@@ -581,17 +591,15 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   findViewElement(viewElements: Array<ChildElement>, id: string): ChildElement | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
-        if (element.$.id.localeCompare(id) === 0) {
+      for (const element of viewElements) {
+        if (element.$.id.replace('id-', '').localeCompare(id) === 0) {
           return element;
         }
 
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let result = this.findViewElement(child, id);
+          const result = this.findViewElement(child, id);
 
           if (result !== null) {
             return result;
@@ -618,20 +626,16 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   findViewElementParent(viewElements: Array<ChildElement>, id: string): ChildElement | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.findViewElementParent(child, id);
+          const response = this.findViewElementParent(child, id);
 
           if (response !== null) {
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return element;
               }
@@ -659,30 +663,26 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   calculateNestedPosition(viewElements: Array<ChildElement>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.calculateNestedPosition(child, id);
+          const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            let x = this.getViewElementPositionX(element) || 0;
-            let y = this.getViewElementPositionY(element) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element });
+            const y = this.getViewElementPositionY({ viewElement: element });
 
-            response.x += x;
-            response.y += y;
+            response.x += x ? x : 0;
+            response.y += y ? y : 0;
 
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return {
-                  x: this.getViewElementPositionX(element, null, null),
-                  y: this.getViewElementPositionY(element, null, null),
+                  x: this.getViewElementPositionX({ viewElement: element }),
+                  y: this.getViewElementPositionY({ viewElement: element }),
                 };
               }
             }
@@ -756,12 +756,13 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Returns the Relationship bendpoint
-   * @param bendpoint Bendpoint Model
-   * @param bendpointIndex Bendpoint index
-   * @param bendpointsLength Bendpoint quantity
-   * @param sourceViewElement Source View Element
-   * @param targetViewElement Target View Element
-   * @param viewNodes View Nodes
+   * @param setting
+   * @param setting.bendpoint Bendpoint Model
+   * @param setting.bendpointIndex Bendpoint index
+   * @param setting.bendpointsLength Bendpoint quantity
+   * @param setting.sourceViewElement Source View Element
+   * @param setting.targetViewElement Target View Element
+   * @param setting.viewNodes View Nodes
    * @return Bendpoint
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
@@ -773,22 +774,28 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const targetViewElement = model['archimate:model'].folder[8].folder[0].element[1].child[1];
    * const views = model['archimate:model'].folder[8].folder[0].element[1].child;
    *
-   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(relationship.bendpoint, 1, 0, sourceViewElement, targetViewElement, views);
+   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint({
+   *         bendpoint:relationship.bendpoint,
+   *         bendpointIndex: 1,
+   *         bendpointsLength: 1,
+   *         sourceViewElement,
+   *         targetViewElement,
+   *         viewNodes: views});
    */
-  getViewRelationshipBendpoint(
-    bendpoint: BendpointModel,
-    bendpointIndex: number,
-    bendpointsLength: number,
-    sourceViewElement: ChildElement | null,
-    targetViewElement: ChildElement | null,
-    viewNodes: Array<ChildElement>,
-  ): Bendpoint {
+  getViewRelationshipBendpoint({
+    bendpoint,
+    bendpointIndex,
+    bendpointsLength,
+    sourceViewElement,
+    targetViewElement,
+    viewNodes,
+  }: ViewRelationshipBendpointSetting): Bendpoint {
     const sourceBounds = sourceViewElement.bounds[0].$;
     const targetBounds = targetViewElement.bounds[0].$;
-    const sourceXPosition = sourceBounds.x ? +sourceBounds.x : 0;
-    const sourceYPosition = sourceBounds.y ? +sourceBounds.y : 0;
-    const targetXPosition = targetBounds.x ? +targetBounds.x : 0;
-    const targetYPosition = targetBounds.y ? +targetBounds.y : 0;
+    const sourceXPosition = sourceBounds.x ? Number(sourceBounds.x) : 0;
+    const sourceYPosition = sourceBounds.y ? Number(sourceBounds.y) : 0;
+    const targetXPosition = targetBounds.x ? Number(targetBounds.x) : 0;
+    const targetYPosition = targetBounds.y ? Number(targetBounds.y) : 0;
     const sourceParentPositionIncrement = this.calculateNestedPosition(
       viewNodes,
       sourceViewElement.$.id,
@@ -797,19 +804,19 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
       viewNodes,
       targetViewElement.$.id,
     );
-    const sx = bendpoint.$.startX ? +bendpoint.$.startX : 0;
-    const sy = bendpoint.$.startY ? +bendpoint.$.startY : 0;
-    const ex = bendpoint.$.endX ? +bendpoint.$.endX : 0;
-    const ey = bendpoint.$.endY ? +bendpoint.$.endY : 0;
+    const sx = bendpoint.$.startX ? Number(bendpoint.$.startX) : 0;
+    const sy = bendpoint.$.startY ? Number(bendpoint.$.startY) : 0;
+    const ex = bendpoint.$.endX ? Number(bendpoint.$.endX) : 0;
+    const ey = bendpoint.$.endY ? Number(bendpoint.$.endY) : 0;
     let sourceIncrementX = 0;
     let sourceIncrementY = 0;
     let targetIncrementX = 0;
     let targetIncrementY = 0;
 
-    let sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
-    let sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
-    let targetWidth = targetBounds.width ? +targetBounds.width : 0;
-    let targetHeight = targetBounds.height ? +targetBounds.height : 0;
+    const sourceWidth = sourceBounds.width ? Number(sourceBounds.width) : 0;
+    const sourceHeight = sourceBounds.height ? Number(sourceBounds.height) : 0;
+    const targetWidth = targetBounds.width ? Number(targetBounds.width) : 0;
+    const targetHeight = targetBounds.height ? Number(targetBounds.height) : 0;
 
     if (sourceParentPositionIncrement !== null) {
       sourceIncrementX = sourceParentPositionIncrement.x;
@@ -821,16 +828,16 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
       targetIncrementY = targetParentPositionIncrement.y;
     }
 
-    let sourcePositionX = sourceXPosition + sourceIncrementX;
-    let sourcePositionY = sourceYPosition + sourceIncrementY;
-    let targetPositionX = targetXPosition + targetIncrementX;
-    let targetPositionY = targetYPosition + targetIncrementY;
-    let weight = (bendpointIndex + 1) / (bendpointsLength + 1);
+    const sourcePositionX = sourceXPosition + sourceIncrementX;
+    const sourcePositionY = sourceYPosition + sourceIncrementY;
+    const targetPositionX = targetXPosition + targetIncrementX;
+    const targetPositionY = targetYPosition + targetIncrementY;
+    const weight = (bendpointIndex + 1) / (bendpointsLength + 1);
 
-    let x =
+    const x =
       (sourcePositionX + sx + sourceWidth / 2) * (1.0 - weight) +
       weight * (targetPositionX + ex + targetWidth / 2);
-    let y =
+    const y =
       (sourcePositionY + sy + sourceHeight / 2) * (1.0 - weight) +
       weight * (targetPositionY + ey + targetHeight / 2);
 
@@ -852,7 +859,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    */
   getViewRelationshipModelId(viewRelationship: Relationship): string | null {
     return viewRelationship.$.archimateRelationship
-      ? viewRelationship.$.archimateRelationship
+      ? viewRelationship.$.archimateRelationship.replace('id-', '')
       : null;
   }
 
@@ -870,7 +877,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewRelationshipId(relationship);
    */
   getViewRelationshipId(viewRelationship: Relationship): string {
-    return viewRelationship.$.id;
+    return viewRelationship.$.id.replace('id-', '');
   }
 
   /**
@@ -887,7 +894,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewRelationshipSourceElementId(relationship);
    */
   getViewRelationshipSourceElementId(viewRelationship: Relationship): string {
-    return viewRelationship.$.source;
+    return viewRelationship.$.source.replace('id-', '');
   }
 
   /**
@@ -904,7 +911,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    * const id = inputInterpreter.getViewRelationshipTargetElementId(relationship);
    */
   getViewRelationshipTargetElementId(viewRelationship: Relationship): string {
-    return viewRelationship.$.target;
+    return viewRelationship.$.target.replace('id-', '');
   }
 
   /**
@@ -947,8 +954,8 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Loops through a list of views relationships
-   * @param view View Model
-   * @param action Action foe each relationship view in the list
+   * @param _view View Model
+   * @param _action Action foe each relationship view in the list
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
    * const model = {} // Archi Model
@@ -957,7 +964,9 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    *
    * inputInterpreter.forEachViewRelationship(view, (connection) =>{});
    */
-  forEachViewRelationship(view: View, action: (relationship: Relationship) => void): void {}
+  forEachViewRelationship(_view: View, _action: (_relationship: Relationship) => void): void {
+    // Empty because the Archi interpreter does not need to use this function
+  }
 
   /**
    * Loops through a list of nodes
@@ -976,7 +985,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
         folder.$.type.localeCompare(ArchiElementType.Relations) !== 0 &&
         folder.$.type.localeCompare(ArchiElementType.Diagrams) !== 0
       ) {
-        let modelElements = folder.element;
+        const modelElements = folder.element;
 
         if (Array.isArray(modelElements)) {
           modelElements.forEach(action);
@@ -998,7 +1007,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
   forEachModelRelationship(action: (relationship: Element) => void): void {
     this.modelFolders.forEach(folder => {
       if (folder.$.type.localeCompare(ArchiElementType.Relations) === 0) {
-        let modelElements = folder.element;
+        const modelElements = folder.element;
 
         if (Array.isArray(modelElements)) {
           modelElements.forEach(action);
@@ -1009,7 +1018,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
 
   /**
    * Loops through a list of diagram
-   * @param action Action for each diagram in the list
+   * @param _action Action for each diagram in the list
    * @example
    * import { Archi4Interpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/archi/Archi4Interpreter';
    * const model = {} // Archi Model
@@ -1017,7 +1026,7 @@ export class Archi4Interpreter implements ArchiInterpreterModel {
    *
    * inputInterpreter.forEachDiagram((view) => {});
    */
-  forEachDiagram(action: (diagram: Element) => void) {
+  forEachDiagram(_action: (_diagram: Element) => void) {
     return null;
   }
 

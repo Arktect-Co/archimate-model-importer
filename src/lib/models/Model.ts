@@ -60,12 +60,10 @@ export class Model {
     const nodes: Array<Node> = [];
 
     for (const nodeType in this.model.nodes) {
-      if (this.model.nodes.hasOwnProperty(nodeType)) {
+      if (Object.prototype.hasOwnProperty.call(this.model.nodes, nodeType)) {
         const nodeTypeSet = this.model.nodes[nodeType];
 
-        for (let i = 0; i < nodeTypeSet.length; i++) {
-          const node = nodeTypeSet[i];
-
+        for (const node of nodeTypeSet) {
           nodes.push({ ...node, type: nodeType });
         }
       }
@@ -87,12 +85,10 @@ export class Model {
     const relationships: Array<Relationship> = [];
 
     for (const relType in this.model.relationships) {
-      if (this.model.relationships.hasOwnProperty(relType)) {
+      if (Object.prototype.hasOwnProperty.call(this.model.relationships, relType)) {
         const relTypeSet = this.model.relationships[relType];
 
-        for (let i = 0; i < relTypeSet.length; i++) {
-          const relationship = relTypeSet[i];
-
+        for (const relationship of relTypeSet) {
           relationships.push({ ...relationship, type: relType });
         }
       }
@@ -324,8 +320,8 @@ export class Model {
    */
   static createBendpoint(x?: number, y?: number): BendPoint {
     return {
-      x: x || 0,
-      y: y || 0,
+      x: x ? x : 0,
+      y: y ? y : 0,
     };
   }
 
@@ -379,7 +375,7 @@ export class Model {
     isBidirectional,
     identifier,
   }: Relationship): Relationship {
-    let relationship: Relationship = {
+    const relationship: Relationship = {
       sourceId,
       targetId,
       type: type ? type.toLowerCase() : '',
@@ -435,7 +431,7 @@ export class Model {
     documentation,
   }: Node): Node {
     const nodeName = name !== null ? name : 'Unknown Name';
-    let nodeObj: Node = { identifier, name: nodeName, type };
+    const nodeObj: Node = { identifier, name: nodeName, type };
 
     if (properties) {
       nodeObj.properties = properties;
@@ -472,13 +468,13 @@ export class Model {
    *  model.setManyNodes(nodes);
    */
   setManyNodes(nodeList: Array<Node>): void {
-    let categorizedNodes: Nodes = {};
+    const categorizedNodes: Nodes = {};
     let totalNodes = 0;
 
     nodeList.forEach(node => {
       if (node.type && node.identifier) {
         const type = node.type.toLowerCase();
-        const name = node.name || 'Unknown Name';
+        const name = node.name ? node.name : 'Unknown Name';
         const properties = node.properties;
         const documentation = node.documentation;
 
@@ -487,7 +483,7 @@ export class Model {
           categorizedNodes[type] = [];
         }
 
-        let nodeObj: Node = { identifier: node.identifier, name };
+        const nodeObj: Node = { identifier: node.identifier, name };
 
         if (properties) {
           nodeObj.properties = properties;
@@ -504,7 +500,7 @@ export class Model {
     });
 
     for (const nodeType in categorizedNodes) {
-      if (categorizedNodes.hasOwnProperty(nodeType)) {
+      if (Object.prototype.hasOwnProperty.call(categorizedNodes, nodeType)) {
         this.totalByType['nodeTypes'][nodeType] = categorizedNodes[nodeType].length;
       }
     }
@@ -538,7 +534,7 @@ export class Model {
    *  model.setManyRelationships(relationships);
    */
   setManyRelationships(relationshipList: Array<Relationship>): void {
-    let categorizedRelationships: Relationships = {};
+    const categorizedRelationships: Relationships = {};
     let totalRelationships = 0;
 
     relationshipList.forEach(rel => {
@@ -550,7 +546,7 @@ export class Model {
           categorizedRelationships[type] = [];
         }
 
-        let relationship: Relationship = {
+        const relationship: Relationship = {
           identifier: rel.identifier,
           sourceId: rel.sourceId,
           targetId: rel.targetId,
@@ -567,7 +563,7 @@ export class Model {
     });
 
     for (const relType in categorizedRelationships) {
-      if (categorizedRelationships.hasOwnProperty(relType)) {
+      if (Object.prototype.hasOwnProperty.call(categorizedRelationships, relType)) {
         const sumarizedType = relType.replace('relationship', '');
 
         this.totalByType['relationshipTypes'][sumarizedType] =

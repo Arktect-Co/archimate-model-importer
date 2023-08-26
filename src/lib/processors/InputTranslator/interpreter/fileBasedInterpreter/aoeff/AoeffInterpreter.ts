@@ -1,15 +1,15 @@
 import {
   AoeffModel,
+  BendpointModel,
   CandidateView,
   ConnectionModel,
   ElementModel,
-  Model,
   ItemModel,
-  ViewModel,
+  Model,
   NodeModel,
   Property,
   RelationshipModel,
-  BendpointModel,
+  ViewModel,
 } from '@lib/common/interfaces/aoeffModel';
 import _ from 'lodash';
 import { RelationshipAccessType } from '@lib/common/enums/relationshipAccessType';
@@ -25,6 +25,25 @@ const UNKNOWN = 'Unknown Name';
 export interface AccessRelationshipDirection {
   source: boolean;
   target: boolean;
+}
+
+interface Data<T> {
+  [key: string]: T;
+}
+
+interface ViewRelationshipBendpointSetting {
+  bendpoint: BendpointModel;
+  bendpointIndex?: number;
+  bendpointsLength?: number;
+  sourceViewElement?: NodeModel | null;
+  targetViewElement?: NodeModel | null;
+  viewNodes?: Array<NodeModel>;
+}
+
+interface PositionSetting {
+  viewElement: NodeModel;
+  parentId?: string | null;
+  parentViewElements?: Array<NodeModel>;
 }
 
 export type AoeffInterpreterModel = Interpreter<
@@ -47,14 +66,26 @@ export type AoeffInterpreterModel = Interpreter<
 export class AoeffInterpreter implements AoeffInterpreterModel {
   public model: Model;
   public readonly modelid: string;
+  public propertyDefinitions: Data<string>;
   public isNestedDiagramStructure: boolean;
   public hasViewElementChildRelationships: boolean;
 
   constructor(model: AoeffModel) {
+    const propertyDefinitions = model['model'].propertyDefinitions?.[0]?.propertyDefinition;
     this.model = model.model;
     this.modelid = model['model'].$['identifier'];
     this.isNestedDiagramStructure = false;
     this.hasViewElementChildRelationships = false;
+    this.propertyDefinitions =
+      propertyDefinitions && Array.isArray(propertyDefinitions)
+        ? propertyDefinitions.reduce((acc, currentValue) => {
+            const key = currentValue?.$?.identifier;
+            if (key && !acc[key]) {
+              acc[key] = currentValue?.name[0] ? currentValue?.name[0] : 'Unknown';
+            }
+            return acc;
+          }, {})
+        : undefined;
   }
 
   /**
@@ -127,9 +158,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const documentation = inputInterpreter.getNodeDocumentation(node);
    */
   getNodeDocumentation(node: ElementModel): string | null {
-    return node.documentation && node.documentation[0] && node.documentation[0]._
-      ? node.documentation[0]._
-      : null;
+    return node?.documentation?.[0]?._ ? node.documentation[0]._ : null;
   }
 
   /**
@@ -178,15 +207,17 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const propertyEntry = inputInterpreter.getPropertyEntry(property);
    */
   getPropertyEntry(property?: Property): Array<string> {
-    if (
-      property &&
-      property.$ &&
-      property.$.propertyDefinitionRef &&
-      property.value &&
-      property.value[0] &&
-      property.value[0]._
-    ) {
-      return [property.$.propertyDefinitionRef, property.value[0]._];
+    const key = property?.$?.propertyDefinitionRef;
+    const value = property?.value?.[0]?._;
+
+    if (key && value) {
+      // Checks if is a new version of Aoeff file
+      if (key.match('propid-') && this.propertyDefinitions) {
+        const propertyKey = this.propertyDefinitions[key] ? this.propertyDefinitions[key] : key;
+        return [propertyKey, value];
+      }
+
+      return [key, value];
     } else {
       return [];
     }
@@ -298,6 +329,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
           source: true,
           target: true,
         };
+      default:
+        return {
+          source: false,
+          target: true,
+        };
     }
   }
 
@@ -313,7 +349,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const isDirected = inputInterpreter.getAssociationRelationshipIsDirected(relationship);
    */
   getAssociationRelationshipIsDirected(relationship: RelationshipModel): boolean {
-    let isDirected = relationship.$.isDirected;
+    const isDirected = relationship.$.isDirected;
 
     if (isDirected === undefined) return false;
 
@@ -359,7 +395,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const folders = inputInterpreter.getSubFolders(folder);
    */
   getSubFolders(folder: ItemModel): Array<ItemModel> {
-    let subFolders: Array<ItemModel> = [];
+    const subFolders: Array<ItemModel> = [];
 
     folder.item.forEach(candidateFolder => {
       if ('label' in candidateFolder && candidateFolder.label !== undefined) {
@@ -389,7 +425,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const folders = inputInterpreter.getFolderViews(folder);
    */
   getFolderViews(folder: ItemModel): Array<CandidateView> {
-    let folderViews: Array<CandidateView> = [];
+    const folderViews: Array<CandidateView> = [];
     folder.item.forEach(candidateView => {
       if (candidateView !== undefined) {
         if ('$' in candidateView && candidateView.$ !== undefined) {
@@ -455,11 +491,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     } else {
       // It's a view of the Organizations' folder
       // Finding the view related with the ID indicated in the folder
-      let el = _.find(this.model.views[0].diagrams[0].view, v => {
+      const el = _.find(this.model.views[0].diagrams[0].view, v => {
         return v.$.identifier.localeCompare(view.$.identifierRef) === 0;
       });
 
-      if (el && el.name) {
+      if (el?.name) {
         const name = el.name[0];
 
         if (typeof name !== 'string' && '_' in name) return name._;
@@ -505,9 +541,10 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the position x of view element
-   * @param viewElement View Element
-   * @param parentId parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
+   * @param setting.parentId parent ID
+   * @param setting.parentViewElements List of parent view elements
    * @return Position x
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -515,17 +552,13 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(viewElement, null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionX(
-    viewElement: NodeModel,
-    parentId?: string | null,
-    parentViewElements?: Array<NodeModel>,
-  ): number {
+  getViewElementPositionX({ viewElement, parentId, parentViewElements }: PositionSetting): number {
     let x = parseInt(viewElement.$.x, 0);
 
     if (parentId) {
-      let parent = this.findViewElement(parentViewElements, parentId);
+      const parent = this.findViewElement(parentViewElements, parentId);
 
       x = x - parseInt(parent.$.x, 0);
     }
@@ -535,9 +568,10 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the position y of view element
-   * @param viewElement View Element
-   * @param parentId Parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
+   * @param setting.parentId Parent ID
+   * @param setting.parentViewElements List of parent view elements
    * @return Position Y
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -545,17 +579,13 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const inputInterpreter = new AoeffInterpreter(model);
    * const viewElement = model.model.views[0].diagrams[0].view[0].node[0];
    *
-   * const positionY = inputInterpreter.getViewElementPositionY(viewElement, null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY({viewElement, parentId: null, parentViewElements: undefined});
    */
-  getViewElementPositionY(
-    viewElement: NodeModel,
-    parentId?: string,
-    parentViewElements?: Array<NodeModel>,
-  ): number {
+  getViewElementPositionY({ viewElement, parentId, parentViewElements }: PositionSetting): number {
     let y = parseInt(viewElement.$.y, 0);
 
-    if (parentId !== null) {
-      let parent = this.findViewElement(parentViewElements, parentId);
+    if (parentId) {
+      const parent = this.findViewElement(parentViewElements, parentId);
 
       y = y - parseInt(parent.$.y, 0);
     }
@@ -597,7 +627,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the view element source relationship
-   * @param viewElement View Element
+   * @param _viewElement View Element
    * @return Empty Array
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -607,7 +637,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const node = model.model.views[0].diagrams[0].view[0].node[0];
    * const viewElementSource = inputInterpreter.getViewElementSourceRelationships(node);
    */
-  getViewElementSourceRelationships(viewElement: NodeModel): Array<ConnectionModel> {
+  getViewElementSourceRelationships(_viewElement: NodeModel): Array<ConnectionModel> {
     return [];
   }
 
@@ -645,9 +675,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   findViewElement(viewElements: Array<NodeModel>, id: string): NodeModel | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         if (element.$.identifier.replace('id-', '').localeCompare(id) === 0) {
           return element;
         }
@@ -655,7 +683,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let result = this.findViewElement(child, id);
+          const result = this.findViewElement(child, id);
 
           if (result !== null) {
             return result;
@@ -682,15 +710,11 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   findViewElementParent(viewElements: Array<NodeModel>, id: string): NodeModel | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          for (let j = 0; j < child.length; j++) {
-            const childElement = child[j];
-
+          for (const childElement of child) {
             if (childElement.$.identifier.localeCompare(id) === 0) {
               return element;
             }
@@ -717,30 +741,26 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   calculateNestedPosition(viewElements: Array<NodeModel>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.calculateNestedPosition(child, id);
+          const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            let x = this.getViewElementPositionX(element) || 0;
-            let y = this.getViewElementPositionY(element) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element });
+            const y = this.getViewElementPositionY({ viewElement: element });
 
-            response.x += x;
-            response.y += y;
+            response.x += x ? x : 0;
+            response.y += y ? y : 0;
 
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (this.getViewElementViewId(childElement).localeCompare(id) === 0) {
                 return {
-                  x: this.getViewElementPositionX(element),
-                  y: this.getViewElementPositionY(element),
+                  x: this.getViewElementPositionX({ viewElement: element }),
+                  y: this.getViewElementPositionY({ viewElement: element }),
                 };
               }
             }
@@ -766,7 +786,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    */
   getViewNoteContent(viewElement: NodeModel): string {
     const { label } = viewElement;
-    return label && label[0] ? label[0]['_'] || label[0] : 'No Content';
+    return label?.[0] ? label[0]['_'] || label[0] : 'No Content';
   }
 
   /**
@@ -784,7 +804,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
   getViewGroupName(viewElement: NodeModel): string {
     const { label } = viewElement;
 
-    return label && label[0] ? label[0]['_'] || label[0] : UNKNOWN;
+    return label?.[0] ? label[0]['_'] || label[0] : UNKNOWN;
   }
 
   /**
@@ -805,12 +825,8 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
 
   /**
    * Returns the Relationship bendpoint
-   * @param bendpoint Bendpoint Model
-   * @param bendpointIndex Bendpoint index
-   * @param bendpointsLength Bendpoint quantity
-   * @param sourceViewElement Source View Element
-   * @param targetViewElement Target View Element
-   * @param viewNodes View Nodes
+   * @param setting
+   * @param setting.bendpoint Bendpoint Model
    * @return Bendpoint
    * @example
    * import { AoeffInterpreter } from '@lib/processors/InputTranslator/interpreter/fileBasedInterpreter/aoeff/AoeffInterpreter';
@@ -820,16 +836,9 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    *
    * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(relationship.bendpoint);
    */
-  getViewRelationshipBendpoint(
-    bendpoint: BendpointModel,
-    bendpointIndex?: number,
-    bendpointsLength?: number,
-    sourceViewElement?: NodeModel | null,
-    targetViewElement?: NodeModel | null,
-    viewNodes?: Array<NodeModel>,
-  ): Bendpoint {
-    let x = parseInt(bendpoint.$.x, 0);
-    let y = parseInt(bendpoint.$.y, 0);
+  getViewRelationshipBendpoint({ bendpoint }: ViewRelationshipBendpointSetting): Bendpoint {
+    const x = parseInt(bendpoint.$.x, 0);
+    const y = parseInt(bendpoint.$.y, 0);
 
     return { x, y };
   }
@@ -911,7 +920,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
    * const folders = inputInterpreter.getOrganizationFolders();
    */
   getOrganizationFolders(): Array<ItemModel> {
-    let organizationFolders: Array<ItemModel> = [];
+    const organizationFolders: Array<ItemModel> = [];
 
     if (
       Array.isArray(this.model.organizations) &&
@@ -920,7 +929,7 @@ export class AoeffInterpreter implements AoeffInterpreterModel {
     ) {
       this.model.organizations[0].item.forEach(folder => {
         if (folder.label) {
-          let folderName = folder.label[0]['_'] ? folder.label[0]['_'] : folder.label[0];
+          const folderName = folder.label[0]['_'] ? folder.label[0]['_'] : folder.label[0];
 
           if (folderName !== undefined) {
             if (

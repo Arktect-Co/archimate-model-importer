@@ -19,6 +19,21 @@ import { GraficoViewType } from '@lib/common/enums/viewType';
 
 const UNKNOWN = 'Unknown Name';
 
+interface ViewRelationshipBendpointSetting {
+  bendpoint: BendpointModel;
+  bendpointIndex?: number;
+  bendpointsLength?: number;
+  sourceViewElement?: ViewNode;
+  targetViewElement?: ViewNode;
+  viewNodes?: Array<ViewNode>;
+}
+
+interface PositionSetting {
+  viewElement: ViewNode;
+  parentId?: string;
+  parentViewElements?: Array<ViewNode>;
+}
+
 export type GraficoInterpreterModel = Interpreter<
   unknown,
   Node,
@@ -62,11 +77,13 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const name = GraficoInterpreter._getFirstPropertyName(node);
    */
   private static _getFirstPropertyName(jsonObj: View | Relationship | Node): string {
-    for (let key in jsonObj) {
-      if (jsonObj.hasOwnProperty(key)) {
+    for (const key in jsonObj) {
+      if (Object.prototype.hasOwnProperty.call(jsonObj, key)) {
         return key;
       }
     }
+
+    return 'Unknown Property';
   }
 
   /**
@@ -145,7 +162,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   getNodeDocumentation(node: Node): string | null {
     const key = GraficoInterpreter._getFirstPropertyName(node);
-    return node[key].$.documentation || null;
+    return node[key]?.$?.documentation ? node[key].$.documentation : null;
   }
 
   /**
@@ -164,7 +181,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   getNodeJunctionType(node: Node): string {
     const key = GraficoInterpreter._getFirstPropertyName(node);
-    let type = node[key].$.type;
+    const type = node[key].$.type;
 
     if (type === undefined) {
       // AND junction
@@ -207,7 +224,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    */
   getPropertyEntry(property: Property): Array<string> {
-    if (property && property.$ && property.$.key && property.$.value) {
+    if (property?.$?.key && property?.$?.value) {
       return [property.$.key, property.$.value];
     } else {
       return [];
@@ -345,6 +362,11 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
             source: true,
             target: true,
           };
+        default:
+          return {
+            source: false,
+            target: true,
+          };
       }
     }
   }
@@ -363,7 +385,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   getAssociationRelationshipIsDirected(relationship: Relationship): boolean {
     const key = GraficoInterpreter._getFirstPropertyName(relationship);
-    let isDirected = relationship[key].$.directed;
+    const isDirected = relationship[key].$.directed;
 
     if (isDirected === undefined) {
       return false;
@@ -387,11 +409,13 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     const filePath = path.join(folder, 'folder.xml');
 
     if (fs.existsSync(filePath)) {
-      let data = fs.readFileSync(filePath);
+      const data = fs.readFileSync(filePath);
 
-      let parser = new xml2js.Parser({ explicitArray: true });
+      const parser = new xml2js.Parser({ explicitArray: true });
 
-      parser.parseString(data, function (err, folderData) {
+      parser.parseString(data, (err, folderData) => {
+        if (err) throw err;
+
         folderName = folderData[GraficoInterpreter._getFirstPropertyName(folderData)].$.name; // Seems to be wrong (async), but actually is sync behaviour
       });
     }
@@ -410,10 +434,10 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const folders = inputInterpreter.getSubFolders("Folder Path");
    */
   getSubFolders(folder: string): Array<string> {
-    let folders = [];
+    const folders = [];
 
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {
-      fs.readdirSync(folder).map(name => {
+      fs.readdirSync(folder).forEach(name => {
         if (fs.statSync(path.join(folder, name)).isDirectory()) {
           folders.push(path.join(folder, name));
         }
@@ -434,18 +458,22 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const views = inputInterpreter.getFolderViews("Folder Path");
    */
   getFolderViews(folder: string): Array<View> {
-    let diagrams = [];
+    const diagrams = [];
     if (fs.existsSync(folder) && fs.lstatSync(folder).isDirectory()) {
-      fs.readdirSync(folder).map(name => {
+      const folders = fs.readdirSync(folder);
+
+      folders.forEach(name => {
         if (
           name.localeCompare('folder.xml') !== 0 &&
           fs.statSync(path.join(folder, name)).isFile()
         ) {
-          let data = fs.readFileSync(path.join(folder, name));
+          const data = fs.readFileSync(path.join(folder, name));
 
-          let parser = new xml2js.Parser({ explicitArray: true });
+          const parser = new xml2js.Parser({ explicitArray: true });
 
-          parser.parseString(data, function (err, diagramData) {
+          parser.parseString(data, (err, diagramData) => {
+            if (err) throw err;
+
             diagrams.push(diagramData);
           });
         }
@@ -534,42 +562,32 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Returns the position x of view element
-   * @param viewElement View Element
-   * @param parentId parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position x
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
    *
-   * const positionX = inputInterpreter.getViewElementPositionX(views[0].children[0], null, undefined);
+   * const positionX = inputInterpreter.getViewElementPositionX({viewElement: views[0].children[0]});
    */
-  getViewElementPositionX(
-    viewElement: ViewNode,
-    parentId?: string,
-    parentViewElements?: Array<ViewNode>,
-  ): number {
+  getViewElementPositionX({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.x, 0);
   }
 
   /**
    * Returns the position y of view element
-   * @param viewElement View Element
-   * @param parentId Parent ID
-   * @param parentViewElements List of parent view elements
+   * @param setting
+   * @param setting.viewElement View Element
    * @return Position Y
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    * const views = inputInterpreter.getFolderViews("Folder Path");
-   * const positionY = inputInterpreter.getViewElementPositionY(views[0].children[0], null, undefined);
+   * const positionY = inputInterpreter.getViewElementPositionY({viewElement: views[0].children[0]});
    */
-  getViewElementPositionY(
-    viewElement: ViewNode,
-    parentId?: string,
-    parentViewElements?: Array<ViewNode>,
-  ): number {
+  getViewElementPositionY({ viewElement }: PositionSetting): number {
     return parseInt(viewElement.bounds[0].$.y, 0);
   }
 
@@ -649,9 +667,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   findViewElement(viewElements: Array<ViewNode>, id: string): ViewNode | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         if (element.$.id.localeCompare(id) === 0) {
           return element;
         }
@@ -659,7 +675,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let result = this.findViewElement(child, id);
+          const result = this.findViewElement(child, id);
 
           if (result !== null) {
             return result;
@@ -685,20 +701,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   findViewElementParent(viewElements: Array<ViewNode>, id: string): ViewNode | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.findViewElementParent(child, id);
+          const response = this.findViewElementParent(child, id);
 
           if (response !== null) {
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return element;
               }
@@ -725,30 +737,26 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    */
   calculateNestedPosition(viewElements: Array<ViewNode>, id: string): Bendpoint | null {
     if (Array.isArray(viewElements)) {
-      for (let i = 0; i < viewElements.length; i++) {
-        const element = viewElements[i];
-
+      for (const element of viewElements) {
         const child = this.getViewElementNestedElements(element);
 
         if (child !== undefined) {
-          let response = this.calculateNestedPosition(child, id);
+          const response = this.calculateNestedPosition(child, id);
 
           if (response !== null) {
-            let x = this.getViewElementPositionX(element, null, null) || 0;
-            let y = this.getViewElementPositionY(element, null, null) || 0;
+            const x = this.getViewElementPositionX({ viewElement: element });
+            const y = this.getViewElementPositionY({ viewElement: element });
 
-            response.x += x;
-            response.y += y;
+            response.x += x ? x : 0;
+            response.y += y ? y : 0;
 
             return response;
           } else {
-            for (let j = 0; j < child.length; j++) {
-              const childElement = child[j];
-
+            for (const childElement of child) {
               if (childElement.$.id.localeCompare(id) === 0) {
                 return {
-                  x: this.getViewElementPositionX(element, null, null),
-                  y: this.getViewElementPositionY(element, null, null),
+                  x: this.getViewElementPositionX({ viewElement: element }),
+                  y: this.getViewElementPositionY({ viewElement: element }),
                 };
               }
             }
@@ -820,12 +828,13 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Returns the Relationship bendpoint
-   * @param bendpoint Bendpoint Model
-   * @param bendpointIndex Bendpoint index
-   * @param bendpointsLength Bendpoint quantity
-   * @param sourceViewElement Source View Element
-   * @param targetViewElement Target View Element
-   * @param viewNodes View Nodes
+   * @param setting
+   * @param setting.bendpoint Bendpoint Model
+   * @param setting.bendpointIndex Bendpoint index
+   * @param setting.bendpointsLength Bendpoint quantity
+   * @param setting.sourceViewElement Source View Element
+   * @param setting.targetViewElement Target View Element
+   * @param setting.viewNodes View Nodes
    * @return Bendpoint
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
@@ -833,22 +842,29 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * const source = views[0]['key'].children[0];
    * const target = views[0]['key'].children[1];
    * const bendpoint = views[0]['key'].children[0].sourceConnections[0].bendpoints[0];
-   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint(bendpoint, 0, 1, source, target, views[0]['key'].children);
+   * const { x, y } = inputInterpreter.getViewRelationshipBendpoint({
+   *    bendpoint,
+   *    bendpointIndex: 0,
+   *    bendpointsLength: 1,
+   *    sourceViewElement: source,
+   *    targetViewElement: target,
+   *    viewNodes: views[0]['key'].children,
+   * });
    */
-  getViewRelationshipBendpoint(
-    bendpoint: BendpointModel,
-    bendpointIndex: number,
-    bendpointsLength: number,
-    sourceViewElement: ViewNode,
-    targetViewElement: ViewNode,
-    viewNodes: Array<ViewNode>,
-  ): Bendpoint {
+  getViewRelationshipBendpoint({
+    bendpoint,
+    bendpointsLength,
+    bendpointIndex,
+    viewNodes,
+    sourceViewElement,
+    targetViewElement,
+  }: ViewRelationshipBendpointSetting): Bendpoint {
     const sourceBounds = sourceViewElement.bounds[0].$;
     const targetBounds = targetViewElement.bounds[0].$;
-    const sourceXPosition = sourceBounds.x ? +sourceBounds.x : 0;
-    const sourceYPosition = sourceBounds.y ? +sourceBounds.y : 0;
-    const targetXPosition = targetBounds.x ? +targetBounds.x : 0;
-    const targetYPosition = targetBounds.y ? +targetBounds.y : 0;
+    const sourceXPosition = sourceBounds.x ? Number(sourceBounds.x) : 0;
+    const sourceYPosition = sourceBounds.y ? Number(sourceBounds.y) : 0;
+    const targetXPosition = targetBounds.x ? Number(targetBounds.x) : 0;
+    const targetYPosition = targetBounds.y ? Number(targetBounds.y) : 0;
     const sourceParentPositionIncrement = this.calculateNestedPosition(
       viewNodes,
       sourceViewElement.$.id,
@@ -857,19 +873,19 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       viewNodes,
       targetViewElement.$.id,
     );
-    const sx = bendpoint.$.startX ? +bendpoint.$.startX : 0;
-    const sy = bendpoint.$.startY ? +bendpoint.$.startY : 0;
-    const ex = bendpoint.$.endX ? +bendpoint.$.endX : 0;
-    const ey = bendpoint.$.endY ? +bendpoint.$.endY : 0;
+    const sx = bendpoint.$.startX ? Number(bendpoint.$.startX) : 0;
+    const sy = bendpoint.$.startY ? Number(bendpoint.$.startY) : 0;
+    const ex = bendpoint.$.endX ? Number(bendpoint.$.endX) : 0;
+    const ey = bendpoint.$.endY ? Number(bendpoint.$.endY) : 0;
     let sourceIncrementX = 0;
     let sourceIncrementY = 0;
     let targetIncrementX = 0;
     let targetIncrementY = 0;
 
-    let sourceWidth = sourceBounds.width ? +sourceBounds.width : 0;
-    let sourceHeight = sourceBounds.height ? +sourceBounds.height : 0;
-    let targetWidth = targetBounds.width ? +targetBounds.width : 0;
-    let targetHeight = targetBounds.height ? +targetBounds.height : 0;
+    const sourceWidth = sourceBounds.width ? Number(sourceBounds.width) : 0;
+    const sourceHeight = sourceBounds.height ? Number(sourceBounds.height) : 0;
+    const targetWidth = targetBounds.width ? Number(targetBounds.width) : 0;
+    const targetHeight = targetBounds.height ? Number(targetBounds.height) : 0;
 
     if (sourceParentPositionIncrement !== null) {
       sourceIncrementX = sourceParentPositionIncrement.x;
@@ -881,16 +897,16 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
       targetIncrementY = targetParentPositionIncrement.y;
     }
 
-    let sourcePositionX = sourceXPosition + sourceIncrementX;
-    let sourcePositionY = sourceYPosition + sourceIncrementY;
-    let targetPositionX = targetXPosition + targetIncrementX;
-    let targetPositionY = targetYPosition + targetIncrementY;
-    let weight = (bendpointIndex + 1) / (bendpointsLength + 1);
+    const sourcePositionX = sourceXPosition + sourceIncrementX;
+    const sourcePositionY = sourceYPosition + sourceIncrementY;
+    const targetPositionX = targetXPosition + targetIncrementX;
+    const targetPositionY = targetYPosition + targetIncrementY;
+    const weight = (bendpointIndex + 1) / (bendpointsLength + 1);
 
-    let x =
+    const x =
       (sourcePositionX + sx + sourceWidth / 2) * (1.0 - weight) +
       weight * (targetPositionX + ex + targetWidth / 2);
-    let y =
+    const y =
       (sourcePositionY + sy + sourceHeight / 2) * (1.0 - weight) +
       weight * (targetPositionY + ey + targetHeight / 2);
 
@@ -993,8 +1009,8 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Loops through a list of views relationships
-   * @param view View Model
-   * @param action Action foe each relationship view in the list
+   * @param _view View Model
+   * @param _action Action foe each relationship view in the list
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
@@ -1002,7 +1018,9 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    *
    * inputInterpreter.forEachViewRelationship(view[0], (view) =>{});
    */
-  forEachViewRelationship(view: View, action: (view: ViewRelationship) => void): void {}
+  forEachViewRelationship(_view: View, _action: (_view: ViewRelationship) => void): void {
+    // Empty because the GRAFICO interpreter does not need to use this function
+  }
 
   /**
    * Loops through a list of nodes
@@ -1014,7 +1032,7 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * inputInterpreter.forEachModelNode((node) => {});
    */
   forEachModelNode(action: (node: Node) => void): void {
-    let nodeFolders = [
+    const nodeFolders = [
       'strategy',
       'motivation',
       'business',
@@ -1025,18 +1043,20 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
     ];
 
     nodeFolders.forEach(folder => {
-      let nodeDirectory = path.join(this.modelPath, folder);
+      const nodeDirectory = path.join(this.modelPath, folder);
 
       if (fs.existsSync(nodeDirectory) && fs.lstatSync(nodeDirectory).isDirectory()) {
-        fs.readdirSync(nodeDirectory).map(name => {
+        fs.readdirSync(nodeDirectory).forEach(name => {
           const filePath = path.join(nodeDirectory, name);
 
           if (name.localeCompare('folder.xml') !== 0 && fs.lstatSync(filePath).isFile()) {
-            let data = fs.readFileSync(filePath);
+            const data = fs.readFileSync(filePath);
 
-            let parser = new xml2js.Parser({ explicitArray: true });
+            const parser = new xml2js.Parser({ explicitArray: true });
 
-            parser.parseString(data, function (err, nodeData) {
+            parser.parseString(data, (err, nodeData) => {
+              if (err) throw err;
+
               action(nodeData);
             });
           }
@@ -1055,18 +1075,20 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
    * inputInterpreter.forEachModelRelationship((relationship) => {});
    */
   forEachModelRelationship(action: (relationship: Relationship) => void): void {
-    let relationshipDirectory = path.join(this.modelPath, 'relations');
+    const relationshipDirectory = path.join(this.modelPath, 'relations');
 
     if (fs.existsSync(relationshipDirectory) && fs.lstatSync(relationshipDirectory).isDirectory()) {
-      fs.readdirSync(relationshipDirectory).map(name => {
+      fs.readdirSync(relationshipDirectory).forEach(name => {
         const filePath = path.join(relationshipDirectory, name);
 
         if (name.localeCompare('folder.xml') !== 0 && fs.lstatSync(filePath).isFile()) {
-          let data = fs.readFileSync(filePath);
+          const data = fs.readFileSync(filePath);
 
-          let parser = new xml2js.Parser({ explicitArray: true });
+          const parser = new xml2js.Parser({ explicitArray: true });
 
-          parser.parseString(data, function (err, relationshipData) {
+          parser.parseString(data, (err, relationshipData) => {
+            if (err) throw err;
+
             action(relationshipData);
           });
         }
@@ -1076,14 +1098,14 @@ export class GraficoInterpreter implements GraficoInterpreterModel {
 
   /**
    * Loops through a list of diagram
-   * @param action Action for each diagram in the list
+   * @param _action Action for each diagram in the list
    * @example
    * import { Grafico } from '@lib/processors/InputTranslator/interpreter/folderBasedInterpreter/grafico/GraficoInterpreter';
    * const inputInterpreter = new Grafico("modelPath");
    *
    * inputInterpreter.forEachDiagram((view) => {});
    */
-  forEachDiagram(action: (view: View) => void) {
+  forEachDiagram(_action: (_view: View) => void) {
     return null;
   }
 

@@ -444,7 +444,7 @@ describe('GraficoInterpreter', () => {
 
   describe('getViewElementPositionX', () => {
     it('should return a element position x', () => {
-      const x = inputInterpreter.getViewElementPositionX(diagramModel.children[0]);
+      const x = inputInterpreter.getViewElementPositionX({ viewElement: diagramModel.children[0] });
 
       expect(x).to.equal(parseInt(diagramModel.children[0].bounds[0].$.x));
     });
@@ -452,7 +452,7 @@ describe('GraficoInterpreter', () => {
 
   describe('getViewElementPositionY', () => {
     it('should return a element position y', () => {
-      const y = inputInterpreter.getViewElementPositionY(diagramModel.children[0]);
+      const y = inputInterpreter.getViewElementPositionY({ viewElement: diagramModel.children[0] });
 
       expect(y).to.equal(parseInt(diagramModel.children[0].bounds[0].$.y));
     });
@@ -604,14 +604,14 @@ describe('GraficoInterpreter', () => {
       const source = diagramModel.children[0];
       const target = diagramModel.children[0];
       const bendpoint = diagramModel.children[0].sourceConnections[0].bendpoints[0];
-      const { x, y } = inputInterpreter.getViewRelationshipBendpoint(
+      const { x, y } = inputInterpreter.getViewRelationshipBendpoint({
         bendpoint,
-        0,
-        1,
-        source,
-        target,
-        diagramModel.children,
-      );
+        bendpointIndex: 0,
+        bendpointsLength: 1,
+        sourceViewElement: source,
+        targetViewElement: target,
+        viewNodes: diagramModel.children,
+      });
 
       expect(x).to.equal(779);
       expect(y).to.equal(828);
