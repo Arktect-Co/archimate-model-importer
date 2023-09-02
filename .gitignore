@@ -104,6 +104,7 @@ dist
 .tern-port
 
 # IDE Elements
-/.idea/archimate-model-importer.iml
-/.idea/modules.xml
-/.idea/workspace.xml
+/.idea/*
+
+# OS
+.DS_Store
