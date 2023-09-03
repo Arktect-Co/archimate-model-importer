@@ -1,24 +1,56 @@
 {
   "name": "@arktect-co/archimate-model-importer",
-  "author": "diorbert.pereira",
-  "repository": "github:Arktect-Co/archimate-model-importer",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "In memory Archimate model importer compatible with Archi (.archimate), AOEFF and GRAFICO (distributed Archi file)",
+  "author": "diorbert.pereira",
+  "main": "dist/index.js",
+  "types": "dist/@types/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "@types/**/*"
+  ],
+  "repository": "github:Arktect-Co/archimate-model-importer",
+  "engines": {
+    "node": ">= 12"
+  },
+  "scripts": {
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
+    "test:unique": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts  --grep",
+    "test:cov": "nyc mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
+    "build": "tsc --project tsconfig.build.json && tscpaths -p tsconfig.build.json -s src -o ./dist/lib && tscpaths -p tsconfig.build.json -s src -o ./dist/@types"
+  },
+  "_moduleAliases": {
+    "@src": "src",
+    "@lib": "src/lib"
+  },
   "dependencies": {
     "lodash": "^4.17.20",
     "uniqid": "^5.0.3",
-    "xml2js": "^0.4.16"
+    "xml2js": "0.5.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-typescript": "^7.22.5",
+    "@types/chai": "^4.3.5",
+    "@types/deep-equal-in-any-order": "^1.0.1",
+    "@types/lodash": "^4.14.197",
+    "@types/mocha": "^10.0.1",
+    "@types/uniqid": "^5.3.2",
+    "@types/xml2js": "^0.4.11",
+    "babel-plugin-module-resolver": "^5.0.0",
     "chai": "^4.2.0",
     "cross-env": "^5.2.0",
     "deep-equal-in-any-order": "^1.0.25",
-    "mocha": "^7.1.1",
+    "mocha": "10.1.0",
     "nodemon": "^2.0.3",
-    "nyc": "^15.1.0"
-  },
-  "scripts": {
-    "test": "mocha"
+    "nyc": "^15.1.0",
+    "prettier": "2.8.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "tscpaths": "^0.0.9",
+    "typescript": "^5.1.6"
   },
   "license": "MIT",
   "keywords": [
