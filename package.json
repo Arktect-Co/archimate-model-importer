@@ -1,14 +1,28 @@
 {
   "name": "@arktect-co/archimate-model-importer",
-  "author": "diorbert.pereira",
-  "repository": "github:Arktect-Co/archimate-model-importer",
   "version": "1.0.0",
   "description": "In memory Archimate model importer compatible with Archi (.archimate), AOEFF and GRAFICO (distributed Archi file)",
+  "author": "diorbert.pereira",
   "main": "dist/index.js",
+  "types": "dist/@types/index.d.ts",
   "files": [
     "dist/**/*",
     "@types/**/*"
   ],
+  "repository": "github:Arktect-Co/archimate-model-importer",
+  "engines": {
+    "node": ">= 12"
+  },
+  "scripts": {
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
+    "test:unique": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts  --grep",
+    "test:cov": "nyc mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
+    "build": "tsc --project tsconfig.build.json && tscpaths -p tsconfig.build.json -s src -o ./dist/lib && tscpaths -p tsconfig.build.json -s src -o ./dist/@types"
+  },
+  "_moduleAliases": {
+    "@src": "src",
+    "@lib": "src/lib"
+  },
   "dependencies": {
     "lodash": "^4.17.20",
     "uniqid": "^5.0.3",
@@ -35,13 +49,8 @@
     "prettier": "2.8.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
+    "tscpaths": "^0.0.9",
     "typescript": "^5.1.6"
-  },
-  "scripts": {
-    "test": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
-    "test:unique": "mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts  --grep",
-    "test:cov": "nyc mocha --require ts-node/register --require tsconfig-paths/register ./__tests__/**/*.test.ts",
-    "build": "npx babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored"
   },
   "license": "MIT",
   "keywords": [
