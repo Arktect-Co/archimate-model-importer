@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "In memory Archimate model importer compatible with Archi (.archimate), AOEFF and GRAFICO (distributed Archi file)",
   "author": "diorbert.pereira",
-  "main": "dist/index.js",
+  "main": "dist/lib/index.js",
   "types": "dist/@types/index.d.ts",
   "files": [
     "dist/**/*",
