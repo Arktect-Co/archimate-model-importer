@@ -1,6 +1,6 @@
 {
   "name": "@arktect-co/archimate-model-importer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "In memory Archimate model importer compatible with Archi (.archimate), AOEFF and GRAFICO (distributed Archi file)",
   "author": "diorbert.pereira",
   "main": "dist/lib/index.js",
